@@ -41,6 +41,10 @@ This long-term plan should result in a vast improvement of my full-stack capabil
 
 ## 🛠 Tech Stack / Tools Plan
 
+**Project Structure - DDD**
+
+- Domain-Driven Design seems to be a high-quality design for a web-app such as this which has the potential to scale both in users and feature sets. Will look into exactly how to apply and make a write-up.
+
 **Domain registration/CDN - Cloudflare**
 - as a CDN, Cloudflare offers some auxiliary services that could prove useful such as user-tracking, data-caching and protection from attacks (e.g. a DDoS). Give that they are an industry standard and also offer Domain Registration (will look to grab "movethechains.app" if available), they seem to be a good choice.
 
@@ -62,7 +66,7 @@ This long-term plan should result in a vast improvement of my full-stack capabil
 **Server/Hosting - Azure**
 - As incredibly powerful (and therefore complicated) tools, I want to pick a cloud platform that is both well-used and suitable for my use-case. Azure, AWS and Google Cloud Platform are all valid options. However, as I am at least a small piece of experience in Azure, it seems the most sensible to build upon this foundation rather than switch to an entirely new platform without cause.
 
-**Auth - Azure B2C**
+**Auth - Microsoft Entra External ID**
 - If I am picking the Azure Cloud Service Provider, then the logical extension would be to use its solution rather than further break down features into additional third parties unless there is a  significant upside which I have yet to see.
 
 **Repository/Project management  - GitHub**
@@ -74,11 +78,18 @@ This long-term plan should result in a vast improvement of my full-stack capabil
 **AI - TBD**
 - I have not yet conducted any research, considering this will be a very late-stage feature.
 
-**Additional technologies**
+**Additional Technologies**
 - Containers (e.g. Docker)
   - Microservice (Middleman calling API, kind of redundant but could be nice to have)
-
----
+  - Function app to poll/cache data.
+  - Deployment
+    - Use Docker image to build/deploy to Azure container instance.
+ 
+- Application Insights
+  - Use Azure Application Insights to learn error logging/performance monitoring.
+ 
+- Bicep (IAC)
+  - Azure interface, more easy to interact with Azure services.
 
 ## 🚀 Development Stages
 
