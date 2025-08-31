@@ -1,0 +1,21 @@
+name: 📖 User Story
+description: A user story that describes a feature from an end-user perspective.
+labels: ['User Story']
+projects: ["SamHignett/1"]
+assignees: ["SamHignett"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Remember, User Stories are used to describe functionality in a user-context, and are not specific task-level issues.
+           
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the desired action as if you were a user,
+      placeholder: As a [type of user], I want [an action] so that [a benefit/a value]
+    validations:
+      required: true

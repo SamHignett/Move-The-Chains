@@ -1,0 +1,41 @@
+name: ♻️ Refactor Request
+description: Need to make a change to an existing implementation?
+labels: ['Refactor']
+projects: ["SamHignett/1"]
+assignees: ["SamHignett"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Please provide details about the refactoring task. Include the objectives, areas of code to be refactored, and any specific considerations or steps.
+      
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the purpose of the refactoring task, including what needs to be improved and why.
+      placeholder: Enter the purpose of the refactoring, listing the current issues or problems
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_benefits
+    attributes:
+      label: Expected Benefits
+      description: Describe the expected benefits or improvements from the refactoring.
+      placeholder: Describe the expected benefits or improvements
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_context
+    attributes:
+      label: Additional Context
+      description: Add any other context or relevant information about the refactoring task.
+      placeholder: Include any additional context or relevant information
+      value: |
+        _N/A_
+    validations:
+      required: false

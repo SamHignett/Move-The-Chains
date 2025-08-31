@@ -1,0 +1,21 @@
+name: 🏔️ Epic
+description: A large, overarching goal that encompasses multiple features, tasks, or user stories.
+labels: ['Epic']
+projects: ["SamHignett/1"]
+assignees: ["SamHignett"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Remember, Epics are big-picture objectives, and are not specific task-level issues.
+           
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe, in broad terms, what this epic aims to achieve.
+      placeholder: Enter the goals of this Epic
+    validations:
+      required: true
