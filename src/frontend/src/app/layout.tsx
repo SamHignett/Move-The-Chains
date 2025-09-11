@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-// Unused variable should be flagged
-const unusedVariable = 42;
-
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -36,8 +33,3 @@ export default function RootLayout({
         </html>
     );
 }
-
-// Missing semicolon and console statement should also be flagged
-console.log("Debuuug output")
-
-const foo_bar = 1;
