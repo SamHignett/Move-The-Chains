@@ -1,0 +1,31 @@
+﻿name: Build Back-End (.Net 9)
+
+on:
+  pull_request:
+    branches:
+      - main
+        
+jobs:
+    build:
+        name: Build Back-End
+        runs-on: ubuntu-latest
+        strategy: 
+            matrix:
+                dotnet-version: ['9.0.x']
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up DotNet
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: ${{ matrix.dotnet-version }}
+                  
+            - name: Install dependencies
+              run: dotnet restore
+              working-directory: src/backend
+              
+            - name: Build
+              run: dotnet build --no-restore
+              working-directory: src/backend
