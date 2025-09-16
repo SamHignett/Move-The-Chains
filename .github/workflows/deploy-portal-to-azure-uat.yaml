@@ -1,0 +1,15 @@
+﻿name: Deploy Portal to Azure SWA - UAT
+
+on:
+  push:
+    branches:
+      - uat
+        
+jobs:
+    deploy:
+      uses: ./.github/workflows/_deploy-azure-static-web-app.yaml
+      with:
+        app_name: portal
+        target_env: UAT
+        app_location: src/frontend
+      secrets: inherit
