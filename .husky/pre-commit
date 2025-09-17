@@ -1,0 +1,10 @@
+for project in src/*; do
+  if [ -f "$project/package.json" ]; then
+    echo "▶️ Node project detected in $project"
+    npm run pre-commit --prefix "$project" || exit 1
+  elif [ -f "$project/project.csproj" ]; then
+    echo "▶️ .NET project detected in $project"
+  else
+    echo "ℹ️ Skipping $project (no recognized config)"
+  fi
+done

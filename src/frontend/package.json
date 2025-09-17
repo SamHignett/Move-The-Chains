@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@movethechains/portal",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -9,7 +9,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pre-commit": "npx eslint src/ --fix --max-warnings 0"
   },
   "dependencies": {
     "eslint-plugin-prettier": "^5.5.4",
