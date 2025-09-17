@@ -56,3 +56,4 @@ jobs:
               app_location: ${{ inputs.app_location }}
               output_location: ".next"
               skip_app_build: true
+              deployment_environment: ${{ inputs.target_env }}
