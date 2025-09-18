@@ -1,0 +1,29 @@
+﻿name: Deploy Azure Static Web App
+  
+inputs:
+  target-env:
+    description: "Environment to deploy to"
+    required: true
+  app-location:
+    description: "Location of the app to deploy"
+    required: true
+  github-token:
+    description: "GitHub token"
+    required: true
+  swa-deploy-token:
+    description: "Azure Static Web Apps deployment token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Deploy SWA
+      uses: Azure/static-web-apps-deploy@v1
+      with:
+        azure_static_web_apps_api_token: ${{ inputs.swa-deploy-token }}
+        repo_token: ${{ inputs.github-token }}
+        action: "upload"
+        app_location: ${{ inputs.app-location }}
+        output_location: ".next"
+        skip_app_build: true
+        deployment_environment: ${{ inputs.target-env }}

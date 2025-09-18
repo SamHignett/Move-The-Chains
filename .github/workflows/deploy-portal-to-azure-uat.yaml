@@ -1,15 +1,29 @@
 ﻿name: Deploy Portal to Azure SWA - UAT
 
 on:
-  push:
+  pull_request:
     branches:
-      - uat
-        
+      - live
 jobs:
-    deploy:
-      uses: ./.github/workflows/_deploy-azure-static-web-app.yaml
-      with:
-        app_name: portal
-        target_env: UAT
-        app_location: src/frontend
-      secrets: inherit
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+        name: portal-uat
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Build Portal
+        uses: ./.github/actions/build-node-app
+        with:
+          app-directory: src/frontend
+          node-version: 20
+          
+      - name: Deploy Portal to Azure SWA - UAT
+        uses: ./.github/actions/deploy-azure-swa
+        with:
+          app-location: src/frontend
+          target-env: ${{ github.environment }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          swa-deploy-token: ${{ secrets.AZURE_STATIC_WEB_APP_DEPLOYMENT_TOKEN }}
+          

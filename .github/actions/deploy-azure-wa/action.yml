@@ -1,0 +1,33 @@
+﻿name: Deploy Azure Web App
+  
+inputs:
+  target_env:
+    description: "Environment to deploy to"
+    required: true
+  package:
+    description: "Location of the package to deploy"
+    required: true
+  webapp-name:
+    description: "Name of the Azure Web App"
+    required: true
+  publish-profile:
+    description: "Azure Web App publish profile"
+    required: true
+  app-directory:
+    description: "Location of the application to deploy"
+    required: true
+    
+runs:
+  using: "composite"
+  steps:
+    - name: Publish
+      run: dotnet publish ${{ inputs.app-directory }} -c Release -o ${{ inputs.package }}
+      shell: bash
+
+    - name: Deploy Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: ${{ inputs.webapp-name }}
+        publish-profile: ${{ inputs.publish-profile }}
+        package: ${{ inputs.package }}
+        clean: true

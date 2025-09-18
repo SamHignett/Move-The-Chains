@@ -1,0 +1,30 @@
+﻿name: Deploy ApiSuite to Azure WA - UAT
+
+on:
+  pull_request:
+    branches:
+      - live
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+        name: apisuite-uat
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Build ApiSuite
+        uses: ./.github/actions/build-dotnet-app
+        with:
+          app-directory: src/backend
+          dotnet-version: '9.0.x'
+          
+      - name: Deploy ApiSuite
+        uses: ./.github/actions/deploy-azure-wa
+        with:
+          target_env: apisuite-uat
+          package: build
+          webapp-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-directory: src/backend

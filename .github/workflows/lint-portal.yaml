@@ -1,0 +1,19 @@
+﻿name: Lint/Style Portal 
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  lint-style:
+    name: Lint-Styling (ESLint/Prettier)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Lint/Style Portal
+        uses: ./.github/actions/lint-node-app
+        with:
+            app-location: src/frontend
