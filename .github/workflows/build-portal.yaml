@@ -1,14 +1,20 @@
 ﻿name: Build Portal
 
 on:
-  workflow_call:
   pull_request:
     branches:
       - main
 
 jobs:
     build-portal:
-        uses: ./.github/workflows/_build-react_app.yaml
-        with:
-            app-directory: src/frontend
-            node-version: 20
+      name: Build Portal
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v3
+        
+        - name: Build Portal
+          uses: ./.github/actions/build-node-app
+          with:
+              app-directory: src/frontend
+              node-version: 20

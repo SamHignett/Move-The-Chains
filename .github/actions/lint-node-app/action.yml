@@ -1,0 +1,31 @@
+﻿name: Front-End Linting/Styling
+
+inputs:
+  app-location:
+    description: 'The location of the Node app'
+    required: true
+  node-version:
+    description: 'The Node.js version to use'
+    required: false
+    default: '20'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ${{ inputs.app-location }}
+      shell: bash
+
+    - name: Run ESLint/Prettier
+      run: npx eslint src/ --max-warnings 0
+      working-directory: ${{ inputs.app-location }}
+      shell: bash
