@@ -4,13 +4,47 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+
 updates:
   - package-ecosystem: "nuget" 
     directory: "/src/backend"
+    target-branch: "dependabot/weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     schedule:
       interval: "weekly"
-      
+
+  - package-ecosystem: "nuget"
+    directory: "/src/backend"
+    target-branch: "dependabot/monthly"
+    schedule:
+      interval: "monthly"
+    groups:
+      major-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+
   - package-ecosystem: "npm"
     directory: "/src/frontend"
+    target-branch: "dependabot/weekly"
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
     schedule:
-      interval: "daily"
+      interval: "weekly"
+  
+  - package-ecosystem: "npm"
+    directory: "/src/frontend"
+    target-branch: "dependabot/monthly"
+    groups:
+      major-updates:
+        patterns:
+          - "*"
+        update-types:
+          - "major"
+    schedule:
+      interval: "monthly"
+
