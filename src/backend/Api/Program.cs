@@ -1,12 +1,26 @@
+using System.Reflection;
+using Application.Interfaces;
+using Infrastructure.Clients.Team.Tank01;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddSingleton<ITeamClient, Tank01TeamClient>();
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(MoveTheChains.Application.Commands.Team.GetTeam.Handler).Assembly));
+
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(x => x.AddMaps(Assembly.GetCallingAssembly()));
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
