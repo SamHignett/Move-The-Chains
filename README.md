@@ -41,27 +41,20 @@ This long-term plan should result in a vast improvement of my full-stack capabil
 
 ## 🛠 Tech Stack / Tools Plan
 
-**Project Structure - DDD**
-
-- Domain-Driven Design seems to be a high-quality design for a web-app such as this which has the potential to scale both in users and feature sets. Will look into exactly how to apply and make a write-up.
-
 **Domain registration/CDN - Cloudflare**
 - as a CDN, Cloudflare offers some auxiliary services that could prove useful such as user-tracking, data-caching and protection from attacks (e.g. a DDoS). Give that they are an industry standard and also offer Domain Registration (will look to grab "movethechains.app" if available), they seem to be a good choice.
 
 **Front-End - React (NextJS)**
 - Whilst Vite would be well-suited for static websites, due to the nature of this site being dynamic (with the potential for content such as team logos to change) it would make sense to use a more dynamic choice. NextJS is a mature, well-used and documented framework and so is an attractive option.
 
-**Content - Hygraph CMS**
-- A CMS might not be completely crucial (most textual itself would be either static or generated from API requests at runtime, and most visual elements would be unlikely to frequently need updating) but a basic understanding/implementation would prove useful to learn. I am currently not learned on the landscape of CMS, but again due to the likely limited use Hygraph seems as good a choice as any, being a respected CMS and offering a suitable free tier.
-
 **Back-End - C# .Net**
 - Responsible for communication between the front-end and APIs/Database(s). As I have some small experience in using .NET back-end, good experience in C#, have existing software as a reference to draw inspiration from, and it is a widely-used language/framework, why choose another?
 
 **NFL Data API - RapidApi**
-- Whilst I have not yet done a full evaluation on the scope/capabilities/scalability/etc on the available NFL Data sources, preliminary research suggests RapidApi to be a user-friendly, low-cost (with generous free usage limits) service which also contains a suitable amount of data to draw from. So at this early stage, it looks to be a strong candidate (TBC).
+- Whilst I have not yet done a full evaluation on the scope/capabilities/scalability/etc on the available NFL Data sources, preliminary research suggests RapidApi to be a user-friendly, low-cost (with generous free usage limits) service which also contains a suitable amount of data to draw from. So at this early stage, it looks to be a strong candidate. However the system will be designed to easily allow other APIs to be used if found.
 
-**Database - SQL**
-- For storage of simple data, I see no reason to sway from the tried, tested and universally understood/respected SQL. Why rock the boat?
+**Database - CosmosDB**
+- For storage of simple data, I will look to use CosmosDB. I have prior experience with SQL and so learning a document-based storage system will expand my skillset.
 
 **Server/Hosting - Azure**
 - As incredibly powerful (and therefore complicated) tools, I want to pick a cloud platform that is both well-used and suitable for my use-case. Azure, AWS and Google Cloud Platform are all valid options. However, as I am at least a small piece of experience in Azure, it seems the most sensible to build upon this foundation rather than switch to an entirely new platform without cause.
