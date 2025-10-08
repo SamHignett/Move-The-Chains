@@ -14,7 +14,7 @@ namespace Infrastructure.Clients.Team.Tank01
             };
         }
     }
-    
+
     public class MapperProfile : Profile
     {
         public MapperProfile()
