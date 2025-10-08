@@ -17,7 +17,7 @@ builder.Services.AddAutoMapper(x => x.AddMaps(Assembly.GetCallingAssembly()));
 builder.Services.ApiRegistry();
 builder.Services.ApplicationRegistry();
 
-builder.Services.AddHttpClient<ITeamClient,Tank01TeamClient>( client =>
+builder.Services.AddHttpClient<ITeamClient, Tank01TeamClient>(client =>
 {
     client.BaseAddress = new Uri("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com");
 });
@@ -47,7 +47,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

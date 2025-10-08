@@ -8,7 +8,7 @@ public static class IServiceCollectionExtensions
 {
     public static void ApiRegistry(this IServiceCollection services)
     {
-        services.AddScoped<ITeamClient,Tank01TeamClient>();
+        services.AddScoped<ITeamClient, Tank01TeamClient>();
 
         services.DomainRegistry();
     }

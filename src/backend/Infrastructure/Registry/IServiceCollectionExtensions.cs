@@ -9,7 +9,7 @@ public static class IServiceCollectionExtensions
 {
     public static void ApplicationRegistry(this IServiceCollection services)
     {
-        services.AddScoped<ITeamClient,Tank01TeamClient>();
+        services.AddScoped<ITeamClient, Tank01TeamClient>();
 
         services.DomainRegistry();
     }

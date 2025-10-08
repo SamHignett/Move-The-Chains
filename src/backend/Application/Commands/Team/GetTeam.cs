@@ -13,7 +13,7 @@ public static class GetTeam
     public class Handler : IRequestHandler<Command, Domain.Entities.Team>
     {
         private readonly ITeamClient teamClient;
-        
+
         public Task<Domain.Entities.Team> Handle(Command request, CancellationToken cancellationToken)
         {
             return teamClient.GetTeam(request.Name);
