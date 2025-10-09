@@ -1,7 +1,8 @@
 ﻿import React from 'react';
+import { TeamInfoCard } from '@/app/stats/components/team/TeamInfoCard';
 
 const TeamStatsPage: React.FC = () => {
-  return <h1>Team Stats Page</h1>;
+  return <TeamInfoCard />;
 };
 
 export { TeamStatsPage };
