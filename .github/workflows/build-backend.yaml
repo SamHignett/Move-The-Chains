@@ -1,4 +1,4 @@
-﻿name: Build ApiSuite
+﻿name: Build Backend
 
 on:
   pull_request:
@@ -7,13 +7,13 @@ on:
 
 jobs:
     build:
-        name: Build ApiSuite
+        name: Build Backend
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
             
-            - name: Build API Suite
+            - name: Build Backend
               uses: ./.github/actions/build-dotnet-app
               with:
                 app-directory: 'src/backend'
