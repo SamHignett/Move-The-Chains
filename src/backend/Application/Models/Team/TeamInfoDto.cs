@@ -13,4 +13,10 @@ public class TeamInfoDto
     public string Division { get; set; }
 
     public string Logo { get; set; }
+
+    public string Wins { get; set; }
+
+    public string Losses { get; set; }
+
+    public string Ties { get; set; }
 }

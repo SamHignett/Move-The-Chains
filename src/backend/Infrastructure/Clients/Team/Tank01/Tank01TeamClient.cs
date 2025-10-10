@@ -12,20 +12,23 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         using HttpResponseMessage response = client.GetAsync($"getNFLTeams").Result;
         response.EnsureSuccessStatusCode();
 
-        var teams = JsonSerializer.Deserialize<Tank01TeamDto[]>(response.Content.ReadAsStringAsync().Result);
-        if (teams == null || teams.Length == 0)
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(response.Content.ReadAsStringAsync().Result)?.body;
+
+        if (teams == null || teams.Count == 0)
             throw new Exception("No teams found");
 
-        var team = teams.First(x => x.TeamName == name);
+        var team = teams.First(x => x.Name == name);
 
         var teamDto = new TeamInfoDto
         {
             City = team.TeamCity,
             Conference = team.Conference,
             Division = team.Division,
-            ID = team.TeamAbv,
             Logo = team.NflComLogo1,
-            Name = team.TeamName
+            Name = team.Name,
+            Wins = team.Wins,
+            Losses = team.Losses,
+            Ties = team.Ties,
         };
 
         return Task.FromResult(teamDto);
