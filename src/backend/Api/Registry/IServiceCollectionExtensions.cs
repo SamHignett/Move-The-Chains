@@ -2,9 +2,9 @@
 using Domain.Registry;
 using Infrastructure.Clients.Team.Tank01;
 
-namespace MoveTheChains.Api.Registry;
+namespace Api.Registry;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static void ApiRegistry(this IServiceCollection services)
     {

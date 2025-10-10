@@ -1,8 +1,8 @@
-﻿using Domain.Entities;
+﻿using Application.Models.Team;
 
 namespace Application.Interfaces;
 
 public interface ITeamClient
 {
-    Task<Team> GetTeam(string name);
+    Task<TeamInfoDto> GetTeamInfo(string name);
 }

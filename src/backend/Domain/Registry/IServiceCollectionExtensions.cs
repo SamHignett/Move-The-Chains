@@ -2,7 +2,7 @@
 
 namespace Domain.Registry;
 
-public static class IServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static void DomainRegistry(this IServiceCollection services)
     {

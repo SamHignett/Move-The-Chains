@@ -1,18 +1,15 @@
-using System.Reflection;
+using Api.Registry;
 using Application.Commands.Team;
 using Application.Interfaces;
-using Application.Registry;
 using Infrastructure.Clients.Team.Tank01;
-using MoveTheChains.Api.Registry;
+using Infrastructure.Registry;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTeam.Handler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetTeamInfo.Handler).Assembly));
 
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(x => x.AddMaps(Assembly.GetCallingAssembly()));
 
 builder.Services.ApiRegistry();
 builder.Services.ApplicationRegistry();
