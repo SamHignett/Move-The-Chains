@@ -1,5 +1,4 @@
 ﻿using Application.Commands.Team;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

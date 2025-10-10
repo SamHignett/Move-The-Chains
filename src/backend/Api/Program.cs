@@ -19,8 +19,6 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient<ITeamClient, Tank01TeamClient>(client =>
 {
     client.BaseAddress = new Uri("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com");
-
-    client.DefaultRequestHeaders.Add("x-rapidapi-host", "tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com");
     client.DefaultRequestHeaders.Add("x-rapidapi-key", builder.Configuration["Tank01:ApplicationKey"]);
 });
 

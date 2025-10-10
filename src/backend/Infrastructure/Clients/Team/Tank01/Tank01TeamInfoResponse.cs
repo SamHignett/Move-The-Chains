@@ -1,8 +1,13 @@
-﻿namespace Infrastructure.Clients.Team.Tank01
+﻿using System.Text.Json.Serialization;
+
+namespace Infrastructure.Clients.Team.Tank01
 {
     public class Tank01TeamInfoResponse
     {
-        public int statusCode { get; set; }
-        public List<Tank01TeamDto> body { get; set; }
+        [JsonPropertyName("statusCode")]
+        public int StatusCode { get; init; }
+
+        [JsonPropertyName("body")]
+        public List<Tank01TeamDto> Body { get; init; } = [];
     }
 }

@@ -1,24 +1,25 @@
-﻿using System.Text.Json;
+﻿using System.Runtime.Serialization;
+using System.Text.Json;
 using Application.Interfaces;
 using Application.Models.Team;
-using AutoMapper;
 
 namespace Infrastructure.Clients.Team.Tank01;
 
 public class Tank01TeamClient(HttpClient client) : ITeamClient
 {
-    public Task<TeamInfoDto> GetTeamInfo(string name)
+    public async Task<TeamInfoDto> GetTeamInfo(string name)
     {
-        using HttpResponseMessage response = client.GetAsync($"getNFLTeams").Result;
+        using HttpResponseMessage response = await client.GetAsync($"getNFLTeams");
         response.EnsureSuccessStatusCode();
-
-        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(response.Content.ReadAsStringAsync().Result)?.body;
-
+        
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
         if (teams == null || teams.Count == 0)
-            throw new Exception("No teams found");
+            throw new HttpRequestException("Failed to parse team data from response");
 
-        var team = teams.First(x => x.Name == name);
-
+        var team = teams.FirstOrDefault(x => x.Name == name);
+        if (team == null)
+            throw new HttpRequestException($"Team '{name}' not found");
+        
         var teamDto = new TeamInfoDto
         {
             City = team.TeamCity,
@@ -26,11 +27,11 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
             Division = team.Division,
             Logo = team.NflComLogo1,
             Name = team.Name,
-            Wins = team.Wins,
-            Losses = team.Losses,
-            Ties = team.Ties,
+            Wins = int.Parse(team.Wins),
+            Losses = int.Parse(team.Losses),
+            Ties = int.Parse(team.Ties),
         };
 
-        return Task.FromResult(teamDto);
+        return teamDto;
     }
 }
