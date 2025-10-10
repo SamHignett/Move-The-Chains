@@ -1,12 +1,13 @@
 ﻿using System.Text.Json;
 using Application.Interfaces;
+using Application.Models.Team;
 using AutoMapper;
 
 namespace Infrastructure.Clients.Team.Tank01;
 
-public class Tank01TeamClient(IMapper mapper, HttpClient client) : ITeamClient
+public class Tank01TeamClient(HttpClient client) : ITeamClient
 {
-    public Task<Domain.Entities.Team> GetTeam(string name)
+    public Task<TeamInfoDto> GetTeamInfo(string name)
     {
         using HttpResponseMessage response = client.GetAsync($"getNFLTeams").Result;
         response.EnsureSuccessStatusCode();
@@ -17,6 +18,16 @@ public class Tank01TeamClient(IMapper mapper, HttpClient client) : ITeamClient
 
         var team = teams.First(x => x.TeamName == name);
 
-        return Task.FromResult(mapper.Map<Domain.Entities.Team>(team));
+        var teamDto = new TeamInfoDto
+        {
+            City = team.TeamCity,
+            Conference = team.Conference,
+            Division = team.Division,
+            ID = team.TeamAbv,
+            Logo = team.NflComLogo1,
+            Name = team.TeamName
+        };
+
+        return Task.FromResult(teamDto);
     }
 }

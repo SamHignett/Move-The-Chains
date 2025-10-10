@@ -3,17 +3,17 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MoveTheChains.Api.Team;
+namespace Api.Team;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TeamController(IMediator mediator, IMapper mapper) : Controller
+public class TeamController(IMediator mediator) : Controller
 {
-    [HttpGet("{name}")]
-    public async Task<IActionResult> Get([FromRoute] string name)
+    [HttpGet("{name}/info")]
+    public async Task<IActionResult> GetTeamInfo([FromRoute] string name)
     {
-        var team = await mediator.Send(new GetTeam.Command(name));
+        var team = await mediator.Send(new GetTeamInfo.Command(name));
 
-        return Ok(mapper.Map<Domain.Entities.Team, TeamDto>(team));
+        return Ok(team);
     }
 }

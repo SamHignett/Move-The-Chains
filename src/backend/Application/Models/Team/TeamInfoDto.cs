@@ -1,6 +1,6 @@
-﻿namespace Domain.Entities;
+﻿namespace Application.Models.Team;
 
-public class Team
+public class TeamInfoDto
 {
     public string ID { get; set; }
 
