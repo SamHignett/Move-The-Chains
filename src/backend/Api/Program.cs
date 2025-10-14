@@ -25,8 +25,6 @@ builder.Services.AddHttpClient<ITeamClient, Tank01TeamClient>(client =>
 
 var app = builder.Build();
 
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -44,7 +42,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(options =>
 {
-    var origins = builder.Configuration.GetSection("CorsSettings:AllowedOrigins").Get<string[]>();
+    var origins = builder.Configuration.GetSection("CORSSettings:AllowedOrigins").Get<string[]>();
 
     if (origins != null)
         options.WithOrigins(origins)
