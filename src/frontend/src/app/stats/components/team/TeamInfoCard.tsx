@@ -6,7 +6,20 @@ import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const TeamInfoCard: React.FC = () => {
+export type TeamInfoCardProps = {
+  info: {
+    name: string;
+    logoURL: string;
+    city: string;
+    conference: string;
+    division: string;
+    wins: number;
+    losses: number;
+    ties: number;
+  };
+};
+
+const TeamInfoCard: React.FC<TeamInfoCardProps> = ({ info }) => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -35,8 +48,8 @@ const TeamInfoCard: React.FC = () => {
       >
         <Box
           component="img"
-          src="https://res.cloudinary.com/nflleague/image/private/f_auto/league/puhrqgj71gobgdkdo6uq"
-          alt="Philadelphia Eagles logo"
+          src={info.logoURL}
+          alt="Logo"
           sx={{
             width: 150,
             height: 150,
@@ -52,10 +65,14 @@ const TeamInfoCard: React.FC = () => {
             marginRight: 'auto',
           }}
         >
-          <Typography variant="h4">Philadelphia Eagles</Typography>
-          <Typography variant="h5">Location: Philadelphia, PA</Typography>
-          <Typography variant="h5">Division/Conference: NFC East</Typography>
-          <Typography variant="h6">Current Season Record: 4-1</Typography>
+          <Typography variant="h4">{info.name}</Typography>
+          <Typography variant="h5">Location: {info.city}</Typography>
+          <Typography variant="h5">
+            Division/Conference: {info.conference} {info.division}
+          </Typography>
+          <Typography variant="h6">
+            Current Season Record: {info.wins}-{info.losses}-{info.ties}
+          </Typography>
         </Box>
       </Box>
     </ThemeProvider>

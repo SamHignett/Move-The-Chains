@@ -25,7 +25,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
             City = team.TeamCity,
             Conference = team.Conference,
             Division = team.Division,
-            Logo = team.NflComLogo1,
+            LogoURL = team.NflComLogo1,
             Name = team.Name,
             Wins = int.Parse(team.Wins),
             Losses = int.Parse(team.Losses),

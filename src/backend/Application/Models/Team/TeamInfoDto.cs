@@ -12,7 +12,7 @@ public class TeamInfoDto
 
     public string Division { get; set; }
 
-    public string Logo { get; set; }
+    public string LogoURL { get; set; }
 
     public int Wins { get; set; }
 

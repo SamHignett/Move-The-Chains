@@ -30,6 +30,7 @@ const eslintConfig = [
 
         rules: {
           "prettier/prettier": "warn",
+          "unicorn/prevent-abbreviations": "off",
           "unicorn/filename-case": [
             "error",
             {
