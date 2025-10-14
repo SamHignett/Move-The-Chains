@@ -40,6 +40,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(options =>
+{
+    var origins = builder.Configuration.GetSection("CORSSettings:AllowedOrigins").Get<string[]>();
+
+    if (origins != null)
+        options.WithOrigins(origins)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+});
+
+app.UseRouting();
 app.MapControllers();
 
 // Configure the HTTP request pipeline.
