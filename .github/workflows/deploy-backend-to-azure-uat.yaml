@@ -3,7 +3,7 @@
 on:
   pull_request:
     branches:
-      - live
+      - uat
 
 jobs:
   deploy:
