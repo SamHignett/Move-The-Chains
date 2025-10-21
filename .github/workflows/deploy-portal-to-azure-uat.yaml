@@ -19,6 +19,8 @@ jobs:
         with:
           app-directory: src/frontend
           node-version: 20
+        env:
+          NEXT_PUBLIC_API_URL: ${{ env.NEXT_PUBLIC_API_URL }}
           
       - name: Deploy Portal to Azure SWA - UAT
         uses: ./.github/actions/deploy-azure-swa
