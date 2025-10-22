@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "@movethechains/portal",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -9,25 +9,32 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pre-commit": "npx eslint src/ --fix --max-warnings 0"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.4",
+    "@mui/material": "^7.3.2",
+    "@tanstack/react-query": "^5.90.2",
+    "axios": "^1.12.2",
     "eslint-plugin-prettier": "^5.5.4",
-    "next": "15.5.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "next": "15.5.5",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20.19.13",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9.35.0",
-    "eslint-config-next": "15.5.2",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "eslint-plugin-unicorn": "^61.0.2",
     "tailwindcss": "^4",
     "typescript": "^5"

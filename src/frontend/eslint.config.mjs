@@ -29,15 +29,31 @@ const eslintConfig = [
         ],
 
         rules: {
-          "prettier/prettier": "warn", // 👈 surfaces prettier violations in ESLint
+          "prettier/prettier": "warn",
+          "unicorn/prevent-abbreviations": "off",
+          "unicorn/filename-case": [
+            "error",
+            {
+              "case": "pascalCase",
+              "ignore": [
+                "layout.tsx",
+                "page.tsx",
+                "error.tsx",
+                "loading.tsx",
+                "not-found.tsx",
+                "template.tsx",
+                "route.ts",
+                "middleware.ts",
+                "error.js",
+                "loading.js",
+                "not-found.js",
+                "template.js",
+                "route.js",
+                "middleware.js"
+              ]
+            }
+            ],
         },
-      
-      /*
-        rules: {
-            semi: "error",
-        }
-        
-       */
     },
 ];  
 

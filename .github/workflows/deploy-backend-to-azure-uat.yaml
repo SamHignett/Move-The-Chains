@@ -1,0 +1,31 @@
+﻿name: Deploy Backend to Azure WA - UAT
+
+on:
+  push:
+    branches: [ uat ]
+  pull_request:
+    branches: [ uat ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+        name: backend-uat
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Build Backend
+        uses: ./.github/actions/build-dotnet-app
+        with:
+          app-directory: src/backend
+          dotnet-version: '9.0.x'
+          
+      - name: Deploy Backend
+        uses: ./.github/actions/deploy-azure-wa
+        with:
+          target_env: backend-uat
+          package: build
+          webapp-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          app-directory: src/backend
