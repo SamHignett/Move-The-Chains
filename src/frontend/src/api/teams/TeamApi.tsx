@@ -6,6 +6,9 @@ import { useParams } from 'next/navigation';
 export function useTeamInfo(): UseQueryResult<TeamInfo> {
   const { teamName } = useParams<{ teamName: string }>();
 
+  if (!teamName)
+    throw new Error('Team name is required to fetch team information.');
+
   return useQuery({
     queryKey: ['teamInfo', teamName],
     queryFn: () =>
