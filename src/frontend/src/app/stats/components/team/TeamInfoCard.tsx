@@ -19,7 +19,7 @@ export type TeamInfoCardProps = {
   };
 };
 
-const TeamInfoCard: React.FC<TeamInfoCardProps> = ({ info }) => {
+export default function TeamInfoCard({ info }: TeamInfoCardProps) {
   const theme = createTheme({
     palette: {
       primary: {
@@ -77,6 +77,4 @@ const TeamInfoCard: React.FC<TeamInfoCardProps> = ({ info }) => {
       </Box>
     </ThemeProvider>
   );
-};
-
-export { TeamInfoCard };
+}

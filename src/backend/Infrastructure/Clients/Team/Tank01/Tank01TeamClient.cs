@@ -16,7 +16,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         if (teams == null || teams.Count == 0)
             throw new HttpRequestException("Failed to parse team data from response");
 
-        var team = teams.FirstOrDefault(x => x.Name == name);
+        var team = teams.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.CurrentCultureIgnoreCase));
         if (team == null)
             throw new HttpRequestException($"Team '{name}' not found");
         
