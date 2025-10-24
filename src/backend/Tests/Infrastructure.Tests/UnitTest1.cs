@@ -1,4 +1,4 @@
-namespace Application.Tests;
+namespace Infrastructure.Tests;
 
 public class UnitTest1
 {
