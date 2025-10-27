@@ -1,12 +1,20 @@
 ﻿namespace Domain.Entities;
 
-public class Player(int age, string position, string team, string name)
+public class Player()
 {
-    public string Name { get; private set; } = name;
+    public string Name { get; private set; }
 
-    public int Age { get; private set; } = age;
+    public int Age { get; private set; }
+    
+    public string Height { get; private set; }
+    
+    public int Weight { get; private set; }
+    
+    public string School { get; private set; }
+    
+    public string Team { get; private set; }
 
-    public string Team { get; private set; } = team;
-
-    public string Position { get; private set; } = position;
+    public string Position { get; private set; }
+    
+    public string HeadshotImageUrl { get; private set; }
 }
