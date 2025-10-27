@@ -14,7 +14,7 @@ describe('TeamInfoCard', () => {
     ties: 2,
   };
 
-  it('renders team information correctly', () => {
+  it('Renders team information correctly', () => {
     const { getByText, getByAltText } = render(
       <TeamInfoCard info={mockInfo} />,
     );
