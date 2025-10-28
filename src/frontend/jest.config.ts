@@ -5,6 +5,7 @@
 
 import type {Config} from 'jest'
 import nextJest from 'next/jest.js'
+import path from "node:path";
 
 const createJestConfig = nextJest({
   dir: `./`,
@@ -119,7 +120,13 @@ const config: Config = {
   // projects: undefined,
 
   // Use this configuration option to add custom reporters to Jest
-  // reporters: undefined,
+  reporters: [
+    "default",
+    ["jest-junit", {
+      outputDirectory: 'jest_reports',
+      outputName: 'jest-junit.xml'
+    }]
+  ],
 
   // Automatically reset mock state before every test
   // resetMocks: false,

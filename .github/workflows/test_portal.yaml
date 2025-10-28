@@ -1,0 +1,39 @@
+﻿name: Test Portal
+
+on:
+  pull_request:
+    branches:
+      - main
+      - uat
+      - live
+
+jobs:
+  test:
+    name: Run Portal Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      checks: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Install dependencies
+        run: npm install
+        working-directory: "src/frontend"
+        shell: bash
+
+      - name: Run Jest tests
+        run: npm run test
+        working-directory: "src/frontend"
+        shell: bash
+
+      - name: Publish Test Results
+        uses: dorny/test-reporter@v2
+        if: ${{ always() }}
+        with:
+          name: 'Portal JEST Tests'
+          path: src/frontend/jest_reports/*.xml
+          reporter: 'jest-junit'
