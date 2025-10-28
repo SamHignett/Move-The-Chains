@@ -7,5 +7,5 @@
   school: string;
   currentTeam: string;
   position: string;
-  headshotURL: string;
+  headshotImageUrl: string;
 };
