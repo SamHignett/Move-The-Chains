@@ -3,9 +3,14 @@ import { useParams } from 'next/navigation';
 import { usePlayerInfo } from '@/api/players/PlayerApi';
 import { renderHook, waitFor } from '@testing-library/react';
 import React from 'react';
+import { Axios } from '@/app/Axios';
 
 jest.mock('next/navigation', () => ({
   useParams: jest.fn(),
+}));
+
+jest.mock('@/app/Axios', () => ({
+  Axios: { get: jest.fn() },
 }));
 
 function createWrapper() {
@@ -29,30 +34,33 @@ describe('PlayerApi', () => {
     jest.resetAllMocks();
   });
 
-  it('Fetches Player info and returns data', async () => {
-    const expectedName = 'Jalen Hurts';
+  it('Gets Player info and returns data', async () => {
+    const expectedName = 'JalenHurts';
 
     (useParams as jest.Mock).mockReturnValue({ playerName: expectedName });
 
-    (globalThis as unknown as { fetch?: typeof fetch }).fetch = jest
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: () => Promise.resolve({ id: 1, name: expectedName }),
-      });
+    (Axios.get as jest.Mock).mockResolvedValue({
+      data: {
+        id: 1,
+        name: expectedName,
+      },
+    });
 
     const { result } = renderHook(() => usePlayerInfo(), {
       wrapper: createWrapper(),
     });
 
-    await waitFor(() => {
-      expect(result.current.isSuccess).toBe(true);
-    });
+    expect(Axios.get).toHaveBeenCalled();
+
+    await waitFor(
+      () => {
+        expect(result.current.isSuccess).toBe(true);
+      },
+      { timeout: 2000 },
+    );
 
     expect(result.current.data).toEqual({ id: 1, name: expectedName });
-    expect(
-      (globalThis as unknown as { fetch?: typeof fetch }).fetch,
-    ).toHaveBeenCalledWith(`api/player/${expectedName}/info`);
+    expect(Axios.get).toHaveBeenCalledWith(`api/player/${expectedName}/info`);
   });
 
   it('Throws when no playerName provided', () => {
