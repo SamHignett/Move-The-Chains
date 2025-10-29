@@ -1,6 +1,8 @@
 ﻿import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import React, { useCallback, useMemo } from 'react';
+import { debounce } from 'lodash';
 
 const SearchField = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -45,6 +47,24 @@ const SearchInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const Search: React.FC = () => {
+  const [search, setSearch] = React.useState<string>('');
+
+  const debounceSearchChange = useMemo(
+    () =>
+      debounce((value: string) => {
+        // Handle the debounced search query here
+        console.log('Debounced search query:', value);
+      }, 500),
+    [],
+  );
+
+  /*
+  const handleSearchChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
+    debounceSearchChange.(event.target.value);
+  }, [debounceSearchChange]);
+  */
+
   return (
     <SearchField>
       <SearchIconWrapper>
