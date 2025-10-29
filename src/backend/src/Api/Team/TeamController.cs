@@ -15,4 +15,12 @@ public class TeamController(IMediator mediator) : Controller
 
         return Ok(team);
     }
+
+    [HttpGet("search/{searchTerm}")]
+    public async Task<IActionResult> SearchTeams(string searchTerm)
+    {
+        var teams = await mediator.Send(new SearchTeams.Command(searchTerm));
+        
+        return Ok(teams);
+    }
 }

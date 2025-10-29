@@ -33,4 +33,35 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
 
         return teamDto;
     }
+
+    public async Task<TeamInfoDto[]> SearchTeams(string searchTerm)
+    {
+        using HttpResponseMessage response = await client.GetAsync($"getNFLTeams");
+        response.EnsureSuccessStatusCode();
+        
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+        if (teams == null || teams.Count == 0)
+            return [];
+
+        var matchingTeams = teams.Where(t => t.Name.Contains(searchTerm) || t.TeamCity.Contains(searchTerm));
+        var teamDtos = new List<TeamInfoDto>();
+        
+        foreach (var team in matchingTeams)
+        {
+            var teamDto = new TeamInfoDto
+            {
+                City = team.TeamCity,
+                Conference = team.Conference,
+                Division = team.Division,
+                LogoURL = team.NflComLogo1,
+                Name = team.Name,
+                Wins = int.Parse(team.Wins),
+                Losses = int.Parse(team.Losses),
+                Ties = int.Parse(team.Ties),
+            };
+            teamDtos.Add(teamDto);
+        }
+        
+        return teamDtos.ToArray();
+    }
 }
