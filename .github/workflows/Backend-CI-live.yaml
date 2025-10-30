@@ -1,0 +1,19 @@
+﻿name: Backend CI (Live)
+
+on:
+  push:
+    branches:
+      - feature/#108
+
+jobs:
+    build:
+      uses: ./.github/workflows/build-backend.yaml
+  
+    test:
+      permissions:
+        contents: read
+        issues: read
+        checks: write
+        pull-requests: write
+      uses: ./.github/workflows/test_backend.yaml
+      needs: build

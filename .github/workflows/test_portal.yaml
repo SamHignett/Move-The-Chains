@@ -1,6 +1,7 @@
 ﻿name: Test Portal
 
 on:
+  workflow_call: 
   pull_request:
     branches:
       - main

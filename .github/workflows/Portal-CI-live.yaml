@@ -1,0 +1,19 @@
+﻿name: Test/Build (Live)
+
+on:
+  push:
+    branches:
+      - feature/#108
+
+jobs:
+    build:
+      uses: ./.github/workflows/build-portal.yaml
+  
+    test:
+      permissions:
+        contents: read
+        issues: read
+        checks: write
+        pull-requests: write
+      uses: ./.github/workflows/test_portal.yaml
+      needs: build
