@@ -1,7 +1,7 @@
 ﻿'use client';
 
-import { usePlayerInfo } from '@/api/players/PlayerApi';
-import PlayerInfoCard from '@/app/stats/components/player/PlayerInfoCard';
+import { usePlayerInfo } from '@/features/player/hooks/playerInfo/usePlayerInfo';
+import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
 
 export default function PlayerStatsPage() {
   const { data: playerInfo, isLoading, error } = usePlayerInfo();

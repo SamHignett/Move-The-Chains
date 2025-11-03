@@ -1,8 +1,8 @@
 ﻿'use client';
 
 import React from 'react';
-import { useTeamInfo } from '@/api/teams/TeamApi';
-import TeamInfoCard from '@/app/stats/components/team/TeamInfoCard';
+import { useTeamInfo } from '@/features/teams/hooks/teamInfo/useTeamInfo';
+import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
 
 export default function TeamStatsPage() {
   const { data: teamInfo, isLoading, error } = useTeamInfo();
