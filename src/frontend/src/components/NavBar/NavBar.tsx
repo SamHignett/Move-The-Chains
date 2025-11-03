@@ -5,7 +5,7 @@ import { SportsFootball } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box } from '@mui/system';
 import React from 'react';
-import { Search } from '@/app/components/search/Search';
+import { Search } from '@/components/Search/Search';
 
 const NavBar: React.FC = () => {
   const pages = ['Stats', 'Predictions'];

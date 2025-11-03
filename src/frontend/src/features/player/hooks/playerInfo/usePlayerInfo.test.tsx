@@ -1,6 +1,6 @@
 ﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { usePlayerInfo } from '@/api/players/PlayerApi';
+import { usePlayerInfo } from '@/features/player/hooks/playerInfo/usePlayerInfo';
 import { renderHook, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Axios } from '@/app/Axios';

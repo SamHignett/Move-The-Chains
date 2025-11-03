@@ -1,7 +1,20 @@
-﻿import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { PlayerInfo } from '@/api/players/responses/PlayerInfo';
+﻿'use client';
+
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { Axios } from '@/app/Axios';
+
+export type PlayerInfo = {
+  id: string;
+  name: string;
+  age: number;
+  height: string;
+  weight: number;
+  school: string;
+  currentTeam: string;
+  position: string;
+  headshotImageUrl: string;
+};
 
 export function usePlayerInfo(): UseQueryResult<PlayerInfo> {
   const { playerName } = useParams<{ playerName: string }>();

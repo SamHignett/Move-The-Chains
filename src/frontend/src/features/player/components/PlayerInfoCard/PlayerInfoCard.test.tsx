@@ -1,6 +1,6 @@
 ﻿import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import PlayerInfoCard from '@/app/stats/components/player/PlayerInfoCard';
+import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
 
 describe('PlayerInfoCard', () => {
   const mockInfo = {
