@@ -58,16 +58,6 @@ export default function Search() {
 
   const router = useRouter();
 
-  if (search.length > 0) {
-    if (players.length > 0) console.log(players);
-    else console.log(`No players found for search term "${search}"`);
-  }
-
-  if (search.length > 0) {
-    if (teams.length > 0) console.log(teams);
-    else console.log(`No teams found for search term "${search}"`);
-  }
-
   const debounceSearchChange = useMemo(
     () =>
       debounce((value: string) => {
@@ -80,7 +70,7 @@ export default function Search() {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setInput(value);
-      debounceSearchChange(event.target.value);
+      debounceSearchChange(value);
     },
     [debounceSearchChange],
   );
@@ -89,16 +79,22 @@ export default function Search() {
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {
         if (players.length > 0) {
-          const url: string = `/stats/player/${players[0].name}`;
+          const url: string = `/stats/player/${encodeURIComponent(players[0].name.replaceAll(' ', ''))}`;
           router.push(url);
         } else if (teams.length > 0) {
-          const url: string = `/stats/teams/${teams[0].name}`;
+          const url: string = `/stats/teams/${encodeURIComponent(teams[0].name.replaceAll(' ', ''))}`;
           router.push(url);
         }
       }
     },
     [players, teams, router],
   );
+
+  React.useEffect(() => {
+    return () => {
+      debounceSearchChange.cancel();
+    };
+  }, [debounceSearchChange]);
 
   return (
     <SearchField>

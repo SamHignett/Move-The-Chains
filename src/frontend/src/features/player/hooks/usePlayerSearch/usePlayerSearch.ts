@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { PlayerInfo } from '@/features/player/types';
+import { PlayerInfo } from '@/features/player/Types';
 import { Axios } from '@/app/Axios';
 export function usePlayerSearch(
   searchTerm: string,

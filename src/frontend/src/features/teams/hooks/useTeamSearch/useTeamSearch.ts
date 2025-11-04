@@ -2,7 +2,7 @@
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { Axios } from '@/app/Axios';
-import { TeamInfo } from '@/features/teams/types';
+import { TeamInfo } from '@/features/teams/Types';
 
 export function useTeamSearch(searchTerm: string): UseQueryResult<TeamInfo[]> {
   return useQuery({

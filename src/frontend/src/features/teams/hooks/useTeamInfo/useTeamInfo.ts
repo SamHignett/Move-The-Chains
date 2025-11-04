@@ -3,7 +3,7 @@
 import { Axios } from '@/app/Axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
-import { TeamInfo } from '@/features/teams/types';
+import { TeamInfo } from '@/features/teams/Types';
 
 export function useTeamInfo(): UseQueryResult<TeamInfo> {
   const { teamName } = useParams<{ teamName: string }>();

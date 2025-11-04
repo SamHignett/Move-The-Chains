@@ -43,24 +43,21 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         if (teams == null || teams.Count == 0)
             return [];
 
-        var matchingTeams = teams.Where(t => t.Name.Contains(searchTerm) || t.TeamCity.Contains(searchTerm));
-        var teamDtos = new List<TeamInfoDto>();
-        
-        foreach (var team in matchingTeams)
+        var matchingTeams = teams.Where(t => 
+            t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+
+        var teamDtos = matchingTeams.Select(t => new TeamInfoDto()
         {
-            var teamDto = new TeamInfoDto
-            {
-                City = team.TeamCity,
-                Conference = team.Conference,
-                Division = team.Division,
-                LogoURL = team.NflComLogo1,
-                Name = team.Name,
-                Wins = int.Parse(team.Wins),
-                Losses = int.Parse(team.Losses),
-                Ties = int.Parse(team.Ties),
-            };
-            teamDtos.Add(teamDto);
-        }
+            City = t.TeamCity,
+            Conference = t.Conference,
+            Division = t.Division,
+            LogoURL = t.NflComLogo1,
+            Name = t.Name,
+            Wins = int.Parse(t.Wins),
+            Losses = int.Parse(t.Losses),
+            Ties = int.Parse(t.Ties),
+        });
         
         return teamDtos.ToArray();
     }

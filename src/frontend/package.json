@@ -10,7 +10,7 @@
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "pre-commit": "npx eslint src/ --fix",
+    "pre-commit": "npx eslint src/ --fix --max-warnings 0",
     "test": "jest"
   },
   "dependencies": {

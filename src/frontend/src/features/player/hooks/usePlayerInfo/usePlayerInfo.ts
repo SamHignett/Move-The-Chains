@@ -3,7 +3,7 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import { Axios } from '@/app/Axios';
-import { PlayerInfo } from '@/features/player/types';
+import { PlayerInfo } from '@/features/player/Types';
 
 export function usePlayerInfo(): UseQueryResult<PlayerInfo> {
   const { playerName } = useParams<{ playerName: string }>();
