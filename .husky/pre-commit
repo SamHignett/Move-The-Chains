@@ -10,3 +10,5 @@ for project in src/*; do
   fi
   echo ""
 done
+
+git add -u 

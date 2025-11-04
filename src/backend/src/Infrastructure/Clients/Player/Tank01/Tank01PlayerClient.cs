@@ -32,4 +32,31 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
 
         return playerDto;
     }
+
+    public async Task<PlayerInfoDto[]> SearchPlayers(string name)
+    {
+        var url = $"getNFLPlayerInfo?playerName={Uri.EscapeDataString(name)}";
+        
+        using HttpResponseMessage response = await client.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        var players = JsonSerializer.Deserialize<Tank01PlayerSearchResponse>(await response.Content.ReadAsStringAsync())?.Body;
+
+        if (players == null || players.Count == 0)
+            return [];
+
+        var playerDtos = players.Select(p => new PlayerInfoDto()
+        {
+            Name = p.PlayerName,
+            Age = int.TryParse(p.Age, out var age) ? age : 0,
+            Height = p.Height,
+            Weight = p.Weight,
+            School = p.School,
+            CurrentTeam = p.Team,
+            Position = p.Position,
+            HeadshotImageUrl = p.HeadshotImageUrl
+        });
+        
+        return playerDtos.ToArray();
+    }
 }

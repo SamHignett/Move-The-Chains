@@ -5,4 +5,6 @@ namespace Application.Interfaces;
 public interface ITeamClient
 {
     Task<TeamInfoDto> GetTeamInfo(string name);
+    
+    Task<TeamInfoDto[]> SearchTeams(string searchTerm);
 }
