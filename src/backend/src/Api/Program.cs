@@ -5,6 +5,7 @@ using Application.Interfaces;
 using Azure.Identity;
 using Infrastructure.Clients.Player.Tank01;
 using Infrastructure.Clients.Team.Tank01;
+using Infrastructure.Handlers;
 using Infrastructure.Registry;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,15 +37,19 @@ builder.Services.ApplicationRegistry();
 
 builder.Services.AddControllers();
 
+builder.Services.AddMemoryCache();
+
+builder.Services.AddTransient<CachingHandler>();
+
 builder.Services.AddHttpClient<ITeamClient, Tank01TeamClient>(client =>
 {
     client.BaseAddress = new Uri("https://tank01-nfl-live-in-game-real-time-statistics-nfl.p.rapidapi.com");
 
     var appKey = builder.Configuration["Tank01:ApplicationKey"];
-    
+
     if (!string.IsNullOrEmpty(appKey))
         client.DefaultRequestHeaders.Add("x-rapidapi-key", appKey);
-});
+}).AddHttpMessageHandler<CachingHandler>();
 
 builder.Services.AddHttpClient<IPlayerClient, Tank01PlayerClient>(client =>
 {
@@ -54,7 +59,8 @@ builder.Services.AddHttpClient<IPlayerClient, Tank01PlayerClient>(client =>
     
     if (!string.IsNullOrEmpty(appKey))
         client.DefaultRequestHeaders.Add("x-rapidapi-key", appKey);
-});
+}).AddHttpMessageHandler<CachingHandler>();
+
 
 builder.Services.AddCors(options =>
 {
