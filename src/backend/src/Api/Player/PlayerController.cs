@@ -17,7 +17,7 @@ public class PlayerController(IMediator mediator): Controller
     }
 
     [HttpGet("search/{searchTerm}")]
-    public async Task<IActionResult> SearchTeams(string searchTerm)
+    public async Task<IActionResult> SearchPlayers(string searchTerm)
     {
         var matchingPlayers = await mediator.Send(new SearchPlayers.Command(searchTerm));
         
