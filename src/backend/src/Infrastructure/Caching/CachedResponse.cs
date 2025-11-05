@@ -2,63 +2,39 @@
 
 namespace Infrastructure.Caching;
 
-class CachedResponse : HttpContent
+internal class CachedResponse(
+    byte[] content,
+    Dictionary<string, IEnumerable<string>> contentHeaders,
+    Version version,
+    HttpStatusCode statusCode,
+    Dictionary<string, IEnumerable<string>> responseHeaders)
 {
-    private readonly byte[] buffer;
-
-    class CachedResponseMemoryStream(byte[] buffer) : MemoryStream(buffer)
+    public static async Task<CachedResponse> CreateAsync(HttpResponseMessage response)
     {
-        private void Reset()
+        var buffer = await response.Content.ReadAsByteArrayAsync();
+        
+        var responseHeaders = response.Headers.ToDictionary(h => h.Key, h => h.Value);
+        
+        var contentHeaders = response.Content.Headers.ToDictionary(h => h.Key, h => h.Value);
+        
+        return new CachedResponse(buffer, contentHeaders, response.Version, response.StatusCode, responseHeaders);
+    }
+
+    public HttpResponseMessage ToHttpResponseMessage()
+    {
+        var res = new HttpResponseMessage()
         {
-            Position = 0;
-        }
+            Content = new ByteArrayContent(content),
+            Version = version,
+            StatusCode = statusCode,
+        };
+        
+        foreach (var (key, value) in responseHeaders)
+            res.Headers.TryAddWithoutValidation(key, value);
+        
+        foreach (var (key, value) in contentHeaders)
+            res.Content.Headers.TryAddWithoutValidation(key, value);
 
-        protected override void Dispose(bool disposing)
-        {
-            Reset();
-        }
-
-        public override ValueTask DisposeAsync()
-        {
-            Reset();
-            return ValueTask.CompletedTask;
-        }
-    }
-
-    public CachedResponse(HttpContent content)
-    {
-        ArgumentNullException.ThrowIfNull(content, nameof(content));
-
-        buffer = content.ReadAsByteArrayAsync().ConfigureAwait(false).GetAwaiter().GetResult();
-
-        foreach (var headers in content.Headers)
-        {
-            Headers.TryAddWithoutValidation(headers.Key, headers.Value);
-        }
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-    }
-
-    protected async Task CopyToStreamAsync(Stream stream)
-    {
-        await stream.WriteAsync(buffer, 0, buffer.Length);
-    }
-
-    protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context)
-    {
-        await CopyToStreamAsync(stream);
-    }
-
-    protected override bool TryComputeLength(out long length)
-    {
-        length = buffer.Length;
-        return true;
-    }
-
-    protected override Task<Stream> CreateContentReadStreamAsync()
-    {
-        return Task.FromResult<Stream>(new CachedResponseMemoryStream(buffer));
+        return res;
     }
 }

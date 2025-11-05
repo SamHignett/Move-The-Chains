@@ -7,7 +7,6 @@ using Infrastructure.Clients.Player.Tank01;
 using Infrastructure.Clients.Team.Tank01;
 using Infrastructure.Handlers;
 using Infrastructure.Registry;
-using Microsoft.AspNetCore.ResponseCaching;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +36,6 @@ builder.Services.ApiRegistry();
 builder.Services.ApplicationRegistry();
 
 builder.Services.AddControllers();
-
-builder.Services.AddLogging(options => options.AddConsole());
 
 builder.Services.AddMemoryCache();
 
