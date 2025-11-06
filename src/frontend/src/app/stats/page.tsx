@@ -7,15 +7,15 @@ export default function StatsHomePage() {
       <Typography
         variant="h1"
         sx={{
+          alignItems: 'center',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
           paddingTop: '20%',
         }}
       >
         Under Construction
         <ConstructionIcon
-          style={{
+          sx={{
             fontSize: 90,
           }}
         />
