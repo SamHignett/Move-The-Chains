@@ -8,10 +8,9 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
 {
     public async Task<TeamInfoDto> GetTeamInfo(string name)
     {
-        using HttpResponseMessage response = await client.GetAsync($"getNFLTeams");
-        response.EnsureSuccessStatusCode();
+        var teamsResponse = await GetTeams();
         
-        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
         if (teams == null || teams.Count == 0)
             throw new HttpRequestException("Failed to parse team data from response");
 
@@ -34,18 +33,17 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         return teamDto;
     }
 
-    public async Task<TeamInfoDto[]> SearchTeams(string searchTerm)
+    //TODO: Converty sorting to take enum & convert to string (avoid using specific Third-party in interface)
+    public async Task<TeamInfoDto[]> GetTeams(string name, string sortBy)
     {
-        using HttpResponseMessage response = await client.GetAsync($"getNFLTeams");
-        response.EnsureSuccessStatusCode();
+        var teamsResponse = await GetTeams(string.IsNullOrEmpty(sortBy) ? "" : $"?sortBy={sortBy}");
         
-        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
         if (teams == null || teams.Count == 0)
             return [];
 
         var matchingTeams = teams.Where(t => 
-            t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
-
+            t.Name.Contains(name, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(name, StringComparison.OrdinalIgnoreCase));
 
         var teamDtos = matchingTeams.Select(t => new TeamInfoDto()
         {
@@ -60,5 +58,13 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         });
         
         return teamDtos.ToArray();
+    }
+
+    private async Task<HttpResponseMessage> GetTeams(string parameters = "")
+    {
+        HttpResponseMessage response = await client.GetAsync($"getNFLTeams{parameters}");
+        response.EnsureSuccessStatusCode();
+
+        return response;
     }
 }
