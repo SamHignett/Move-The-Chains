@@ -12,11 +12,11 @@ export function usePlayerInfo(): UseQueryResult<PlayerInfo> {
     throw new Error('Player name is required to fetch player information.');
 
   return useQuery({
-    queryKey: ['playerInfo', playerName],
     queryFn: () =>
       Axios.get(`api/player/${playerName}/info`).then(
         (response) => response.data,
       ),
+    queryKey: ['playerInfo', playerName],
     staleTime: 1000 * 60 * 5,
   });
 }

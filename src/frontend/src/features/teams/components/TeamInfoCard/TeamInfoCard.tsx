@@ -23,8 +23,8 @@ export default function TeamInfoCard({ info }: TeamInfoCardProps) {
   const theme = createTheme({
     palette: {
       primary: {
-        main: '#004953',
         dark: `#002b30`,
+        main: '#004953',
       },
     },
   });
@@ -33,17 +33,17 @@ export default function TeamInfoCard({ info }: TeamInfoCardProps) {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          width: {
-            xs: '100%',
-            sm: '75%',
-            md: '50%',
-          },
-          padding: 1,
-          margin: `auto`,
-          bgcolor: 'primary.main',
-          flexDirection: 'row',
-          display: 'flex',
           alignItems: 'flex-start',
+          bgcolor: 'primary.main',
+          display: 'flex',
+          flexDirection: 'row',
+          margin: `auto`,
+          padding: 1,
+          width: {
+            md: '50%',
+            sm: '75%',
+            xs: '100%',
+          },
         }}
       >
         <Box
@@ -51,10 +51,10 @@ export default function TeamInfoCard({ info }: TeamInfoCardProps) {
           src={info.logoURL}
           alt="Logo"
           sx={{
-            width: 150,
-            height: 150,
-            display: { xs: 'none', sm: 'block' },
+            display: { sm: 'block', xs: 'none' },
             flexShrink: 0,
+            height: 150,
+            width: 150,
           }}
         />
         <Box

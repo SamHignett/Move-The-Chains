@@ -6,12 +6,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Box } from '@mui/system';
 import React from 'react';
 import Search from '@/components/Search/Search';
+import { useRouter } from 'next/navigation';
 
 const NavBar: React.FC = () => {
-  const pages = ['Stats', 'Predictions'];
+  const pages = ['stats', 'predictions'];
+
+  const router = useRouter();
 
   return (
-    <div suppressHydrationWarning>
+    <div>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -23,28 +26,31 @@ const NavBar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <SportsFootball sx={{ display: { xs: `none`, md: `flex` }, mr: 1 }} />
+          <SportsFootball sx={{ display: { md: `flex`, xs: `none` }, mr: 1 }} />
           <Typography
-            variant="h5"
+            variant="button"
             noWrap
             component="a"
+            onClick={() => {
+              router.push(`/`);
+            }}
             sx={{
-              mr: 2,
-              display: { xs: `none`, md: `flex` },
-              fontFamily: `monospace`,
-              fontWeight: 500,
-              letterSpacing: `.2rem`,
               color: `inherit`,
+              display: { md: `flex`, xs: `none` },
+              mr: 2,
               textDecoration: `none`,
             }}
           >
             Move The Chains
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: `none`, md: `flex` } }}>
+          <Box sx={{ display: { md: `flex`, xs: `none` }, flexGrow: 1 }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: `white`, display: `block` }}
+                sx={{ color: `white`, display: `block`, my: 2 }}
+                onClick={() => {
+                  router.push(`/${page}`);
+                }}
               >
                 {page}
               </Button>

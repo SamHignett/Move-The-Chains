@@ -3,6 +3,7 @@ import {fileURLToPath} from "node:url";
 import {FlatCompat} from "@eslint/eslintrc";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import eslintPluginPrettier from "eslint-plugin-prettier";
+import perfectionist from "eslint-plugin-perfectionist";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +19,8 @@ const eslintConfig = [
 
   {
     plugins: {
-      prettier: eslintPluginPrettier, // 👈 register the plugin
+      prettier: eslintPluginPrettier,
+      perfectionist
     },
 
     ignores: [
@@ -30,6 +32,7 @@ const eslintConfig = [
     ],
 
     rules: {
+      "perfectionist/sort-objects": "error",
       "prettier/prettier": "warn",
       "unicorn/prevent-abbreviations": "off",
       "unicorn/filename-case": [
