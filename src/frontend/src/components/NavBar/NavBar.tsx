@@ -26,7 +26,7 @@ const NavBar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <SportsFootball sx={{ display: { xs: `none`, md: `flex` }, mr: 1 }} />
+          <SportsFootball sx={{ display: { md: `flex`, xs: `none` }, mr: 1 }} />
           <Typography
             variant="button"
             noWrap
@@ -35,19 +35,19 @@ const NavBar: React.FC = () => {
               router.push(`/`);
             }}
             sx={{
-              mr: 2,
-              display: { xs: `none`, md: `flex` },
               color: `inherit`,
+              display: { md: `flex`, xs: `none` },
+              mr: 2,
               textDecoration: `none`,
             }}
           >
             Move The Chains
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: `none`, md: `flex` } }}>
+          <Box sx={{ display: { md: `flex`, xs: `none` }, flexGrow: 1 }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ my: 2, color: `white`, display: `block` }}
+                sx={{ color: `white`, display: `block`, my: 2 }}
                 onClick={() => {
                   router.push(`/${page}`);
                 }}

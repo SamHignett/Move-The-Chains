@@ -6,12 +6,12 @@ import { TeamInfo } from '@/features/teams/Types';
 
 export function useTeamSearch(searchTerm: string): UseQueryResult<TeamInfo[]> {
   return useQuery({
-    queryKey: ['useTeamSearch', searchTerm],
+    enabled: Boolean(searchTerm),
     queryFn: () =>
       Axios.get(`api/team/search/${searchTerm}`).then(
         (response) => response.data,
       ),
+    queryKey: ['useTeamSearch', searchTerm],
     staleTime: 1000 * 60 * 10,
-    enabled: Boolean(searchTerm),
   });
 }

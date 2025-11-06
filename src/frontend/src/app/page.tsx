@@ -22,9 +22,9 @@ export default function Home() {
       </Typography>
       <Box
         sx={{
+          alignItems: 'center',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
         }}
       >
         <Typography variant="h3">Under Construction</Typography>

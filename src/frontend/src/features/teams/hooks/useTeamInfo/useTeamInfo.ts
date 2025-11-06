@@ -12,9 +12,9 @@ export function useTeamInfo(): UseQueryResult<TeamInfo> {
     throw new Error('Team name is required to fetch team information.');
 
   return useQuery({
-    queryKey: ['teamInfo', teamName],
     queryFn: () =>
       Axios.get(`api/team/${teamName}/info`).then((response) => response.data),
+    queryKey: ['teamInfo', teamName],
     staleTime: 1000 * 60 * 5,
   });
 }

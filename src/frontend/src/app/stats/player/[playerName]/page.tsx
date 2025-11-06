@@ -4,7 +4,7 @@ import { usePlayerInfo } from '@/features/player/hooks/usePlayerInfo/usePlayerIn
 import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
 
 export default function PlayerStatsPage() {
-  const { data: playerInfo, isLoading, error } = usePlayerInfo();
+  const { data: playerInfo, error, isLoading } = usePlayerInfo();
 
   if (isLoading) {
     return <div>Loading...</div>;

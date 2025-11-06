@@ -4,18 +4,18 @@ import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard'
 
 describe('TeamInfoCard', () => {
   const mockInfo = {
-    name: 'Mock Team',
-    logoURL: 'https://via.placeholder.com/150',
     city: 'Mock City',
     conference: 'Mock Conference',
     division: 'Mock Division',
-    wins: 10,
+    logoURL: 'https://via.placeholder.com/150',
     losses: 5,
+    name: 'Mock Team',
     ties: 2,
+    wins: 10,
   };
 
   it('Renders team information correctly', () => {
-    const { getByText, getByAltText } = render(
+    const { getByAltText, getByText } = render(
       <TeamInfoCard info={mockInfo} />,
     );
 

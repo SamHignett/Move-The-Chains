@@ -7,12 +7,12 @@ export function usePlayerSearch(
   searchTerm: string,
 ): UseQueryResult<PlayerInfo[]> {
   return useQuery({
-    queryKey: ['usePlayerSearch', searchTerm],
+    enabled: Boolean(searchTerm),
     queryFn: () =>
       Axios.get(`api/player/search/${searchTerm}`).then(
         (response) => response.data,
       ),
+    queryKey: ['usePlayerSearch', searchTerm],
     staleTime: 1000 * 60 * 5,
-    enabled: Boolean(searchTerm),
   });
 }

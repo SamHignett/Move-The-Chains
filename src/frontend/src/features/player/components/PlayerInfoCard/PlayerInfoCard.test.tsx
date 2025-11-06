@@ -4,19 +4,19 @@ import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerIn
 
 describe('PlayerInfoCard', () => {
   const mockInfo = {
+    age: 25,
+    currentTeam: 'Mock Team',
+    headshotImageUrl: 'https://via.placeholder.com/100',
+    height: '6 ft 2 in',
     id: '1',
     name: 'Mock Player',
-    age: 25,
-    height: '6 ft 2 in',
-    weight: 210,
-    school: 'Mock University',
-    currentTeam: 'Mock Team',
     position: 'Mock Position',
-    headshotImageUrl: 'https://via.placeholder.com/100',
+    school: 'Mock University',
+    weight: 210,
   };
 
   it('Renders player information correctly', () => {
-    const { getByText, getByAltText } = render(
+    const { getByAltText, getByText } = render(
       <PlayerInfoCard info={mockInfo} />,
     );
 
