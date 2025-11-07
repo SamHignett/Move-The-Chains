@@ -27,5 +27,14 @@ namespace Infrastructure.Clients.Team.Tank01
 
         [JsonPropertyName("tie")]
         public string Ties { get; set; }
+        
+        [JsonPropertyName("pf")]
+        public string PointsFor { get; set; }
+    
+        [JsonPropertyName("pa")]
+        public string PointsAgainst { get; set; }
+        
+        [JsonPropertyName("teamStats")]
+        public Tank01TeamStats TeamStats { get; set; }
     }
 }

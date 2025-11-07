@@ -7,4 +7,6 @@ public interface ITeamClient
     Task<TeamInfoDto> GetTeamInfo(string name);
     
     Task<TeamInfoDto[]> GetTeams(string name, string sortBy);
+    
+    Task<TeamStatsDto[]> GetTeamStats(string name);
 }

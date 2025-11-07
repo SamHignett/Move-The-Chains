@@ -6,38 +6,25 @@ import { TeamInfo } from '@/features/teams/Types';
 
 export function useTeamSearch(options: {
   searchTerm?: string;
-  sortby?: string;
+  sortBy?: string;
 }): UseQueryResult<TeamInfo[]> {
-  let url = 'api/team/search';
-  let firstParamAdded = false;
+  const baseUrl = 'api/team/search';
 
-  //TODO: Refactor to use URLSearchParams
-  if (options.searchTerm || options.sortby) {
-    url += '?';
+  const params = new URLSearchParams();
+
+  if (options?.searchTerm) {
+    params.append('searchTerm', options.searchTerm);
   }
 
-  if (options.searchTerm) {
-    if (firstParamAdded) {
-      url += '&';
-    } else {
-      firstParamAdded = true;
-    }
-
-    url += `searchTerm=${options.searchTerm}`;
+  if (options?.sortBy) {
+    params.append('sortBy', options.sortBy);
   }
 
-  if (options.sortby) {
-    if (firstParamAdded) {
-      url += '&';
-    } else {
-      firstParamAdded = true;
-    }
-    url += `sortBy=${options.sortby}`;
-  }
+  const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
   return useQuery({
     queryFn: () => Axios.get(url).then((response) => response.data),
-    queryKey: ['useTeamSearch', options.searchTerm, options.sortby],
+    queryKey: ['useTeamSearch', options.searchTerm, options.sortBy],
     staleTime: 1000 * 60 * 10,
   });
 }
