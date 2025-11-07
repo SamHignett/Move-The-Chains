@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
+using System.Web;
 using Application.Interfaces;
 using Application.Models.Team;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infrastructure.Clients.Team.Tank01;
 
@@ -34,9 +36,14 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
     }
 
     //TODO: Converty sorting to take enum & convert to string (avoid using specific Third-party in interface)
-    public async Task<TeamInfoDto[]> GetTeams(string name, string sortBy)
+    public async Task<TeamInfoDto[]> GetTeams(string name, string sortBy = "")
     {
-        var teamsResponse = await GetTeams(string.IsNullOrEmpty(sortBy) ? "" : $"?sortBy={sortBy}");
+        var parameters = new Dictionary<string, string>
+        {
+            { $"{nameof(sortBy)}", sortBy }
+        };
+        
+        var teamsResponse = await GetTeams(parameters);
         
         var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
         if (teams == null || teams.Count == 0)
@@ -45,24 +52,55 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         var matchingTeams = teams.Where(t => 
             t.Name.Contains(name, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(name, StringComparison.OrdinalIgnoreCase));
 
-        var teamDtos = matchingTeams.Select(t => new TeamInfoDto()
-        {
-            City = t.TeamCity,
-            Conference = t.Conference,
-            Division = t.Division,
-            LogoURL = t.NflComLogo1,
-            Name = t.Name,
-            Wins = int.Parse(t.Wins),
-            Losses = int.Parse(t.Losses),
-            Ties = int.Parse(t.Ties),
-        });
+        var teamDtos= matchingTeams.Select(t => t.ToTeamInfoDto());
         
         return teamDtos.ToArray();
     }
 
-    private async Task<HttpResponseMessage> GetTeams(string parameters = "")
+    public async Task<TeamStatsDto[]> GetTeamStats(string name)
     {
-        HttpResponseMessage response = await client.GetAsync($"getNFLTeams{parameters}");
+        var query = new Dictionary<string, string>
+        {
+            { "teamStats", "true" }
+        };
+        
+        var teamsResponse = await GetTeams(query);
+        
+        var teamsStats = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
+        if (teamsStats == null || teamsStats.Count == 0)
+            return [];
+        
+        var matchingTeams = teamsStats.Where(t => 
+            t.Name.Contains(name, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(name, StringComparison.OrdinalIgnoreCase));
+
+        var teamStatsDtos = matchingTeams.Select(t => t.ToTeamStatsDto());
+        
+        return teamStatsDtos.ToArray();
+    }
+
+    private async Task<HttpResponseMessage> GetTeams(Dictionary<string, string>? parameters = null)
+    {
+        var uri = "getNFLTeams";
+        
+        var builder = new UriBuilder(uri)
+        {
+            Port = -1
+        };
+
+        if (parameters != null)
+        {
+            var query = HttpUtility.ParseQueryString(builder.Query);
+            foreach (var parameter in parameters)
+            {
+                if (!string.IsNullOrEmpty(parameter.Value))
+                    query[parameter.Key] = parameter.Value;
+            }
+            
+            builder.Query = query.ToString();
+            uri = QueryHelpers.AddQueryString(uri, parameters);
+        }
+        
+        HttpResponseMessage response = await client.GetAsync($"{uri}");
         response.EnsureSuccessStatusCode();
 
         return response;

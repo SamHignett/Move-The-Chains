@@ -1,7 +1,7 @@
 ﻿import { Box, Typography, Grid } from '@mui/material';
 import { Fragment } from 'react';
 
-export type TeamDivisionTableProps = {
+export type TeamDivisionGridProps = {
   divisionName: string;
   teams: Array<{
     name: string;
@@ -14,18 +14,18 @@ export type TeamDivisionTableProps = {
   }>;
 };
 
-export default function TeamDivisionTable({
+export default function TeamDivisionGrid({
   divisionName,
   teams,
-}: TeamDivisionTableProps) {
+}: TeamDivisionGridProps) {
   if (teams.length === 0) {
     return <div>No Teams in this Division</div>;
   }
 
-  if (teams.length > 1) {
-    const division = teams[0].division;
-    const conference = teams[0].conference;
+  const division = teams[0].division;
+  const conference = teams[0].conference;
 
+  if (teams.length > 1) {
     for (const team of teams) {
       if (team.division != division || team.conference != conference) {
         return <div>Mis-matched team</div>;
@@ -53,7 +53,7 @@ export default function TeamDivisionTable({
                 justifyContent: 'center',
               }}
             >
-              {divisionName}
+              {conference} {divisionName}
             </Typography>
           </Grid>
           {teams.map((team) => (
