@@ -2,7 +2,7 @@
 
 import { Typography } from '@mui/material';
 import LeagueTableGrid from '@/features/teams/components/LeagueTableGrid/LeagueTableGrid';
-import TopTeamStatsCard from '@/features/teams/components/TopTeamStatsCard/TopTeamStatsCard';
+import TopTeamStatsGrid from '@/features/teams/components/TopTeamStatsGrid/TopTeamStatsGrid';
 
 export default function StatsHomePage() {
   return (
@@ -17,9 +17,8 @@ export default function StatsHomePage() {
       >
         Stats
       </Typography>
-
       <LeagueTableGrid />
-      <TopTeamStatsCard />
+      <TopTeamStatsGrid />
     </div>
   );
 }

@@ -24,6 +24,7 @@ public static class Tank01TeamMapper
         return new TeamStatsDto
         {
             Name = dto.Name,
+            LogoURL = dto.NflComLogo1,
             PointsFor = dto.PointsFor,
             PointsAgainst = dto.PointsAgainst,
             Offensive = ToTeamOffensiveStatsDto(dto),
@@ -39,8 +40,7 @@ public static class Tank01TeamMapper
             Rushing = ToTeamRushingStatsDto(dto),
             Kicking = ToTeamKickingStatsDto(dto),
             Punting = ToTeamPuntingStatsDto(dto),
-            Fumbles = int.Parse(dto.TeamStats.Defensive.Fumbles),
-            FumblesLost = int.Parse(dto.TeamStats.Defensive.FumblesLost)
+            Fumbling = ToTeamFumblingStatsDto(dto),
         };
     }
 
@@ -91,6 +91,16 @@ public static class Tank01TeamMapper
         };
     }
 
+    private static TeamFumblingStats ToTeamFumblingStatsDto(this Tank01TeamDto dto)
+    {
+        return new TeamFumblingStats
+        {
+            Fumbles = int.Parse(dto.TeamStats.Defensive.Fumbles),
+            FumblesLost = int.Parse(dto.TeamStats.Defensive.FumblesLost),
+            FumblesRecovered = int.Parse(dto.TeamStats.Defensive.FumblesRecovered),
+        };
+    }
+    
     private static TeamDefensiveStats ToTeamDefensiveStatsDto(this Tank01TeamDto dto)
     {
         return new TeamDefensiveStats

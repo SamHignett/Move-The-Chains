@@ -49,11 +49,13 @@ export default function TeamDivisionGrid({
             <Typography
               variant="h4"
               sx={{
+                borderBottom: 4,
+                borderColor: '#000000',
                 display: 'flex',
                 justifyContent: 'center',
               }}
             >
-              {conference} {divisionName}
+              {conference} - {divisionName}
             </Typography>
           </Grid>
           {teams.map((team) => (

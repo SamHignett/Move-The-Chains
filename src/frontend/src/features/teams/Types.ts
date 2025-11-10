@@ -12,6 +12,7 @@
 
 export type TeamStats = {
   name: string;
+  logoURL: string;
   pointsFor: number;
   pointsAgainst: number;
   offensive: TeamOffensiveStats;
@@ -23,8 +24,7 @@ export type TeamOffensiveStats = {
   passing: TeamPassingStats;
   kicking: TeamKickingStats;
   punting: TeamPuntingStats;
-  fumbles: number;
-  fumblesLost: number;
+  fumbling: TeamFumblingStats;
 };
 
 export type TeamRushingStats = {
@@ -64,4 +64,17 @@ export type TeamDefensiveStats = {
   passingTDsAllowed: number;
   rushingYardsAllowed: number;
   rushingTDsAllowed: number;
+};
+
+export type TeamFumblingStats = {
+  fumbles: number;
+  fumblesLost: number;
+  fumblesRecovered: number;
+};
+
+export type TeamSingleStat = {
+  teamName: string;
+  logoURL?: string;
+  name: string;
+  value: number;
 };
