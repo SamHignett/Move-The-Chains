@@ -3,6 +3,8 @@
 public class TeamStatsDto
 {
     public string Name { get; set; } = "";
+    
+    public string LogoURL { get; set; } = "";
     public string PointsFor { get; set; } = "";
     
     public string PointsAgainst { get; set; } = "";
@@ -19,9 +21,7 @@ public class TeamOffensiveStats
     public TeamKickingStats Kicking { get; set; }
     public TeamPuntingStats Punting { get; set; }
     
-    public int Fumbles { get; set; }
-    
-    public int FumblesLost { get; set; }
+    public TeamFumblingStats Fumbling { get; set; }
 }
 
 public class TeamRushingStats
@@ -54,6 +54,13 @@ public class TeamPuntingStats
     public int Yards { get; set; }
     public double AverageYards { get; set; }
     public int PuntsInside20 { get; set; }
+}
+
+public class TeamFumblingStats
+{
+    public int Fumbles { get; set; }
+    public int FumblesLost { get; set; }
+    public int FumblesRecovered { get; set; }
 }
 
 public class TeamDefensiveStats

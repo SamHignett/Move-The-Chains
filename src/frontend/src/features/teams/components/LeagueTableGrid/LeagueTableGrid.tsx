@@ -19,7 +19,14 @@ export default function LeagueTableGrid() {
   const conferenceNames = new Set<string>(teams.map((team) => team.conference));
 
   return (
-    <Grid container spacing={3} sx={{ flexGrow: 1 }}>
+    <Grid
+      container
+      spacing={3}
+      sx={{
+        flexGrow: 1,
+        paddingBottom: 5,
+      }}
+    >
       {[...conferenceNames].map((conference) => (
         <TeamConferenceGrid
           key={conference}
