@@ -10,3 +10,12 @@ public class Tank01PlayerInfoResponse
     [JsonPropertyName("body")]
     public List<Tank01PlayerInfoDto> Body { get; init; }
 }
+
+public class Tank01SinglePlayerInfoResponse
+{
+    [JsonPropertyName("statusCode")]
+    public int StatusCode { get; init; }
+    
+    [JsonPropertyName("body")]
+    public Tank01PlayerInfoDto Body { get; init; }
+}

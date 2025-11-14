@@ -8,10 +8,10 @@ namespace Api.Player;
 [Route("api/[controller]")]
 public class PlayerController(IMediator mediator): Controller
 {
-    [HttpGet("{name}/info")]
-    public async Task<IActionResult> GetPlayerInfo([FromRoute] string name)
+    [HttpGet("info")]
+    public async Task<IActionResult> GetPlayerInfo([FromQuery] string? name = "", [FromQuery] string? id = "")
     {
-        var player = await mediator.Send(new GetPlayerInfo.Command(name));
+        var player = await mediator.Send(new GetPlayerInfo.Command(name, id));
         
         return Ok(player);
     }

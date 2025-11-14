@@ -3,9 +3,11 @@
 import React from 'react';
 import { useTeamInfo } from '@/features/teams/hooks/useTeamInfo/useTeamInfo';
 import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
+import { useParams } from 'next/navigation';
 
 export default function TeamStatsPage() {
-  const { data: teamInfo, error, isLoading } = useTeamInfo();
+  const { teamName } = useParams<{ teamName: string }>();
+  const { data: teamInfo, error, isLoading } = useTeamInfo(teamName);
 
   if (isLoading) {
     return <div>Loading...</div>;

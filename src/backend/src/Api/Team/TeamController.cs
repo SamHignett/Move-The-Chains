@@ -16,11 +16,27 @@ public class TeamController(IMediator mediator) : Controller
         return Ok(team);
     }
 
-    [HttpGet("search/{searchTerm}")]
-    public async Task<IActionResult> SearchTeams(string searchTerm)
+    [HttpGet("search")]
+    public async Task<IActionResult> GetTeams([FromQuery] string? searchTerm = "", [FromQuery] string? sortBy = "")
     {
-        var teams = await mediator.Send(new SearchTeams.Command(searchTerm));
+        var teams = await mediator.Send(new GetTeams.Command(searchTerm ?? "", sortBy ?? ""));
         
         return Ok(teams);
+    }
+    
+    [HttpGet("stats")]
+    public async Task<IActionResult> GetTeamStats([FromQuery] string? searchTerm = "")
+    {
+        var teamStats = await mediator.Send(new GetTeamStats.Command(searchTerm ?? ""));
+
+        return Ok(teamStats);
+    }
+    
+    [HttpGet("topPerformers")]
+    public async Task<IActionResult> GetTeamTopPerformers([FromQuery] string? searchTerm = "")
+    {
+        var teamStats = await mediator.Send(new GetTeamTopPerformers.Command(searchTerm ?? ""));
+
+        return Ok(teamStats);
     }
 }

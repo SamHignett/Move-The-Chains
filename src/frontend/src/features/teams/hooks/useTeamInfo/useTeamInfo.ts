@@ -2,12 +2,9 @@
 
 import { Axios } from '@/app/Axios';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import { TeamInfo } from '@/features/teams/Types';
 
-export function useTeamInfo(): UseQueryResult<TeamInfo> {
-  const { teamName } = useParams<{ teamName: string }>();
-
+export function useTeamInfo(teamName?: string): UseQueryResult<TeamInfo> {
   if (!teamName)
     throw new Error('Team name is required to fetch team information.');
 

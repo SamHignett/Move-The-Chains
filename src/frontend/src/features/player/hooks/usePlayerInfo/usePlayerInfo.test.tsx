@@ -60,7 +60,9 @@ describe('PlayerApi', () => {
     );
 
     expect(result.current.data).toEqual({ id: 1, name: expectedName });
-    expect(Axios.get).toHaveBeenCalledWith(`api/player/${expectedName}/info`);
+    expect(Axios.get).toHaveBeenCalledWith(
+      `api/player/info?playerName=${expectedName}`,
+    );
   });
 
   it('Throws when no playerName provided', () => {

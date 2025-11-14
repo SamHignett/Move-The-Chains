@@ -6,16 +6,17 @@ namespace Application.Commands.Player;
 
 public static class GetPlayerInfo
 {
-    public class Command(string name) : IRequest<PlayerInfoDto>
+    public class Command(string name, string ID) : IRequest<PlayerInfoDto>
     {
         internal string Name { get; set; } = name;
+        internal string ID { get; set; } = ID;
     }
 
     public class Handler(IPlayerClient client) : IRequestHandler<Command, PlayerInfoDto>
     {
         public Task<PlayerInfoDto> Handle(Command request, CancellationToken cancellationToken)
         {
-            return client.GetPlayerInfo(request.Name);
+            return client.GetPlayerInfo(request.Name, request.ID);
         }
     }
 }
