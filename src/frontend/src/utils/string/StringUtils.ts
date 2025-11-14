@@ -1,4 +1,4 @@
-﻿export function formatCamelCase(input: string): string {
+﻿export function formatCamelCase(input: string | undefined): string {
   if (!input) {
     return '';
   }

@@ -35,7 +35,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         return teamDto;
     }
 
-    //TODO: Converty sorting to take enum & convert to string (avoid using specific Third-party in interface)
+    //TODO: Convert sorting to take enum & convert to string (avoid using specific Third-party in interface)
     public async Task<TeamInfoDto[]> GetTeams(string name, string sortBy = "")
     {
         var parameters = new Dictionary<string, string>
@@ -77,7 +77,30 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         
         return teamStatsDtos.ToArray();
     }
+    
+    public async Task<TeamTopPerformersDto[]> GetTopTeamPerformers(string name)
+    {
+        var query = new Dictionary<string, string>
+        {
+            { "topPerformers", "true" }
+        };
+        
+        var teamsResponse = await GetTeams(query);
+        
+        var teamsStats = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
+        if (teamsStats == null || teamsStats.Count == 0)
+            return [];
+        
+        
+        var matchingTeams = teamsStats.Where(t => 
+            t.Name.Contains(name, StringComparison.OrdinalIgnoreCase) || t.TeamCity.Contains(name, StringComparison.OrdinalIgnoreCase));
 
+        var topPerformerDtos = matchingTeams.Select(t => t.ToTeamTopPerformersDto());
+        
+        return topPerformerDtos.ToArray();
+    }
+    
+    
     private async Task<HttpResponseMessage> GetTeams(Dictionary<string, string>? parameters = null)
     {
         var uri = "getNFLTeams";

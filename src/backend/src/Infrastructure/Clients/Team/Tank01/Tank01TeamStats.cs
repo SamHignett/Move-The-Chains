@@ -13,6 +13,9 @@ public class Tank01TeamStats
     [JsonPropertyName("Passing")]
     public Tank01TeamPassingStats Passing { get; set; }
     
+    [JsonPropertyName("Receiving")]
+    public Tank01TeamReceivingStats Receiving { get; set; }
+    
     [JsonPropertyName("Punting")]
     public Tank01TeamPuntingStats Punting { get; set; }
  
@@ -64,6 +67,22 @@ public class Tank01TeamPassingStats
     [JsonPropertyName("passAttempts")]
     public string Attempts { get; set; }
 }
+
+public class Tank01TeamReceivingStats
+{
+    [JsonPropertyName("recYds")]
+    public string Yards { get; set; }
+    
+    [JsonPropertyName("recTD")]
+    public string Touchdowns { get; set; }
+    
+    [JsonPropertyName("targets")]
+    public string Targets { get; set; }
+    
+    [JsonPropertyName("receptions")]
+    public string Receptions { get; set; }
+}
+
 
 public class Tank01TeamPuntingStats
 {

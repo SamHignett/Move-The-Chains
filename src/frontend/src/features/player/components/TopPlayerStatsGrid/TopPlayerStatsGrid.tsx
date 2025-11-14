@@ -1,58 +1,51 @@
 ﻿'use client';
 
-import { useTeamStats } from '@/features/teams/hooks/useTeamStats/useTeamStats';
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
-import { TeamStats } from '@/features/teams/Types';
-import { useTeamSearch } from '@/features/teams/hooks/useTeamSearch/useTeamSearch';
-import TeamStatsCard from '@/features/teams/components/TeamStatsCard/TeamStatsCard';
+import { TeamTopPerformers } from '@/features/teams/Types';
 import {
-  getTopTeamStatsForCategory,
-  StatCategoryConfig,
-} from '@/features/teams/utils/StatUtils';
-import {
-  TeamDefensiveStatsTemplate,
-  FumblingStatsTemplate,
+  PlayerDefensiveStatsTemplate,
   KickingStatsTemplate,
   PassingStatsTemplate,
   PuntingStatsTemplate,
   RushingStatsTemplate,
 } from '@/features/teams/StatTemplates';
 import { Stat } from '@/features/stats/Types';
+import { useTeamTopPerformers } from '@/features/teams/hooks/useTeamTopPerformers/useTeamTopPerformers';
+import {
+  StatCategoryConfig,
+  getTopPerformersForStatCategory,
+} from '@/features/player/utils/StatUtils';
+import PlayerCategoryStatsCard from '@/features/player/components/PlayerCategoryStatsCard/PlayerCategoryStatsCard';
 
 const statCategories: Record<
   string,
   StatCategoryConfig<Record<string, Stat>>
 > = {
   Defensive: {
-    getStats: (team: TeamStats) => team.defensive,
-    template: TeamDefensiveStatsTemplate,
-  },
-  Fumbling: {
-    getStats: (team: TeamStats) => team.offensive.fumbling,
-    template: FumblingStatsTemplate,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.defensive,
+    template: PlayerDefensiveStatsTemplate,
   },
   Kicking: {
-    getStats: (team: TeamStats) => team.offensive.kicking,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.kicking,
     template: KickingStatsTemplate,
   },
   Passing: {
-    getStats: (team: TeamStats) => team.offensive.passing,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.passing,
     template: PassingStatsTemplate,
   },
   Punting: {
-    getStats: (team: TeamStats) => team.offensive.punting,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.punting,
     template: PuntingStatsTemplate,
   },
   Rushing: {
-    getStats: (team: TeamStats) => team.offensive.rushing,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.rushing,
     template: RushingStatsTemplate,
   },
 };
 
 export default function TopTeamStatsGrid() {
-  const { data: teamStats = [], error, isLoading } = useTeamStats();
-  const { data: teams = [] } = useTeamSearch();
+  const { data: topPerformers = [], error, isLoading } = useTeamTopPerformers();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -62,7 +55,7 @@ export default function TopTeamStatsGrid() {
     return <div>Error loading Stats</div>;
   }
 
-  if (teams == undefined || teams.length === 0) {
+  if (topPerformers == undefined || topPerformers.length === 0) {
     return <div>No Teams Found</div>;
   }
 
@@ -78,17 +71,17 @@ export default function TopTeamStatsGrid() {
         <Typography variant="h2">Top Team Stats</Typography>
       </Grid>
       {Object.entries(statCategories).map(([categoryName, config]) => {
-        const topStats = getTopTeamStatsForCategory(teamStats, config);
+        const topStats = getTopPerformersForStatCategory(topPerformers, config);
         return (
           <Grid
-            key={categoryName}
+            key={'topPlayerStats-' + categoryName}
             size={3}
             sx={{
               display: 'flex',
               justifyContent: 'center',
             }}
           >
-            <TeamStatsCard
+            <PlayerCategoryStatsCard
               key={categoryName}
               category={categoryName}
               stats={topStats}

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Web;
 using Application.Interfaces;
 using Application.Models.Player;
 
@@ -6,14 +7,36 @@ namespace Infrastructure.Clients.Player.Tank01;
 
 public class Tank01PlayerClient(HttpClient client) : IPlayerClient
 {
-    public async Task<PlayerInfoDto> GetPlayerInfo(string name)
+    public async Task<PlayerInfoDto> GetPlayerInfo(string name, string id)
     {
-        var url = $"getNFLPlayerInfo?playerName={Uri.EscapeDataString(name)}";
+        if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(id))
+        {
+            throw new ArgumentException("Either name or id must be provided");
+        }
+        
+        var query = HttpUtility.ParseQueryString(string.Empty);
+        
+        if (!string.IsNullOrEmpty(name))
+            query["playerName"] = name;
+        
+        if (!string.IsNullOrEmpty(id))
+            query["playerID"] = id;
+        
+        var url = $"getNFLPlayerInfo?{query}";
         
         using HttpResponseMessage response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();
 
-        var player = JsonSerializer.Deserialize<Tank01PlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body.First();
+        var player = new Tank01PlayerInfoDto(); 
+        
+        if (!string.IsNullOrEmpty(id))
+        {
+            player = JsonSerializer.Deserialize<Tank01SinglePlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+        }
+        else
+        {
+            player = JsonSerializer.Deserialize<Tank01PlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body.First();
+        }
         
         if (player == null)
             throw new HttpRequestException($"Player '{name}' not found");

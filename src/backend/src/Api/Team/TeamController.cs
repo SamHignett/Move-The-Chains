@@ -31,4 +31,12 @@ public class TeamController(IMediator mediator) : Controller
 
         return Ok(teamStats);
     }
+    
+    [HttpGet("topPerformers")]
+    public async Task<IActionResult> GetTeamTopPerformers([FromQuery] string? searchTerm = "")
+    {
+        var teamStats = await mediator.Send(new GetTeamTopPerformers.Command(searchTerm ?? ""));
+
+        return Ok(teamStats);
+    }
 }

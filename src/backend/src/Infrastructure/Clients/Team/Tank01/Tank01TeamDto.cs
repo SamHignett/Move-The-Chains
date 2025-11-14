@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Infrastructure.Clients.Player.Tank01;
 
 namespace Infrastructure.Clients.Team.Tank01
 {
@@ -36,5 +37,8 @@ namespace Infrastructure.Clients.Team.Tank01
         
         [JsonPropertyName("teamStats")]
         public Tank01TeamStats TeamStats { get; set; }
+        
+        [JsonPropertyName("topPerformers")]
+        public Tank01PlayerStats TopPerformers { get; set; }
     }
 }

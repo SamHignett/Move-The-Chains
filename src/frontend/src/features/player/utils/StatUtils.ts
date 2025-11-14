@@ -1,28 +1,29 @@
-﻿import { TeamSingleStat, TeamStats } from '@/features/teams/Types';
+﻿import { TeamTopPerformers } from '@/features/teams/Types';
+import { PlayerSingleStat } from '@/features/player/Types';
 import { Stat } from '@/features/stats/Types';
 
 export type StatCategoryConfig<T> = {
-  getStats: (team: TeamStats) => T;
+  getStats: (topPerformers: TeamTopPerformers) => T;
   template: T;
 };
 
-export function getTopTeamStatsForCategory<T extends Record<string, Stat>>(
-  teamStats: TeamStats[],
+export function getTopPerformersForStatCategory<T extends Record<string, Stat>>(
+  teamStats: TeamTopPerformers[],
   categoryConfig: StatCategoryConfig<T>,
-): TeamSingleStat[] {
+): PlayerSingleStat[] {
   const statKeys = Object.keys(categoryConfig.template) as Array<keyof T>;
 
   return statKeys.map((statKey) => {
     const topTeamForStat = [...teamStats].toSorted((a, b) => {
       const statA = categoryConfig.getStats(a)[statKey];
       const statB = categoryConfig.getStats(b)[statKey];
+
       return statB.value - statA.value;
     })[0];
 
     return {
-      logoURL: topTeamForStat.logoURL,
       name: statKey as string,
-      teamName: topTeamForStat.name,
+      playerID: categoryConfig.getStats(topTeamForStat)[statKey].id,
       value: categoryConfig.getStats(topTeamForStat)[statKey].value,
     };
   });

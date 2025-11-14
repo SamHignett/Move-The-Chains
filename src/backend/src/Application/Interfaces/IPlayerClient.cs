@@ -4,7 +4,7 @@ namespace Application.Interfaces;
 
 public interface IPlayerClient
 {
-    Task<PlayerInfoDto> GetPlayerInfo(string name);
+    Task<PlayerInfoDto> GetPlayerInfo(string name, string id);
 
     Task<PlayerInfoDto[]> SearchPlayers(string name);
 }
