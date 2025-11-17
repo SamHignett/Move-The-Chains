@@ -10,9 +10,9 @@ export default function PlayerStatsPage() {
     return <div>Loading...</div>;
   }
 
-  if (error || !playerInfo) {
+  if (error || !playerInfo || playerInfo.length === 0) {
     return <div>No player information available.</div>;
   }
 
-  return <PlayerInfoCard info={playerInfo} />;
+  return <PlayerInfoCard info={playerInfo[0]} />;
 }

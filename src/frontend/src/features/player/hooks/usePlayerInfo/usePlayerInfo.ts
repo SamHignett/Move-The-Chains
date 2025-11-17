@@ -6,32 +6,54 @@ import { Axios } from '@/app/Axios';
 import { PlayerInfo } from '@/features/player/Types';
 
 export function usePlayerInfo(options?: {
-  playerName?: string;
-  id?: string;
-}): UseQueryResult<PlayerInfo> {
+  names?: string[];
+  ids?: string[];
+}): UseQueryResult<PlayerInfo[]> {
   const routeParams = useParams<{ playerName?: string; playerId?: string }>();
 
   const baseUrl = `api/player/info`;
 
   const params = new URLSearchParams();
 
-  const playerName = options?.playerName ?? routeParams.playerName;
-  const playerId = options?.id ?? routeParams.playerId;
+  let playerNames: string[] = [];
+  if (routeParams.playerName === undefined) {
+    if (options !== undefined && options.names !== undefined) {
+      playerNames = options.names;
+    }
+  } else {
+    playerNames = [routeParams.playerName];
+  }
 
-  if (playerName) params.append('playerName', playerName);
+  let playerIds: string[] = [];
+  if (routeParams.playerId === undefined) {
+    if (options !== undefined && options.ids !== undefined)
+      playerIds = options.ids;
+  } else {
+    playerIds = [routeParams.playerId];
+  }
 
-  if (playerId) params.append('id', playerId);
-
-  if (!playerName && !playerId)
+  if (playerNames.length === 0 && playerIds.length === 0)
     throw new Error(
       'Player name or ID is required to fetch player information.',
     );
+
+  if (playerNames.length > 0) {
+    for (const playerName of playerNames) {
+      params.append('names', playerName);
+    }
+  }
+
+  if (playerIds.length > 0) {
+    for (const playerId of playerIds) {
+      params.append('ids', playerId);
+    }
+  }
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
   return useQuery({
     queryFn: () => Axios.get(url).then((response) => response.data),
-    queryKey: ['playerInfo', playerName, playerId],
+    queryKey: ['playerInfo', playerNames, playerIds],
     staleTime: 1000 * 60 * 5,
   });
 }

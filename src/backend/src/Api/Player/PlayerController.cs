@@ -9,9 +9,14 @@ namespace Api.Player;
 public class PlayerController(IMediator mediator): Controller
 {
     [HttpGet("info")]
-    public async Task<IActionResult> GetPlayerInfo([FromQuery] string? name = "", [FromQuery] string? id = "")
+    public async Task<IActionResult> GetPlayerInfo([FromQuery] string[]? names = null, [FromQuery] string[]? ids = null)
     {
-        var player = await mediator.Send(new GetPlayerInfo.Command(name, id));
+        if ((names == null || names.Length == 0) && (ids == null || ids.Length == 0))
+        {
+            return BadRequest("Either 'names' or 'ids' must be provided.");
+        }
+        
+        var player = await mediator.Send(new GetPlayerInfo.Command(names ?? [], ids ?? []));
         
         return Ok(player);
     }

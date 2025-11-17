@@ -12,6 +12,8 @@ export function getTopTeamStatsForCategory<T extends Record<string, Stat>>(
 ): TeamSingleStat[] {
   const statKeys = Object.keys(categoryConfig.template) as Array<keyof T>;
 
+  if (teamStats.length === 0) return [];
+
   return statKeys.map((statKey) => {
     const topTeamForStat = [...teamStats].toSorted((a, b) => {
       const statA = categoryConfig.getStats(a)[statKey];

@@ -8,7 +8,7 @@ public static class GetTeamStats
 {
     public class Command(string? searchTerm) : IRequest<TeamStatsDto[]>
     {
-        private string SearchTerm { get; } = searchTerm ?? "";
+        internal string SearchTerm { get; } = searchTerm ?? "";
         
         public class Handler(ITeamClient client): IRequestHandler<Command, TeamStatsDto[]>
         {

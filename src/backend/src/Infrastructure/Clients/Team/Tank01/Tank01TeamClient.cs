@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using System.Web;
 using Application.Interfaces;
 using Application.Models.Team;
 using Microsoft.AspNetCore.WebUtilities;
@@ -40,7 +39,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
     {
         var parameters = new Dictionary<string, string>
         {
-            { $"{nameof(sortBy)}", sortBy }
+            { $"sortBy", sortBy }
         };
         
         var teamsResponse = await GetTeams(parameters);
@@ -104,24 +103,11 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
     private async Task<HttpResponseMessage> GetTeams(Dictionary<string, string>? parameters = null)
     {
         var uri = "getNFLTeams";
-        
-        var builder = new UriBuilder(uri)
-        {
-            Port = -1
-        };
 
         if (parameters != null)
-        {
-            var query = HttpUtility.ParseQueryString(builder.Query);
-            foreach (var parameter in parameters)
-            {
-                if (!string.IsNullOrEmpty(parameter.Value))
-                    query[parameter.Key] = parameter.Value;
-            }
-            
-            builder.Query = query.ToString();
-            uri = QueryHelpers.AddQueryString(uri, parameters);
-        }
+            uri = parameters.Where(parameter => !string.IsNullOrEmpty(parameter.Value))
+                .Aggregate(uri, (current, parameter) 
+                => QueryHelpers.AddQueryString(current, parameter.Key, parameter.Value));
         
         HttpResponseMessage response = await client.GetAsync($"{uri}");
         response.EnsureSuccessStatusCode();

@@ -62,7 +62,7 @@ export default function TopTeamStatsGrid() {
     return <div>Error loading Stats</div>;
   }
 
-  if (teams == undefined || teams.length === 0) {
+  if (teams.length === 0) {
     return <div>No Teams Found</div>;
   }
 
@@ -88,11 +88,7 @@ export default function TopTeamStatsGrid() {
               justifyContent: 'center',
             }}
           >
-            <TeamStatsCard
-              key={categoryName}
-              category={categoryName}
-              stats={topStats}
-            />
+            <TeamStatsCard category={categoryName} stats={topStats} />
           </Grid>
         );
       })}

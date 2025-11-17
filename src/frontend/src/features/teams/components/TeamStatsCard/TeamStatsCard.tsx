@@ -12,9 +12,6 @@ export default function TeamStatsCard(props: StatsCardProps) {
   return (
     <Box
       sx={{
-        '&hover': {
-          bgColor: 'background.default',
-        },
         bgcolor: '#004953',
         borderRadius: 1,
       }}
@@ -35,11 +32,9 @@ export default function TeamStatsCard(props: StatsCardProps) {
           </Typography>
         </Grid>
         {props.stats.map((stat) => (
-          <Fragment key={stat.name}>
+          <Fragment key={stat.name + stat.value}>
             <Grid size={6}>
-              <Typography variant="h5" key={stat.name}>
-                {formatCamelCase(stat.name)}
-              </Typography>
+              <Typography variant="h5">{formatCamelCase(stat.name)}</Typography>
             </Grid>
             <Grid size={2}>
               <Box
@@ -57,7 +52,6 @@ export default function TeamStatsCard(props: StatsCardProps) {
             <Grid size={4}>
               <Typography
                 variant="h5"
-                key={stat.value}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',

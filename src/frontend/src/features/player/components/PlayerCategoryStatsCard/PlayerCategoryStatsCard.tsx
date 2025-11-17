@@ -3,24 +3,30 @@ import { Fragment } from 'react';
 import { formatCamelCase } from '@/utils/string/StringUtils';
 import { PlayerSingleStat } from '@/features/player/Types';
 import { usePlayerInfo } from '@/features/player/hooks/usePlayerInfo/usePlayerInfo';
+import { useMemo } from 'react';
 
 export type StatsCardProps = {
   category: string;
   stats: PlayerSingleStat[];
 };
 
-function PlayerName({ playerId }: { playerId: string }) {
-  const { data } = usePlayerInfo({ id: playerId });
-  return <>{data?.name}</>;
-}
-
 export default function PlayerCategoryStatsCard(props: StatsCardProps) {
+  const playerIDs = useMemo(
+    () => [...new Set(props.stats.map((stat) => stat.playerID))],
+    [props.stats],
+  );
+
+  const { data: players } = usePlayerInfo({ ids: playerIDs });
+
+  const playerNameById = useMemo(() => {
+    if (!players) return new Map<string, string>();
+
+    return new Map(players.map((p) => [p.id, p.name]));
+  }, [players]);
+
   return (
     <Box
       sx={{
-        '&hover': {
-          bgColor: 'background.default',
-        },
         bgcolor: '#004953',
         borderRadius: 1,
       }}
@@ -43,14 +49,11 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
         {props.stats.map((stat) => (
           <Fragment key={props.category + stat.name}>
             <Grid size={6}>
-              <Typography variant="h5" key={stat.value}>
-                {formatCamelCase(stat.name)}
-              </Typography>
+              <Typography variant="h5">{formatCamelCase(stat.name)}</Typography>
             </Grid>
             <Grid size={2}>
               <Typography
                 variant="h5"
-                key={stat.value}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -60,8 +63,8 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
               </Typography>
             </Grid>
             <Grid size={4}>
-              <Typography variant="h5" key={stat.value}>
-                <PlayerName playerId={stat.playerID} />
+              <Typography variant="h5">
+                {playerNameById.get(stat.playerID) || 'Unknown Player'}
               </Typography>
             </Grid>
           </Fragment>

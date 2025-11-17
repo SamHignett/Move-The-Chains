@@ -8,13 +8,15 @@ export type StatCategoryConfig<T> = {
 };
 
 export function getTopPerformersForStatCategory<T extends Record<string, Stat>>(
-  teamStats: TeamTopPerformers[],
+  teamTopPerformers: TeamTopPerformers[],
   categoryConfig: StatCategoryConfig<T>,
 ): PlayerSingleStat[] {
   const statKeys = Object.keys(categoryConfig.template) as Array<keyof T>;
 
+  if (teamTopPerformers.length === 0) return [];
+
   return statKeys.map((statKey) => {
-    const topTeamForStat = [...teamStats].toSorted((a, b) => {
+    const topPlayerForStat = [...teamTopPerformers].toSorted((a, b) => {
       const statA = categoryConfig.getStats(a)[statKey];
       const statB = categoryConfig.getStats(b)[statKey];
 
@@ -23,8 +25,8 @@ export function getTopPerformersForStatCategory<T extends Record<string, Stat>>(
 
     return {
       name: statKey as string,
-      playerID: categoryConfig.getStats(topTeamForStat)[statKey].id,
-      value: categoryConfig.getStats(topTeamForStat)[statKey].value,
+      playerID: categoryConfig.getStats(topPlayerForStat)[statKey].id,
+      value: categoryConfig.getStats(topPlayerForStat)[statKey].value,
     };
   });
 }

@@ -15,7 +15,7 @@ export function useTeamStats(options?: {
 
   return useQuery({
     queryFn: () => Axios.get(url).then((response) => response.data),
-    queryKey: ['teamStats', params.toString() ?? ''],
+    queryKey: ['teamStats', params.toString()],
     staleTime: 1000 * 60 * 5,
   });
 }

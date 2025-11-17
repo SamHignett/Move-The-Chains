@@ -27,8 +27,10 @@ export default function TeamDivisionGrid({
 
   if (teams.length > 1) {
     for (const team of teams) {
-      if (team.division != division || team.conference != conference) {
-        return <div>Mis-matched team</div>;
+      if (team.division !== division || team.conference !== conference) {
+        return (
+          <div>Error: All Teams must be in the same division/conference</div>
+        );
       }
     }
   }

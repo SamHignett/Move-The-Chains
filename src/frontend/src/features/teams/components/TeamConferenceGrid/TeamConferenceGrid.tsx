@@ -15,8 +15,8 @@ export default function TeamConferenceGrid({
     const conference = teams[0].conference;
 
     for (const team of teams) {
-      if (team.conference != conference) {
-        return <div>Mis-matched team conference</div>;
+      if (team.conference !== conference) {
+        return <div>Error: All Teams must be in the same conference</div>;
       }
     }
   }

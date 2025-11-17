@@ -12,7 +12,7 @@ export default function LeagueTableGrid() {
     return <div>Loading...</div>;
   }
 
-  if (teams == undefined || teams.length === 0) {
+  if (teams === undefined || teams.length === 0) {
     return <div>No Teams Found</div>;
   }
 
@@ -31,7 +31,7 @@ export default function LeagueTableGrid() {
         <TeamConferenceGrid
           key={conference}
           conferenceName={conference}
-          teams={teams.filter((team) => team.conference == conference)}
+          teams={teams.filter((team) => team.conference === conference)}
         />
       ))}
     </Grid>

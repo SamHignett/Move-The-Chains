@@ -139,15 +139,13 @@ public static class Tank01TeamMapper
     
     private static KickingStats ToPlayerKickingStatsDto(this Tank01TeamDto dto)
     {
-        var memes = new KickingStats
+        return new KickingStats
         {
             ExtraPointsAttempted = ToStat(dto.TopPerformers.Kicking.ExtraPointsAttempted),
             ExtraPointsMade = ToStat(dto.TopPerformers.Kicking.ExtraPointsMade),
             FieldGoalsAttempted = ToStat(dto.TopPerformers.Kicking.FieldGoalsAttempted),
             FieldGoalsMade = ToStat(dto.TopPerformers.Kicking.FieldGoalsMade),
         };
-
-        return memes;
     }
 
     private static PuntingStats ToTeamPuntingStatsDto(this Tank01TeamDto dto)
@@ -159,7 +157,7 @@ public static class Tank01TeamMapper
         {
             Punts = new Stat{Value = punts},
             Yards = new Stat{Value = yards},
-            AverageYards = new Stat{Value = Math.Round(yards / punts, 1)},
+            AverageYards = new Stat{Value = punts > 0 ? Math.Round(yards / punts, 1): 0},
             PuntsInside20 = ToStat(dto.TeamStats.Punting.PuntsInside20)
         };
     }
@@ -168,12 +166,20 @@ public static class Tank01TeamMapper
     {
         var yards = double.Parse(dto.TopPerformers.Punting.Yards.Value);
         var punts = double.Parse(dto.TopPerformers.Punting.Punts.Value);
+
+        var topPuntingAttemptsPlayerID = dto.TopPerformers.Punting.Punts.PlayerIDs.Length > 0
+            ? dto.TopPerformers.Punting.Punts.PlayerIDs[0]
+            : "";
+        
+        var topPuntingYardsPlayerID = dto.TopPerformers.Punting.Yards.PlayerIDs.Length > 0
+            ? dto.TopPerformers.Punting.Yards.PlayerIDs[0]
+            : "";
         
         return new PuntingStats
         {
-            Punts = new Stat{Value = punts, Id = dto.TopPerformers.Punting.Punts.PlayerIDs[0]},
-            Yards = new Stat{Value = yards, Id = dto.TopPerformers.Punting.Yards.PlayerIDs[0]},
-            AverageYards = new Stat{Value = Math.Round(yards / punts, 1), Id = dto.TopPerformers.Punting.Yards.PlayerIDs[0]},
+            Punts = new Stat{Value = punts, Id = topPuntingAttemptsPlayerID},
+            Yards = new Stat{Value = yards, Id = topPuntingYardsPlayerID},
+            AverageYards = new Stat{Value =  punts > 0 ? Math.Round(yards / punts, 1) : 0, Id = topPuntingYardsPlayerID},
             PuntsInside20 = ToStat(dto.TopPerformers.Punting.PuntsInside20)
         };
     }

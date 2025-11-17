@@ -55,8 +55,8 @@ export default function TopTeamStatsGrid() {
     return <div>Error loading Stats</div>;
   }
 
-  if (topPerformers == undefined || topPerformers.length === 0) {
-    return <div>No Teams Found</div>;
+  if (topPerformers === undefined || topPerformers.length === 0) {
+    return <div>No Players Found</div>;
   }
 
   return (
@@ -68,7 +68,7 @@ export default function TopTeamStatsGrid() {
           justifyContent: 'center',
         }}
       >
-        <Typography variant="h2">Top Team Stats</Typography>
+        <Typography variant="h2">Top Player Stats</Typography>
       </Grid>
       {Object.entries(statCategories).map(([categoryName, config]) => {
         const topStats = getTopPerformersForStatCategory(topPerformers, config);
@@ -81,11 +81,7 @@ export default function TopTeamStatsGrid() {
               justifyContent: 'center',
             }}
           >
-            <PlayerCategoryStatsCard
-              key={categoryName}
-              category={categoryName}
-              stats={topStats}
-            />
+            <PlayerCategoryStatsCard category={categoryName} stats={topStats} />
           </Grid>
         );
       })}

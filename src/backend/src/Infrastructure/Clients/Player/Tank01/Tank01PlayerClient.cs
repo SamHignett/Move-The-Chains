@@ -1,76 +1,91 @@
 ﻿using System.Text.Json;
-using System.Web;
 using Application.Interfaces;
 using Application.Models.Player;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infrastructure.Clients.Player.Tank01;
 
 public class Tank01PlayerClient(HttpClient client) : IPlayerClient
 {
-    public async Task<PlayerInfoDto> GetPlayerInfo(string name, string id)
+    public async Task<PlayerInfoDto[]> GetPlayerInfo(string[]? names, string[]? ids)
     {
-        if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(id))
+        if ((names == null || names.Length == 0) && (ids == null || ids.Length == 0))
         {
             throw new ArgumentException("Either name or id must be provided");
         }
-        
-        var query = HttpUtility.ParseQueryString(string.Empty);
+
+        var playerDtos = new List<PlayerInfoDto>();
+
+        if (ids is { Length: > 0 })
+        {
+            var fetchedIds = new HashSet<string>();
+            foreach (var playerID in ids)
+            {
+                if (fetchedIds.Contains(playerID))
+                    continue;
+            
+                var players = await SearchPlayers(id: playerID);
+
+                if (players.Length > 0)
+                {
+                    fetchedIds.Add(playerID);
+                    playerDtos.Add(players.First());
+                }
+                    
+            }
+
+        }
+        else if (names is {Length: > 0})
+        { 
+            foreach (var playerName in names)
+            {
+                var players = await SearchPlayers(playerName);
+
+                if (players.Length > 0)
+                    playerDtos.AddRange(players);
+            }
+        }
+
+
+        return playerDtos.ToArray();
+    }
+
+    public async Task<PlayerInfoDto[]> SearchPlayers(string name = "", string id = "")
+    {
+        var query = $"getNFLPlayerInfo";
         
         if (!string.IsNullOrEmpty(name))
-            query["playerName"] = name;
-        
-        if (!string.IsNullOrEmpty(id))
-            query["playerID"] = id;
-        
-        var url = $"getNFLPlayerInfo?{query}";
-        
-        using HttpResponseMessage response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
+            query = QueryHelpers.AddQueryString(query, "playerName", name);
 
-        var player = new Tank01PlayerInfoDto(); 
-        
+
         if (!string.IsNullOrEmpty(id))
+            query = QueryHelpers.AddQueryString(query, "playerID", id);
+        
+        using HttpResponseMessage response = await client.GetAsync(query);
+        response.EnsureSuccessStatusCode();
+        
+        var players = new List<Tank01PlayerInfoDto>();
+        if (!string.IsNullOrEmpty(name))
         {
-            player = JsonSerializer.Deserialize<Tank01SinglePlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+            var responsePlayers = JsonSerializer.Deserialize<Tank01PlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+
+            responsePlayers?.ForEach(p => players.Add(p));
         }
         else
         {
-            player = JsonSerializer.Deserialize<Tank01PlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body.First();
+            var player = JsonSerializer.Deserialize<Tank01SinglePlayerInfoResponse>(await response.Content.ReadAsStringAsync())?.Body;
+            
+            if (player != null)
+                players.Add(player);
         }
         
-        if (player == null)
-            throw new HttpRequestException($"Player '{name}' not found");
-        
-        var playerDto = new PlayerInfoDto
-        {
-            Name = player.PlayerName,
-            Age = int.TryParse(player.Age, out var age) ? age : 0,
-            Height = player.Height,
-            Weight = player.Weight,
-            School = player.School,
-            CurrentTeam = player.Team,
-            Position = player.Position,
-            HeadshotImageUrl = player.HeadshotImageUrl
-        };
-
-        return playerDto;
-    }
-
-    public async Task<PlayerInfoDto[]> SearchPlayers(string name)
-    {
-        var url = $"getNFLPlayerInfo?playerName={Uri.EscapeDataString(name)}";
-        
-        using HttpResponseMessage response = await client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-
-        var players = JsonSerializer.Deserialize<Tank01PlayerSearchResponse>(await response.Content.ReadAsStringAsync())?.Body;
-
-        if (players == null || players.Count == 0)
+        if (players.Count == 0)
             return [];
 
         var playerDtos = players.Select(p => new PlayerInfoDto()
         {
             Name = p.PlayerName,
+            Id = p.ID,
             Age = int.TryParse(p.Age, out var age) ? age : 0,
             Height = p.Height,
             Weight = p.Weight,
