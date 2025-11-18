@@ -7,6 +7,9 @@ public class Tank01PlayerInfoDto
     [JsonPropertyName("espnName")] 
     public string PlayerName { get; set; }
     
+    [JsonPropertyName("playerID")]
+    public string ID { get; set; }
+    
     [JsonPropertyName("age")]
     public string Age { get; set; }
     
