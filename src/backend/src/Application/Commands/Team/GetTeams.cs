@@ -4,18 +4,19 @@ using MediatR;
 
 namespace Application.Commands.Team;
 
-public static class SearchTeams
+public static class GetTeams
 {
-    public class Command(string searchTerm) : IRequest<TeamInfoDto[]>
+    public class Command(string name, string sortBy) : IRequest<TeamInfoDto[]>
     {
-        internal string SearchTerm { get; set; } = searchTerm;
+        internal string Name { get; set; } = name;
+        internal string SortBy { get; set; } = sortBy;
     }
 
     public class Handler(ITeamClient teamClient) : IRequestHandler<Command, TeamInfoDto[]>
     {
         public Task<TeamInfoDto[]> Handle(Command request, CancellationToken cancellationToken)
         {
-            return teamClient.SearchTeams(request.SearchTerm);
+            return teamClient.GetTeams(request.Name, request.SortBy);
         }
     }
 }

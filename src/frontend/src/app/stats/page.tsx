@@ -1,5 +1,9 @@
-﻿import { Typography } from '@mui/material';
-import ConstructionIcon from '@mui/icons-material/Construction';
+﻿'use client';
+
+import { Typography } from '@mui/material';
+import LeagueTableGrid from '@/features/teams/components/LeagueTableGrid/LeagueTableGrid';
+import TopTeamStatsGrid from '@/features/teams/components/TopTeamStatsGrid/TopTeamStatsGrid';
+import TopPlayerStatsGrid from '@/features/player/components/TopPlayerStatsGrid/TopPlayerStatsGrid';
 
 export default function StatsHomePage() {
   return (
@@ -10,16 +14,13 @@ export default function StatsHomePage() {
           alignItems: 'center',
           display: 'flex',
           justifyContent: 'center',
-          paddingTop: '20%',
         }}
       >
-        Under Construction
-        <ConstructionIcon
-          sx={{
-            fontSize: 90,
-          }}
-        />
+        Stats
       </Typography>
+      <LeagueTableGrid />
+      <TopTeamStatsGrid />
+      <TopPlayerStatsGrid />
     </div>
   );
 }
