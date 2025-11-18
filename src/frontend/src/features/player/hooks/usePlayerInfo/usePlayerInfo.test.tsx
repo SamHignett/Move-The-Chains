@@ -41,8 +41,7 @@ describe('PlayerApi', () => {
 
     (Axios.get as jest.Mock).mockResolvedValue({
       data: {
-        id: 1,
-        name: expectedName,
+        names: expectedName,
       },
     });
 
@@ -59,8 +58,10 @@ describe('PlayerApi', () => {
       { timeout: 2000 },
     );
 
-    expect(result.current.data).toEqual({ id: 1, name: expectedName });
-    expect(Axios.get).toHaveBeenCalledWith(`api/player/${expectedName}/info`);
+    expect(result.current.data).toEqual({ names: expectedName });
+    expect(Axios.get).toHaveBeenCalledWith(
+      `api/player/info?names=${expectedName}`,
+    );
   });
 
   it('Throws when no playerName provided', () => {

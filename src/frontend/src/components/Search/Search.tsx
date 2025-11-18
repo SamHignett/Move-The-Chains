@@ -54,7 +54,7 @@ export default function Search() {
   const [search, setSearch] = React.useState<string>('');
 
   const { data: players = [] } = usePlayerSearch(search);
-  const { data: teams = [] } = useTeamSearch(search);
+  const { data: teams = [] } = useTeamSearch({ searchTerm: search });
 
   const router = useRouter();
 
