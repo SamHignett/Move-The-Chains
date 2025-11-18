@@ -9,3 +9,9 @@
   position: string;
   headshotImageUrl: string;
 };
+
+export type PlayerSingleStat = {
+  name: string;
+  value: number;
+  playerID: string;
+};

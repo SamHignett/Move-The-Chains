@@ -13,7 +13,8 @@ public class PlayerControllerTests
     public async Task GetPlayerInfo_WithValidName_ReturnsPlayerInfo()
     {
         // Arrange
-        var playerName = "John Doe";
+        var playerNames = new List<string>{"John Doe"};
+        
         var expectedPlayerInfo = new PlayerInfoDto
         {
             Name = "John Doe",
@@ -25,21 +26,22 @@ public class PlayerControllerTests
             Position = "Forward",
             HeadshotImageUrl = "http://example.com/headshot.jpg"
         };
+        var playerList = new List<PlayerInfoDto> { expectedPlayerInfo };
         
         var mediator = Substitute.For<IMediator>();
         mediator
             .Send(Arg.Any<GetPlayerInfo.Command>(), Arg.Any<CancellationToken>())
-            .Returns(expectedPlayerInfo);
+            .Returns(playerList.ToArray());
 
         var sut = new PlayerController(mediator);
 
         // Act
-        var result = await sut.GetPlayerInfo(playerName);
+        var result = await sut.GetPlayerInfo(names:playerNames.ToArray());
 
         // Assert
         Assert.NotNull(result);
         var okayResult = Assert.IsType<OkObjectResult>(result);
-        var actual = Assert.IsType<PlayerInfoDto>(okayResult.Value);
+        var actual = Assert.IsType<PlayerInfoDto[]>(okayResult.Value)[0];
         
         Assert.Equal(expectedPlayerInfo.Name, actual.Name);
         Assert.Equal(expectedPlayerInfo.Age, actual.Age);
@@ -52,19 +54,19 @@ public class PlayerControllerTests
     }
     
     [Fact]
-    public async Task GetPlayerInfo_WithInvalidName_ThrowsExcpetion()
+    public async Task GetPlayerInfo_WithInvalidName_ThrowsException()
     {
         // Arrange
-        var playerName = "Invalid Player";
+        var playerNames = new List<string> { "Invalid Player" };
         
         var mediator = Substitute.For<IMediator>();
         mediator
             .Send(Arg.Any<GetPlayerInfo.Command>(), Arg.Any<CancellationToken>())
-            .Returns(Task.FromException<PlayerInfoDto>(new Exception("Player not found")));
+            .Returns(Task.FromException<PlayerInfoDto[]>(new Exception("Player not found")));
 
         var sut = new PlayerController(mediator);
 
         // Act & Assert
-        await Assert.ThrowsAsync<Exception>(() => sut.GetPlayerInfo(playerName));
+        await Assert.ThrowsAsync<Exception>(() => sut.GetPlayerInfo(playerNames.ToArray()));
     }
 }
