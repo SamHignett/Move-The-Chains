@@ -23,28 +23,28 @@ const NavBar: React.FC = () => {
           >
             <MenuIcon />
           </IconButton>
-          <SportsFootball sx={{ display: { md: `flex`, xs: `none` }, mr: 1 }} />
+          <SportsFootball sx={{ display: { xs: `none`, md: `flex` }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
             component="a"
             sx={{
-              color: `inherit`,
-              display: { md: `flex`, xs: `none` },
+              mr: 2,
+              display: { xs: `none`, md: `flex` },
               fontFamily: `monospace`,
               fontWeight: 500,
               letterSpacing: `.2rem`,
-              mr: 2,
+              color: `inherit`,
               textDecoration: `none`,
             }}
           >
             Move The Chains
           </Typography>
-          <Box sx={{ display: { md: `flex`, xs: `none` }, flexGrow: 1 }}>
+          <Box sx={{ flexGrow: 1, display: { xs: `none`, md: `flex` } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                sx={{ color: `white`, display: `block`, my: 2 }}
+                sx={{ my: 2, color: `white`, display: `block` }}
               >
                 {page}
               </Button>

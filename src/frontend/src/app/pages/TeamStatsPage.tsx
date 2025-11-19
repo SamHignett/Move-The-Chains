@@ -9,7 +9,7 @@ export type TeamStatsPageProps = {
 };
 
 const TeamStatsPage: React.FC<TeamStatsPageProps> = ({ teamName }) => {
-  const { data: teamInfo, error, isLoading } = useTeamInfo(teamName);
+  const { data: teamInfo, isLoading, error } = useTeamInfo(teamName);
 
   if (isLoading) {
     return <div>Loading...</div>;
