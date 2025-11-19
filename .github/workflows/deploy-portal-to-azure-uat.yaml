@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ uat ]
+    branches: [ uat, Portal_SWA_Deploy_Fix ]
   pull_request:
     branches: [ uat ]
     
