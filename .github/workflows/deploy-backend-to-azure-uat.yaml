@@ -1,9 +1,10 @@
 ﻿name: Deploy Backend to Azure WA - UAT
 
 on:
+  push:
+    branches: [ uat ]
   pull_request:
-    branches:
-      - uat
+    branches: [ uat ]
 
 jobs:
   deploy:
