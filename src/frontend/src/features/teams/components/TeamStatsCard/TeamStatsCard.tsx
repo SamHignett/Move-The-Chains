@@ -1,68 +1,120 @@
-﻿import { Box, Grid, Typography } from '@mui/material';
-import { TeamSingleStat } from '@/features/teams/Types';
-import { Fragment } from 'react';
-import { formatCamelCase } from '@/utils/string/StringUtils';
+﻿'use client';
 
-export type StatsCardProps = {
-  category: string;
-  stats: TeamSingleStat[];
+import { TeamStats } from '@/features/teams/Types';
+import { Box } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import { useState, SyntheticEvent } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import TeamStatTable from '@/features/stats/components/TeamStatTable/TeamStatTable';
+import TabBar from '@/components/TabBar/TabBar';
+import TabPanel from '@/components/TabPanel/TabPanel';
+
+export type TeamStatsCardProps = {
+  stats: TeamStats;
 };
 
-export default function TeamStatsCard(props: StatsCardProps) {
+export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        dark: `#002b30`,
+        main: '#004953',
+      },
+    },
+  });
+
+  const [categoryValue, setCategoryValue] = useState(0);
+  const [offensiveCategoryValue, setOffensiveCategoryValue] = useState(0);
+
+  const handleCategoryChange = (event: SyntheticEvent, newValue: number) => {
+    setCategoryValue(newValue);
+  };
+
+  const handleOffensiveCategoryChange = (
+    event: SyntheticEvent,
+    newValue: number,
+  ) => {
+    setOffensiveCategoryValue(newValue);
+  };
+
   return (
-    <Box
-      sx={{
-        bgcolor: '#004953',
-        borderRadius: 1,
-      }}
-    >
-      <Grid container spacing={2} sx={{ bgcolor: '#004953' }}>
-        <Grid size={12}>
-          <Typography
-            variant="h4"
-            sx={{
-              borderBottom: 4,
-              borderColor: '#000000',
-              display: 'flex',
-              justifyContent: 'center',
-              p: 2,
-            }}
-          >
-            {props.category}
-          </Typography>
-        </Grid>
-        {props.stats.map((stat) => (
-          <Fragment key={stat.name + stat.value}>
-            <Grid size={6}>
-              <Typography variant="h5">{formatCamelCase(stat.name)}</Typography>
-            </Grid>
-            <Grid size={2}>
-              <Box
-                component="img"
-                src={stat.logoURL}
-                alt="Logo"
-                sx={{
-                  display: { sm: 'block', xs: 'none' },
-                  flexShrink: 0,
-                  height: 50,
-                  width: 50,
-                }}
-              ></Box>
-            </Grid>
-            <Grid size={4}>
-              <Typography
-                variant="h5"
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
-                {stat.value}
-              </Typography>
-            </Grid>
-          </Fragment>
-        ))}
-      </Grid>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          alignItems: 'flex-start',
+          bgcolor: 'primary.main',
+          margin: `auto`,
+          textAlign: 'center',
+          width: {
+            md: '50%',
+            sm: '75%',
+            xs: '100%',
+          },
+        }}
+      >
+        <Typography variant="h3">Stats</Typography>
+        <TabBar
+          value={categoryValue}
+          labels={['Offensive', 'Defensive']}
+          handleChange={handleCategoryChange}
+        ></TabBar>
+        <TabPanel value={categoryValue} index={0}>
+          <TabBar
+            value={offensiveCategoryValue}
+            labels={['Passing', 'Rushing', 'Kicking', 'Punting', 'Fumbling']}
+            handleChange={handleOffensiveCategoryChange}
+          ></TabBar>
+          <TabPanel value={offensiveCategoryValue} index={0}>
+            <TeamStatTable
+              category={'Passing'}
+              stats={Object.entries(stats.offensive.passing).map(
+                ([key, stat]) => ({ id: key, value: stat.value }),
+              )}
+            />
+          </TabPanel>
+          <TabPanel value={offensiveCategoryValue} index={1}>
+            <TeamStatTable
+              category={'Rushing'}
+              stats={Object.entries(stats.offensive.rushing).map(
+                ([key, stat]) => ({ id: key, value: stat.value }),
+              )}
+            />
+          </TabPanel>
+          <TabPanel value={offensiveCategoryValue} index={2}>
+            <TeamStatTable
+              category={'Kicking'}
+              stats={Object.entries(stats.offensive.kicking).map(
+                ([key, stat]) => ({ id: key, value: stat.value }),
+              )}
+            />
+          </TabPanel>
+          <TabPanel value={offensiveCategoryValue} index={3}>
+            <TeamStatTable
+              category={'Punting'}
+              stats={Object.entries(stats.offensive.punting).map(
+                ([key, stat]) => ({ id: key, value: stat.value }),
+              )}
+            />
+          </TabPanel>
+          <TabPanel value={offensiveCategoryValue} index={4}>
+            <TeamStatTable
+              category={'Fumbling'}
+              stats={Object.entries(stats.offensive.fumbling).map(
+                ([key, stat]) => ({ id: key, value: stat.value }),
+              )}
+            />
+          </TabPanel>
+        </TabPanel>
+        <TabPanel value={categoryValue} index={1}>
+          <TeamStatTable
+            category={'Defensive'}
+            stats={Object.entries(stats.defensive).map(([key, stat]) => ({
+              id: key,
+              value: stat.value,
+            }))}
+          />
+        </TabPanel>
+      </Box>
+    </ThemeProvider>
   );
 }

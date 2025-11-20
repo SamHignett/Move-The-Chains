@@ -34,6 +34,7 @@ export type TeamTopPerformers = {
   passing: PassingStats;
   kicking: KickingStats;
   punting: PuntingStats;
+  receiving: RushingStats;
   defensive: PlayerDefensiveStats;
 };
 
