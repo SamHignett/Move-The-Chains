@@ -1,12 +1,8 @@
-<h1 align="center">Moving the Chains</h1>
-
-<p align="center">
-    <img src="https://github.com/SamHignett/Move-The-Chains/actions/workflows/build-all-main.yaml/badge.svg" alt="CI Status Badge"/>
-</p>
+# Moving the Chains
 
 The plan for this project is to result in an NFL-related Web App/Website consisting of two main features-sets:
 
-
+---
 
 ## 🏈 Reading the Field (Game Prediction Tracker)
 

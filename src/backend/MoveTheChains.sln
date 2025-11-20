@@ -12,13 +12,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B93F9799-418
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B761CF4F-1023-4484-A982-F0E69318CE4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "tests\Application.Tests\Application.Tests.csproj", "{6FD12680-3260-497B-B734-1E3FA0A2642F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "Tests\Application.Tests\Application.Tests.csproj", "{6FD12680-3260-497B-B734-1E3FA0A2642F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{159FA657-B4BD-4D56-9148-864DD8A2F455}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "Tests\Infrastructure.Tests\Infrastructure.Tests.csproj", "{159FA657-B4BD-4D56-9148-864DD8A2F455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{57F96BB6-0904-4087-AFA9-2DBAF13CC8AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "Tests\Domain.Tests\Domain.Tests.csproj", "{57F96BB6-0904-4087-AFA9-2DBAF13CC8AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "tests\Api.Tests\Api.Tests.csproj", "{5162DB0D-0873-43B0-9DE8-FD8D8D9A2243}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Tests", "Tests\Api.Tests\Api.Tests.csproj", "{5162DB0D-0873-43B0-9DE8-FD8D8D9A2243}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

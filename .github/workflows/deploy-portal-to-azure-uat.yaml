@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [ uat ]
+    branches: [ uat, main ]
   pull_request:
     branches: [ uat ]
     

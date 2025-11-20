@@ -1,0 +1,31 @@
+﻿name: Build React App
+
+on:
+  workflow_call: 
+    inputs:
+      app-directory:
+        required: true
+        type: string
+      node-version:
+        required: true
+        type: number
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ inputs.node-version }}
+
+            - name: Install dependencies
+              run: npm install
+              working-directory: ${{ inputs.app-directory }}
+              
+            - name: Build
+              run: npm run build
+              working-directory: ${{ inputs.app-directory }}
