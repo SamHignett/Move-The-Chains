@@ -43,11 +43,6 @@ export default function TeamTopPerformersCard({
           bgcolor: 'primary.main',
           margin: `auto`,
           textAlign: 'center',
-          width: {
-            md: '50%',
-            sm: '75%',
-            xs: '100%',
-          },
         }}
       >
         <Typography variant="h3">Top Performers</Typography>

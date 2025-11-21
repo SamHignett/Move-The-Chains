@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices.Marshalling;
 using Application.Models.Stats;
 using Application.Models.Team;
 using Infrastructure.Clients.Player.Tank01;
@@ -11,6 +12,7 @@ public static class Tank01TeamMapper
     {
         return new TeamInfoDto
         {
+            ID = dto.ID,
             Name = dto.Name,
             City = dto.TeamCity,
             Conference = dto.Conference,
@@ -26,6 +28,7 @@ public static class Tank01TeamMapper
     {
         return new TeamStatsDto
         {
+            ID = dto.ID,
             Name = dto.Name,
             LogoURL = dto.NflComLogo1,
             PointsFor = dto.PointsFor,
@@ -233,5 +236,30 @@ public static class Tank01TeamMapper
     private static Stat ToStat(this string playerStat)
     {
         return new Stat { Value = Math.Round(double.Parse(playerStat) , 1) };
+    }
+
+    public static ScheduleDto ToScheduleDto(this Tank01TeamScheduleDto dto)
+    {
+        return new ScheduleDto
+        {
+            Games = dto.Schedule.Select(g => g.ToGameDto()).ToArray()
+        };
+    }
+    
+    private static GameDto ToGameDto(this Tank01GameDto dto)
+    {
+        return new GameDto
+        {
+            ID = dto.GameID,
+            Type = dto.SeasonType,
+            GameWeek = dto.GameWeek,
+            HomeTeamID = dto.TeamIDHome,
+            AwayTeamID = dto.TeamIDAway,
+            Date = dto.GameDate,
+            Time = dto.GameTimeEpoch,
+            Status = dto.GameStatus,
+            HomePoints = dto.HomePts,
+            AwayPoints = dto.AwayPts
+        };
     }
 }

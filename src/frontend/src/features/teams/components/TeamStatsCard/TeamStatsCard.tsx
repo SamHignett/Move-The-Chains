@@ -45,11 +45,6 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           bgcolor: 'primary.main',
           margin: `auto`,
           textAlign: 'center',
-          width: {
-            md: '50%',
-            sm: '75%',
-            xs: '100%',
-          },
         }}
       >
         <Typography variant="h3">Stats</Typography>

@@ -9,7 +9,10 @@ import { useTeamStats } from '@/features/teams/hooks/useTeamStats/useTeamStats';
 import { Stack } from '@mui/system';
 import TeamTopPerformersCard from '@/features/teams/components/TeamTopPerformersCard/TeamTopPerformersCard';
 import { useTeamTopPerformers } from '@/features/teams/hooks/useTeamTopPerformers/useTeamTopPerformers';
+import { Grid } from '@mui/material';
+import TeamScheduleCard from '@/features/teams/components/TeamScheduleCard/TeamScheduleCard';
 
+//TODO: Change data fetching to use `Promise` to group all requests together
 export default function TeamStatsPage() {
   const { teamName } = useParams<{ teamName: string }>();
   const { data: teamStats } = useTeamStats({ searchTerm: teamName });
@@ -42,15 +45,17 @@ export default function TeamStatsPage() {
   }
 
   return (
-    <Stack
-      spacing={3}
-      sx={{
-        alignItems: 'center',
-      }}
-    >
-      <TeamInfoCard info={teamInfo} />
-      <TeamStatsCard stats={teamStats[0]} />
-      <TeamTopPerformersCard teamTopPerformers={topPerformers[0]} />
-    </Stack>
+    <Grid container spacing={2} sx={{ height: '100%', width: '100%' }}>
+      <Grid size={9}>
+        <Stack spacing={3}>
+          <TeamInfoCard info={teamInfo} />
+          <TeamStatsCard stats={teamStats[0]} />
+          <TeamTopPerformersCard teamTopPerformers={topPerformers[0]} />
+        </Stack>
+      </Grid>
+      <Grid size={3}>
+        <TeamScheduleCard teamName={teamName}></TeamScheduleCard>
+      </Grid>
+    </Grid>
   );
 }

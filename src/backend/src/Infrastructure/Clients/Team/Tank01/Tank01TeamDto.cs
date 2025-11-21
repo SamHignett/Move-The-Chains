@@ -5,6 +5,9 @@ namespace Infrastructure.Clients.Team.Tank01
 {
     public class Tank01TeamDto
     {
+        [JsonPropertyName("teamID")]
+        public string ID { get; set; }
+        
         [JsonPropertyName("teamName")]
         public string Name { get; set; }
 

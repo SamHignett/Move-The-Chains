@@ -4,6 +4,8 @@ namespace Application.Models.Team;
 
 public class TeamStatsDto
 {
+    public string ID { get; set; } = "";
+    
     public string Name { get; set; } = "";
     
     public string LogoURL { get; set; } = "";

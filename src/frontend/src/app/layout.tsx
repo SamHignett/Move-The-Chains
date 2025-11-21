@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { QueryProvider } from '@/components/QueryProvider/QueryProvider';
 import { NavBar } from '@/components/NavBar/NavBar';
+import { ReactNode } from 'react';
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -22,9 +23,8 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
-  // Typo in JSX prop should be flagged by react/no-unknown-property
   return (
     <html lang="en">
       <body

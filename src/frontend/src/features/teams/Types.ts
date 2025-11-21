@@ -44,3 +44,23 @@ export type TeamSingleStat = {
   name: string;
   value: number;
 };
+
+export type Game = {
+  id: string;
+  type: string;
+  homeTeamID: number;
+  homeTeamName: string;
+  awayTeamID: number;
+  awayTeamName: string;
+  date: Date;
+  time: string;
+  gameWeek: string;
+  status: string;
+  winner: string;
+  homePoints: number;
+  awayPoints: number;
+};
+
+export type TeamSchedule = {
+  games: Game[];
+};
