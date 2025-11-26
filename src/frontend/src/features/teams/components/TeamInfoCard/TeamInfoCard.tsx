@@ -39,11 +39,6 @@ export default function TeamInfoCard({ info }: TeamInfoCardProps) {
           flexDirection: 'row',
           margin: `auto`,
           padding: 1,
-          width: {
-            md: '50%',
-            sm: '75%',
-            xs: '100%',
-          },
         }}
       >
         <Box

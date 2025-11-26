@@ -5,6 +5,7 @@
 
 export type OffensiveStats = {
   rushing: RushingStats;
+  receiving: ReceivingStats;
   passing: PassingStats;
   kicking: KickingStats;
   punting: PuntingStats;
@@ -66,4 +67,11 @@ export type FumblingStats = {
   fumbles: Stat;
   fumblesLost: Stat;
   fumblesRecovered: Stat;
+};
+
+export type ReceivingStats = {
+  targets: Stat;
+  receptions: Stat;
+  yards: Stat;
+  touchdowns: Stat;
 };

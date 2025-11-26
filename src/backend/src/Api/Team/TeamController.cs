@@ -8,10 +8,13 @@ namespace Api.Team;
 [Route("api/[controller]")]
 public class TeamController(IMediator mediator) : Controller
 {
-    [HttpGet("{name}/info")]
-    public async Task<IActionResult> GetTeamInfo([FromRoute] string name)
+    [HttpGet("info")]
+    public async Task<IActionResult> GetTeamInfo([FromQuery] string name = "", [FromQuery] string id = "")
     {
-        var team = await mediator.Send(new GetTeamInfo.Command(name));
+        if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(name))
+            return BadRequest("Either team name or team ID must be provided");
+        
+        var team = await mediator.Send(new GetTeamInfo.Command(name, id));
 
         return Ok(team);
     }
@@ -38,5 +41,16 @@ public class TeamController(IMediator mediator) : Controller
         var teamStats = await mediator.Send(new GetTeamTopPerformers.Command(searchTerm ?? ""));
 
         return Ok(teamStats);
+    }
+
+    [HttpGet("schedule")]
+    public async Task<IActionResult> GetSchedule([FromQuery] string name, [FromQuery] string season = "")
+    {
+        if (string.IsNullOrEmpty(name))
+            return BadRequest("Team name must be provided");
+        
+        var teamSchedule = await mediator.Send(new GetTeamSchedule.Command(name, season));
+        
+        return Ok(teamSchedule);
     }
 }
