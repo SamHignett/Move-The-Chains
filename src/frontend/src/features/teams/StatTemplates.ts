@@ -6,6 +6,7 @@
   TeamDefensiveStats,
   PlayerDefensiveStats,
   FumblingStats,
+  ReceivingStats,
 } from '@/features/stats/Types';
 
 export const RushingStatsTemplate: RushingStats = {
@@ -63,4 +64,11 @@ export const FumblingStatsTemplate: FumblingStats = {
   fumbles: { id: '', value: 0 },
   fumblesLost: { id: '', value: 0 },
   fumblesRecovered: { id: '', value: 0 },
+};
+
+export const ReceivingStatsTemplate: ReceivingStats = {
+  receptions: { id: '', value: 0 },
+  targets: { id: '', value: 0 },
+  touchdowns: { id: '', value: 0 },
+  yards: { id: '', value: 0 },
 };

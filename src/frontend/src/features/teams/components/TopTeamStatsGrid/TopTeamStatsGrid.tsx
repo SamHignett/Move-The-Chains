@@ -5,7 +5,7 @@ import React from 'react';
 import { Grid, Typography } from '@mui/material';
 import { TeamStats } from '@/features/teams/Types';
 import { useTeamSearch } from '@/features/teams/hooks/useTeamSearch/useTeamSearch';
-import TeamStatsCard from '@/features/teams/components/TeamStatsCard/TeamStatsCard';
+import TopTeamStatsCard from '@/features/teams/components/TopTeamStatsCard/TopTeamStatsCard';
 import {
   getTopTeamStatsForCategory,
   StatCategoryConfig,
@@ -88,7 +88,7 @@ export default function TopTeamStatsGrid() {
               justifyContent: 'center',
             }}
           >
-            <TeamStatsCard category={categoryName} stats={topStats} />
+            <TopTeamStatsCard category={categoryName} stats={topStats} />
           </Grid>
         );
       })}
