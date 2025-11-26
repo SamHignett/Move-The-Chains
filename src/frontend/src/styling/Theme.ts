@@ -2,7 +2,7 @@
 
 import { createTheme } from '@mui/material/styles';
 import { MuiButton } from '@/styling/components/MuiButton';
-import { darkColorScheme, lightColorScheme } from '@/styling/ColourSchemes';
+import { darkColorScheme, lightColorScheme } from '@/styling/ColorSchemes';
 
 const theme = createTheme({
   colorSchemes: {

@@ -7,6 +7,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/styling/Theme';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter';
 import { CssBaseline } from '@mui/material';
+import { Metadata } from 'next';
 
 const roboto = Roboto({
   display: 'swap',
@@ -14,6 +15,12 @@ const roboto = Roboto({
   variable: '--font-roboto',
   weight: ['300', '400', '500', '700'],
 });
+
+export const metadata: Metadata = {
+  description:
+    'An NFL-related website for tracking stats, making predictions and more.',
+  title: 'Move The Chains',
+};
 
 export default function RootLayout({
   children,
