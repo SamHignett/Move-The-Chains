@@ -44,7 +44,6 @@ export default function Home() {
         }}
       >
         <Button
-          variant="contained"
           onClick={() => {
             router.push(`/stats`);
           }}
@@ -52,7 +51,6 @@ export default function Home() {
           Stats
         </Button>
         <Button
-          variant="contained"
           onClick={() => {
             router.push(`/predictions`);
           }}

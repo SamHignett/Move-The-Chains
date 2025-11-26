@@ -4,7 +4,6 @@ import React from 'react';
 
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 export type TeamInfoCardProps = {
   info: {
@@ -20,56 +19,50 @@ export type TeamInfoCardProps = {
 };
 
 export default function TeamInfoCard({ info }: TeamInfoCardProps) {
-  const theme = createTheme({
-    palette: {
-      primary: {
-        dark: `#002b30`,
-        main: '#004953',
-      },
-    },
-  });
-
   return (
-    <ThemeProvider theme={theme}>
+    <Box
+      sx={{
+        alignItems: 'flex-start',
+        bgcolor: '#004953',
+        display: 'flex',
+        flexDirection: 'row',
+        margin: `auto`,
+        padding: 1,
+        width: {
+          md: '50%',
+          sm: '75%',
+          xs: '100%',
+        },
+      }}
+    >
+      <Box
+        component="img"
+        src={info.logoURL}
+        alt="Logo"
+        sx={{
+          display: { sm: 'block', xs: 'none' },
+          flexShrink: 0,
+          height: 150,
+          width: 150,
+        }}
+      />
       <Box
         sx={{
-          alignItems: 'flex-start',
-          bgcolor: 'primary.main',
           display: 'flex',
-          flexDirection: 'row',
-          margin: `auto`,
-          padding: 1,
+          flexDirection: 'column',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
       >
-        <Box
-          component="img"
-          src={info.logoURL}
-          alt="Logo"
-          sx={{
-            display: { sm: 'block', xs: 'none' },
-            flexShrink: 0,
-            height: 150,
-            width: 150,
-          }}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-          }}
-        >
-          <Typography variant="h4">{info.name}</Typography>
-          <Typography variant="h5">Location: {info.city}</Typography>
-          <Typography variant="h5">
-            Division/Conference: {info.conference} {info.division}
-          </Typography>
-          <Typography variant="h6">
-            Current Season Record: {info.wins}-{info.losses}-{info.ties}
-          </Typography>
-        </Box>
+        <Typography variant="h4">{info.name}</Typography>
+        <Typography variant="h5">Location: {info.city}</Typography>
+        <Typography variant="h5">
+          Division/Conference: {info.conference} {info.division}
+        </Typography>
+        <Typography variant="h6">
+          Current Season Record: {info.wins}-{info.losses}-{info.ties}
+        </Typography>
       </Box>
-    </ThemeProvider>
+    </Box>
   );
 }
