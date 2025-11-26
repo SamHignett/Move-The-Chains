@@ -1,17 +1,37 @@
 ﻿'use client';
 
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import {
+  AppBar,
+  Button,
+  FormControlLabel,
+  IconButton,
+  Switch,
+  Toolbar,
+  Typography,
+  useColorScheme,
+} from '@mui/material';
 import { SportsFootball } from '@mui/icons-material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Box } from '@mui/system';
-import React from 'react';
+import React, { useCallback } from 'react';
 import Search from '@/components/Search/Search';
 import { useRouter } from 'next/navigation';
 
 const NavBar: React.FC = () => {
   const pages = ['stats', 'predictions'];
-
   const router = useRouter();
+
+  const { mode, setMode } = useColorScheme();
+  const handleThemeToggle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setMode(event.target.checked ? `dark` : `light`);
+    },
+    [setMode],
+  );
+
+  if (!mode) {
+    return;
+  }
 
   return (
     <div>
@@ -47,6 +67,7 @@ const NavBar: React.FC = () => {
             {pages.map((page) => (
               <Button
                 key={page}
+                variant="text"
                 sx={{ color: `white`, display: `block`, my: 2 }}
                 onClick={() => {
                   router.push(`/${page}`);
@@ -56,6 +77,11 @@ const NavBar: React.FC = () => {
               </Button>
             ))}
           </Box>
+          <FormControlLabel
+            checked={mode === 'dark'}
+            control={<Switch onChange={handleThemeToggle} />}
+            label="Dark Mode"
+          />
           <Search />
         </Toolbar>
       </AppBar>
