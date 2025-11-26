@@ -46,7 +46,7 @@ export default function TeamScheduleCard({ teamName }: TeamScheduleCardProps) {
         />
         <List>
           {schedule.games.map((game) => (
-            <ListItem key={game.gameWeek}>
+            <ListItem key={game.id}>
               <Grid
                 container
                 sx={{
@@ -86,7 +86,6 @@ export default function TeamScheduleCard({ teamName }: TeamScheduleCardProps) {
                   </Grid>
                 )}
               </Grid>
-              <Typography></Typography>
             </ListItem>
           ))}
         </List>

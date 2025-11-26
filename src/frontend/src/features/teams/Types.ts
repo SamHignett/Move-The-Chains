@@ -6,6 +6,7 @@
   PuntingStats,
   PlayerDefensiveStats,
   TeamDefensiveStats,
+  ReceivingStats,
 } from '@/features/stats/Types';
 
 export type TeamInfo = {
@@ -34,7 +35,7 @@ export type TeamTopPerformers = {
   passing: PassingStats;
   kicking: KickingStats;
   punting: PuntingStats;
-  receiving: RushingStats;
+  receiving: ReceivingStats;
   defensive: PlayerDefensiveStats;
 };
 
@@ -56,7 +57,7 @@ export type Game = {
   time: string;
   gameWeek: string;
   status: string;
-  winner: string;
+  winner?: string;
   homePoints: number;
   awayPoints: number;
 };

@@ -41,14 +41,14 @@ export default function PlayerStatTable({
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell align="center" colSpan={2}>
+            <TableCell align="center" colSpan={3}>
               {category}
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {stats.map((stat) => (
-            <TableRow key={stat.name}>
+            <TableRow key={`${stat.name}-${stat.playerID}`}>
               <TableCell align="left" scope="row">
                 {formatCamelCase(stat.name)}
               </TableCell>

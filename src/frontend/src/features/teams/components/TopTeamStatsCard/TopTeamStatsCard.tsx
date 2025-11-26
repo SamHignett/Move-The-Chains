@@ -40,14 +40,14 @@ export default function TopTeamStatsCard(props: StatsCardProps) {
               <Box
                 component="img"
                 src={stat.logoURL}
-                alt="Logo"
+                alt={`${stat.teamName} Logo`}
                 sx={{
                   display: { sm: 'block', xs: 'none' },
                   flexShrink: 0,
                   height: 50,
                   width: 50,
                 }}
-              ></Box>
+              />
             </Grid>
             <Grid size={4}>
               <Typography

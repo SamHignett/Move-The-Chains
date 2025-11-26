@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 
 interface TabPanelProps {
   children?: ReactNode;
-  dir?: string;
   index: number;
   value: number;
 }

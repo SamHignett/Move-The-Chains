@@ -11,6 +11,9 @@ public class TeamController(IMediator mediator) : Controller
     [HttpGet("info")]
     public async Task<IActionResult> GetTeamInfo([FromQuery] string name = "", [FromQuery] string id = "")
     {
+        if (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(name))
+            return BadRequest("Either team name or team ID must be provided");
+        
         var team = await mediator.Send(new GetTeamInfo.Command(name, id));
 
         return Ok(team);
@@ -40,10 +43,13 @@ public class TeamController(IMediator mediator) : Controller
         return Ok(teamStats);
     }
 
-    [HttpGet("{name}/schedule")]
-    public async Task<IActionResult> GetSchedule([FromRoute] string name, [FromQuery] string season = "")
+    [HttpGet("schedule")]
+    public async Task<IActionResult> GetSchedule([FromQuery] string name, [FromQuery] string season = "")
     {
-        var teamSchedule = await mediator.Send(new GetTeamSchedule.Command(name));
+        if (string.IsNullOrEmpty(name))
+            return BadRequest("Team name must be provided");
+        
+        var teamSchedule = await mediator.Send(new GetTeamSchedule.Command(name, season));
         
         return Ok(teamSchedule);
     }

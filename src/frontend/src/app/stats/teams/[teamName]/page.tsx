@@ -28,20 +28,20 @@ export default function TeamStatsPage() {
     return <div>No team information available.</div>;
   }
 
-  if (
-    teamStats === undefined ||
-    teamStats.length === 0 ||
-    teamStats.length > 1
-  ) {
-    return <div> Error accessing team stats.</div>;
+  if (teamStats === undefined || teamStats.length === 0) {
+    return <div>Error accessing team stats.</div>;
   }
 
-  if (
-    topPerformers === undefined ||
-    topPerformers.length === 0 ||
-    topPerformers.length > 1
-  ) {
-    return <div> Error accessing team top performers.</div>;
+  if (teamStats.length > 1) {
+    return <div>Multiple teams found with the same name.</div>;
+  }
+
+  if (topPerformers === undefined || topPerformers.length === 0) {
+    return <div>Error accessing team top performers.</div>;
+  }
+
+  if (topPerformers.length > 1) {
+    return <div>Multiple sets of top performers found with the same name.</div>;
   }
 
   return (
@@ -54,7 +54,7 @@ export default function TeamStatsPage() {
         </Stack>
       </Grid>
       <Grid size={3}>
-        <TeamScheduleCard teamName={teamName}></TeamScheduleCard>
+        <TeamScheduleCard teamName={teamName} />
       </Grid>
     </Grid>
   );

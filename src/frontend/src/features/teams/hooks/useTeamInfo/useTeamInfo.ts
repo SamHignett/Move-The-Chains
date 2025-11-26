@@ -11,10 +11,9 @@ export function useTeamInfo(teamName?: string): UseQueryResult<TeamInfo> {
   const baseUrl = 'api/team/info';
 
   const params = new URLSearchParams();
+  params.append('name', teamName);
 
-  if (teamName) params.append('name', teamName);
-
-  const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
+  const url = `${baseUrl}?${params.toString()}`;
 
   return useQuery({
     queryFn: () => Axios.get(url).then((response) => response.data),

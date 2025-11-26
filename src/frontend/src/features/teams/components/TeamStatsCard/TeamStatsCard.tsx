@@ -26,12 +26,12 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
   const [categoryValue, setCategoryValue] = useState(0);
   const [offensiveCategoryValue, setOffensiveCategoryValue] = useState(0);
 
-  const handleCategoryChange = (event: SyntheticEvent, newValue: number) => {
+  const handleCategoryChange = (_event: SyntheticEvent, newValue: number) => {
     setCategoryValue(newValue);
   };
 
   const handleOffensiveCategoryChange = (
-    event: SyntheticEvent,
+    _event: SyntheticEvent,
     newValue: number,
   ) => {
     setOffensiveCategoryValue(newValue);
@@ -52,13 +52,13 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           value={categoryValue}
           labels={['Offensive', 'Defensive']}
           handleChange={handleCategoryChange}
-        ></TabBar>
+        />
         <TabPanel value={categoryValue} index={0}>
           <TabBar
             value={offensiveCategoryValue}
             labels={['Passing', 'Rushing', 'Kicking', 'Punting', 'Fumbling']}
             handleChange={handleOffensiveCategoryChange}
-          ></TabBar>
+          />
           <TabPanel value={offensiveCategoryValue} index={0}>
             <TeamStatTable
               category={'Passing'}

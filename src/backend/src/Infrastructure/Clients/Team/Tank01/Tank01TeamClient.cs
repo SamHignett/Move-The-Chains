@@ -18,7 +18,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         if (teams == null || teams.Count == 0)
             throw new HttpRequestException("Failed to parse team data from response");
 
-        var team = new Tank01TeamDto();
+        Tank01TeamDto? team;
         if (!string.IsNullOrEmpty(name))
              team = teams.FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
         else
@@ -93,7 +93,15 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
 
     public async Task<ScheduleDto> GetTeamSchedule(string name, string season = "")
     {
-        var teamInfo = await GetTeamInfo(name);
+        var teamsResponse = await GetTeams();
+        var teams = JsonSerializer.Deserialize<Tank01TeamInfoResponse>(await teamsResponse.Content.ReadAsStringAsync())?.Body;
+        if (teams == null || teams.Count == 0)
+            throw new HttpRequestException("Failed to parse team data from response");
+        
+        var teamInfo = teams.FirstOrDefault(t => t.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+        
+        if (teamInfo == null)
+            throw new HttpRequestException($"No team with matching name '{name}' found");
         
         var uri = "getNFLTeamSchedule";
         
@@ -104,7 +112,7 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         
         uri = QueryHelpers.AddQueryString(uri, "season", season);
         
-        HttpResponseMessage response = client.GetAsync(uri).Result;
+        HttpResponseMessage response = await client.GetAsync(uri);
         response.EnsureSuccessStatusCode();
         
         var scheduleResponse = JsonSerializer.Deserialize<Tank01TeamScheduleResponse>(await response.Content.ReadAsStringAsync())?.Body;
@@ -114,10 +122,18 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         
         var scheduleDto = scheduleResponse.ToScheduleDto();
         
+        var teamDict = teams.ToDictionary(x => x.ID, x => x);
         foreach (var game in scheduleDto.Games)
         {
-            game.HomeTeamName = GetTeamInfo(id:game.HomeTeamID).Result.Name;
-            game.AwayTeamName = GetTeamInfo(id:game.AwayTeamID).Result.Name;
+            if (teamDict.TryGetValue(game.HomeTeamID, out var homeTeam))
+            {
+                game.HomeTeamName = homeTeam.Name;
+            }
+            
+            if (teamDict.TryGetValue(game.AwayTeamID, out var awayTeam))
+            {
+                game.AwayTeamName = awayTeam.Name;
+            }
         }
         
         return scheduleDto;

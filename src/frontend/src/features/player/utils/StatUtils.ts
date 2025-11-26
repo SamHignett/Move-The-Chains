@@ -36,7 +36,7 @@ export const StatCategories: Record<
     template: PuntingStatsTemplate,
   },
   Receiving: {
-    getStats: (team: TeamTopPerformers) => team.receiving,
+    getStats: (topPerformers: TeamTopPerformers) => topPerformers.receiving,
     template: ReceivingStatsTemplate,
   },
   Rushing: {

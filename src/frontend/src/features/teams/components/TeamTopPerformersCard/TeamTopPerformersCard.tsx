@@ -31,7 +31,7 @@ export default function TeamTopPerformersCard({
 
   const [categoryValue, setCategoryValue] = useState(0);
 
-  const handleCategoryChange = (event: SyntheticEvent, newValue: number) => {
+  const handleCategoryChange = (_event: SyntheticEvent, newValue: number) => {
     setCategoryValue(newValue);
   };
 
@@ -51,9 +51,8 @@ export default function TeamTopPerformersCard({
           labels={Object.entries(StatCategories).map(
             ([categoryName]) => categoryName,
           )}
-          //labels={['Passing', 'Rushing', 'Kicking', 'Punting', 'Fumbling']}
           handleChange={handleCategoryChange}
-        ></TabBar>
+        />
         {Object.entries(StatCategories).map(([categoryName, config], index) => {
           const topStats = getTopPerformersForStatCategory(
             [teamTopPerformers],
