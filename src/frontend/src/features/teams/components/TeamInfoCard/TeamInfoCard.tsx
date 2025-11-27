@@ -4,21 +4,17 @@ import React from 'react';
 
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
+import { teamInfoQuery } from '@/features/teams/api/TeamApi';
+import { useQuery } from '@tanstack/react-query';
 
-export type TeamInfoCardProps = {
-  info: {
-    name: string;
-    logoURL: string;
-    city: string;
-    conference: string;
-    division: string;
-    wins: number;
-    losses: number;
-    ties: number;
-  };
-};
+export default function TeamInfoCard({ teamName }: { teamName: string }) {
+  
+  const { data: info } = useQuery(teamInfoQuery(teamName));
 
-export default function TeamInfoCard({ info }: TeamInfoCardProps) {
+  if (!info) {
+    return <div>Loading team information...</div>;
+  }
+
   return (
     <Box
       sx={{

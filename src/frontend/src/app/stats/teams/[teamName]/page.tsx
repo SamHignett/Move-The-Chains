@@ -1,33 +1,33 @@
-﻿'use client';
-
-import React from 'react';
-import { useTeamInfo } from '@/features/teams/hooks/useTeamInfo/useTeamInfo';
+﻿import React, {Suspense} from 'react';
 import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
-import { useParams } from 'next/navigation';
 import TeamStatsCard from '@/features/teams/components/TeamStatsCard/TeamStatsCard';
-import { useTeamStats } from '@/features/teams/hooks/useTeamStats/useTeamStats';
-import { Stack } from '@mui/system';
+import {Stack} from '@mui/system';
 import TeamTopPerformersCard from '@/features/teams/components/TeamTopPerformersCard/TeamTopPerformersCard';
-import { useTeamTopPerformers } from '@/features/teams/hooks/useTeamTopPerformers/useTeamTopPerformers';
-import { Grid } from '@mui/material';
+import {Grid} from '@mui/material';
 import TeamScheduleCard from '@/features/teams/components/TeamScheduleCard/TeamScheduleCard';
+import {
+  getTeamStats,
+  getTeamTopPerformers,
+  teamInfoQuery,
+} from '@/features/teams/api/TeamApi';
+import {getQueryClient} from '@/components/ReactQueryProvider/ReactQueryProvider';
+import {dehydrate, HydrationBoundary} from '@tanstack/react-query';
 
 //TODO: Change data fetching to use `Promise` to group all requests together
-export default function TeamStatsPage() {
-  const { teamName } = useParams<{ teamName: string }>();
-  const { data: teamStats } = useTeamStats({ searchTerm: teamName });
-  const { data: teamInfo, error, isLoading } = useTeamInfo(teamName);
-  const { data: topPerformers } = useTeamTopPerformers({
+export default async function TeamStatsPage({params,}: {
+  params: Promise<{ teamName: string }>;
+}) {
+  const {teamName} = await params;
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery(teamInfoQuery(teamName));
+
+  /*
+  const { data: teamStats } = getTeamStats({ searchTerm: teamName });
+  const { teamInfo } = getTeamInfo(teamName);
+  const { data: topPerformers } = getTeamTopPerformers({
     searchTerm: teamName,
   });
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !teamInfo) {
-    return <div>No team information available.</div>;
-  }
-
   if (teamStats === undefined || teamStats.length === 0) {
     return <div>Error accessing team stats.</div>;
   }
@@ -44,18 +44,16 @@ export default function TeamStatsPage() {
     return <div>Multiple sets of top performers found with the same name.</div>;
   }
 
+  */
   return (
-    <Grid container spacing={2} sx={{ height: '100%', width: '100%' }}>
-      <Grid size={9}>
-        <Stack spacing={3}>
-          <TeamInfoCard info={teamInfo} />
-          <TeamStatsCard stats={teamStats[0]} />
-          <TeamTopPerformersCard teamTopPerformers={topPerformers[0]} />
-        </Stack>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Grid container spacing={2} sx={{height: '100%', width: '100%'}}>
+        <Grid size={9}>
+          <Stack spacing={3}>
+            <TeamInfoCard teamName={teamName}/>
+          </Stack>
+        </Grid>
       </Grid>
-      <Grid size={3}>
-        <TeamScheduleCard teamName={teamName} />
-      </Grid>
-    </Grid>
+    </HydrationBoundary>
   );
 }
