@@ -1,8 +1,11 @@
 ﻿import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { teamInfoQuery } from '@/features/teams/api/TeamApi';
 
 describe('TeamInfoCard', () => {
+  const mockName = 'Mock Team';
   const mockInfo = {
     city: 'Mock City',
     conference: 'Mock Conference',
@@ -15,8 +18,25 @@ describe('TeamInfoCard', () => {
   };
 
   it('Renders team information correctly', () => {
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+          // keep data fresh so useQuery won't refetch on mount
+          staleTime: 1000 * 60 * 5,
+        },
+      },
+    });
+
+    queryClient.setQueryData(teamInfoQuery(mockName).queryKey, mockInfo);
+
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+
     const { getByAltText, getByText } = render(
-      <TeamInfoCard info={mockInfo} />,
+      <TeamInfoCard teamName={mockName} />,
+      { wrapper },
     );
 
     expect(screen.getByAltText('Logo')).toBeInTheDocument();
