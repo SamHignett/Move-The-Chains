@@ -46,6 +46,7 @@ const eslintConfig = [
             "loading.tsx",
             "not-found.tsx",
             "template.tsx",
+            "providers.tsx",
             "route.ts",
             "middleware.ts",
             "error.js",

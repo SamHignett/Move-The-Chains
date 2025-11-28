@@ -1,5 +1,9 @@
-﻿import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { TeamInfo, TeamStats, TeamTopPerformers } from '@/features/teams/Types';
+﻿import {
+  TeamInfo,
+  TeamSchedule,
+  TeamStats,
+  TeamTopPerformers,
+} from '@/features/teams/Types';
 import { Axios } from '@/app/Axios';
 
 export function teamInfoQuery(teamName?: string) {
@@ -23,12 +27,19 @@ export async function fetchTeamInfo(teamName?: string): Promise<TeamInfo> {
 
   const url = `${baseUrl}?${params.toString()}`;
 
-  return Axios.get(url).then((response) => response.data)
+  return Axios.get(url).then((response) => response.data);
 }
 
-export function getTeamStats(options?: {
+export function teamStatsQuery(options?: { searchTerm?: string }) {
+  return {
+    queryFn: () => fetchTeamStats(options),
+    queryKey: ['teamStats', options?.searchTerm],
+  };
+}
+
+export async function fetchTeamStats(options?: {
   searchTerm?: string;
-}): UseQueryResult<TeamStats[]> {
+}): Promise<TeamStats[]> {
   const baseUrl = 'api/team/stats';
   const params = new URLSearchParams();
 
@@ -38,16 +49,19 @@ export function getTeamStats(options?: {
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
-  return useQuery({
-    queryFn: () => Axios.get(url).then((response) => response.data),
-    queryKey: ['teamStats', params.toString()],
-    staleTime: 1000 * 60 * 5,
-  });
+  return Axios.get(url).then((response) => response.data);
 }
 
-export function getTeamTopPerformers(options?: {
+export function teamTopPerformersQuery(options?: { searchTerm?: string }) {
+  return {
+    queryFn: () => fetchTeamTopPerformers(options),
+    queryKey: ['teamTopPerformers', options?.searchTerm],
+  };
+}
+
+export async function fetchTeamTopPerformers(options?: {
   searchTerm?: string;
-}): UseQueryResult<TeamTopPerformers[]> {
+}): Promise<TeamTopPerformers[]> {
   const baseUrl = `api/team/topPerformers`;
 
   const params = new URLSearchParams();
@@ -56,9 +70,28 @@ export function getTeamTopPerformers(options?: {
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
-  return useQuery({
-    queryFn: () => Axios.get(url).then((response) => response.data),
-    queryKey: ['teamTopPerformers', options?.searchTerm],
-    staleTime: 1000 * 60 * 5,
-  });
+  return Axios.get(url).then((response) => response.data);
+}
+
+export function teamScheduleQuery(teamName: string) {
+  return {
+    queryFn: () => fetchTeamSchedule(teamName),
+    queryKey: ['teamSchedule', teamName],
+  };
+}
+
+export async function fetchTeamSchedule(
+  teamName: string,
+): Promise<TeamSchedule> {
+  if (!teamName)
+    throw new Error('Team name is required to fetch team schedule.');
+
+  const baseUrl = 'api/team/schedule';
+
+  const params = new URLSearchParams();
+  params.append('name', teamName);
+
+  const url = `${baseUrl}?${params.toString()}`;
+
+  return Axios.get(url).then((response) => response.data);
 }

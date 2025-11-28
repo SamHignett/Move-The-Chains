@@ -8,7 +8,6 @@ import { teamInfoQuery } from '@/features/teams/api/TeamApi';
 import { useQuery } from '@tanstack/react-query';
 
 export default function TeamInfoCard({ teamName }: { teamName: string }) {
-  
   const { data: info } = useQuery(teamInfoQuery(teamName));
 
   if (!info) {
