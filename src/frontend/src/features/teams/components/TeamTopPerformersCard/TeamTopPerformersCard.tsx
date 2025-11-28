@@ -11,7 +11,7 @@ import {
   StatCategories,
 } from '@/features/player/utils/StatUtils';
 import { useQuery } from '@tanstack/react-query';
-import { teamTopPerformersQuery } from '@/features/teams/api/TeamApi';
+import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
 
 export default function TeamTopPerformersCard({
   teamName,

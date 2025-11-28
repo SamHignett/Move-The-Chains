@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { teamScheduleQuery } from '@/features/teams/api/TeamApi';
+import { teamScheduleQuery } from '@/features/teams/api/teamSchedule';
 
 export default function TeamScheduleCard({ teamName }: { teamName: string }) {
   const {

@@ -5,16 +5,13 @@ import { Stack } from '@mui/system';
 import TeamTopPerformersCard from '@/features/teams/components/TeamTopPerformersCard/TeamTopPerformersCard';
 import { Grid } from '@mui/material';
 import TeamScheduleCard from '@/features/teams/components/TeamScheduleCard/TeamScheduleCard';
-import {
-  teamInfoQuery,
-  teamScheduleQuery,
-  teamStatsQuery,
-  teamTopPerformersQuery,
-} from '@/features/teams/api/TeamApi';
+import { teamStatsQuery } from '@/features/teams/api/teamStats';
+import { teamInfoQuery } from '@/features/teams/api/teamInfo';
+import { teamScheduleQuery } from '@/features/teams/api/teamSchedule';
+import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-//TODO: Change data fetching to use `Promise` to group all requests together
 export default async function TeamStatsPage({
   params,
 }: {
@@ -23,12 +20,12 @@ export default async function TeamStatsPage({
   const { teamName } = await params;
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(teamInfoQuery(teamName));
-  await queryClient.prefetchQuery(teamStatsQuery({ searchTerm: teamName }));
-  await queryClient.prefetchQuery(
-    teamTopPerformersQuery({ searchTerm: teamName }),
-  );
-  await queryClient.prefetchQuery(teamScheduleQuery(teamName));
+  await Promise.all([
+    queryClient.prefetchQuery(teamInfoQuery(teamName)),
+    queryClient.prefetchQuery(teamStatsQuery({ searchTerm: teamName })),
+    queryClient.prefetchQuery(teamTopPerformersQuery({ searchTerm: teamName })),
+    queryClient.prefetchQuery(teamScheduleQuery(teamName)),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

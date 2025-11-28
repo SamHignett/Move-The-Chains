@@ -1,18 +1,21 @@
-﻿'use client';
+﻿import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
+import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
+import { playerInfoQuery } from '@/features/player/api/playerInfo';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { usePlayerInfo } from '@/features/player/hooks/usePlayerInfo/usePlayerInfo';
-import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
+export default async function PlayerStatsPage({
+  params,
+}: {
+  params: Promise<{ playerName: string }>;
+}) {
+  const { playerName } = await params;
 
-export default function PlayerStatsPage() {
-  const { data: playerInfo, error, isLoading } = usePlayerInfo();
+  const queryClient = getQueryClient();
+  await queryClient.prefetchQuery(playerInfoQuery({ names: [playerName] }));
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !playerInfo || playerInfo.length === 0) {
-    return <div>No player information available.</div>;
-  }
-
-  return <PlayerInfoCard info={playerInfo[0]} />;
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PlayerInfoCard playerName={playerName} />
+    </HydrationBoundary>
+  );
 }

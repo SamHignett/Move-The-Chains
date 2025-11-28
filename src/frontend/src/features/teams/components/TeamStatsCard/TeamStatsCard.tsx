@@ -7,7 +7,7 @@ import TeamStatTable from '@/features/stats/components/TeamStatTable/TeamStatTab
 import TabBar from '@/components/TabBar/TabBar';
 import TabPanel from '@/components/TabPanel/TabPanel';
 import { useQuery } from '@tanstack/react-query';
-import { teamStatsQuery } from '@/features/teams/api/TeamApi';
+import { teamStatsQuery } from '@/features/teams/api/teamStats';
 
 export default function TeamStatsCard({ teamName }: { teamName: string }) {
   const { data: stats } = useQuery(teamStatsQuery({ searchTerm: teamName }));

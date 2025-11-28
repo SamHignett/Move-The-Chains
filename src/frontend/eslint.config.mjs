@@ -62,7 +62,7 @@ const eslintConfig = [
   },
 
   {
-    files: ["**/hooks/**"],
+    files: ["**/hooks/**", "**/api/**"],
     rules: {
       "unicorn/filename-case": [
         "error",

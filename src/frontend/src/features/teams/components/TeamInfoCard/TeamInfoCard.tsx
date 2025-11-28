@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
-import { teamInfoQuery } from '@/features/teams/api/TeamApi';
+import { teamInfoQuery } from '@/features/teams/api/teamInfo';
 import { useQuery } from '@tanstack/react-query';
 
 export default function TeamInfoCard({ teamName }: { teamName: string }) {

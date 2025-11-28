@@ -2,7 +2,7 @@
 import { render, screen } from '@testing-library/react';
 import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { teamInfoQuery } from '@/features/teams/api/TeamApi';
+import { teamInfoQuery } from '@/features/teams/api/teamInfo';
 
 describe('TeamInfoCard', () => {
   const mockName = 'Mock Team';
@@ -22,7 +22,6 @@ describe('TeamInfoCard', () => {
       defaultOptions: {
         queries: {
           retry: false,
-          // keep data fresh so useQuery won't refetch on mount
           staleTime: 1000 * 60 * 5,
         },
       },

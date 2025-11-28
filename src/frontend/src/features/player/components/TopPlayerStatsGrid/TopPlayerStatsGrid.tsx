@@ -1,26 +1,22 @@
-﻿'use client';
-
-import React from 'react';
+﻿import React from 'react';
 import { Grid, Typography } from '@mui/material';
-import { useTeamTopPerformers } from '@/features/teams/hooks/useTeamTopPerformers/useTeamTopPerformers';
 import {
   getTopPerformersForStatCategory,
   StatCategories,
 } from '@/features/player/utils/StatUtils';
 import PlayerCategoryStatsCard from '@/features/player/components/PlayerCategoryStatsCard/PlayerCategoryStatsCard';
-export default function TopTeamStatsGrid() {
-  const { data: topPerformers = [], error, isLoading } = useTeamTopPerformers();
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
+import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
+import { playerInfoQuery } from '@/features/player/api/playerInfo';
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+export default async function TopPlayerStatsGrid() {
+  const queryClient = getQueryClient();
 
-  if (error) {
-    return <div>Error loading Stats</div>;
-  }
+  const topPerformers = await queryClient.fetchQuery(teamTopPerformersQuery());
 
-  if (topPerformers === undefined || topPerformers.length === 0) {
-    return <div>No Players Found</div>;
+  if (!topPerformers || topPerformers.length === 0) {
+    return <div>Failed to query team top performers</div>;
   }
 
   return (
@@ -34,19 +30,32 @@ export default function TopTeamStatsGrid() {
       >
         <Typography variant="h2">Top Player Stats</Typography>
       </Grid>
-      {Object.entries(StatCategories).map(([categoryName, config]) => {
+      {Object.entries(StatCategories).map(async ([categoryName, config]) => {
         const topStats = getTopPerformersForStatCategory(topPerformers, config);
+
+        const playerIDs = new Set(topStats.map((stat) => stat.playerID));
+        await queryClient.prefetchQuery(
+          playerInfoQuery({ ids: [...playerIDs] }),
+        );
+
         return (
-          <Grid
+          <HydrationBoundary
             key={'topPlayerStats-' + categoryName}
-            size={3}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
+            state={dehydrate(queryClient)}
           >
-            <PlayerCategoryStatsCard category={categoryName} stats={topStats} />
-          </Grid>
+            <Grid
+              size={3}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <PlayerCategoryStatsCard
+                category={categoryName}
+                stats={topStats}
+              />
+            </Grid>
+          </HydrationBoundary>
         );
       })}
     </Grid>
