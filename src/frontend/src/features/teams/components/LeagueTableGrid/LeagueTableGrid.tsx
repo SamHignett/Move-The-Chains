@@ -1,12 +1,17 @@
-﻿import { useTeamSearch } from '@/features/teams/hooks/useTeamSearch/useTeamSearch';
+﻿'use client';
+
 import { Grid } from '@mui/material';
 import TeamConferenceGrid from '@/features/teams/components/TeamConferenceGrid/TeamConferenceGrid';
+import { useQuery } from '@tanstack/react-query';
+import { teamSearchQuery } from '@/features/teams/api/teamSearch';
 
 export default function LeagueTableGrid() {
-  const { data: teams, isLoading } = useTeamSearch({
-    searchTerm: '',
-    sortBy: 'standings',
-  });
+  const { data: teams, isLoading } = useQuery(
+    teamSearchQuery({
+      searchTerm: '',
+      sortBy: 'standings',
+    }),
+  );
 
   if (isLoading) {
     return <div>Loading...</div>;

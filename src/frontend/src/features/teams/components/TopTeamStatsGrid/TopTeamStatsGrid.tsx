@@ -1,10 +1,8 @@
 ﻿'use client';
 
-import { useTeamStats } from '@/features/teams/hooks/useTeamStats/useTeamStats';
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 import { TeamStats } from '@/features/teams/Types';
-import { useTeamSearch } from '@/features/teams/hooks/useTeamSearch/useTeamSearch';
 import TopTeamStatsCard from '@/features/teams/components/TopTeamStatsCard/TopTeamStatsCard';
 import {
   getTopTeamStatsForCategory,
@@ -19,6 +17,8 @@ import {
   RushingStatsTemplate,
 } from '@/features/teams/StatTemplates';
 import { Stat } from '@/features/stats/Types';
+import { teamStatsQuery } from '@/features/teams/api/teamStats';
+import { useQuery } from '@tanstack/react-query';
 
 const statCategories: Record<
   string,
@@ -51,8 +51,7 @@ const statCategories: Record<
 };
 
 export default function TopTeamStatsGrid() {
-  const { data: teamStats = [], error, isLoading } = useTeamStats();
-  const { data: teams = [] } = useTeamSearch();
+  const { data: teamStats = [], error, isLoading } = useQuery(teamStatsQuery());
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -60,10 +59,6 @@ export default function TopTeamStatsGrid() {
 
   if (error) {
     return <div>Error loading Stats</div>;
-  }
-
-  if (teams.length === 0) {
-    return <div>No Teams Found</div>;
   }
 
   return (

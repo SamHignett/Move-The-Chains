@@ -4,6 +4,9 @@ namespace Application.Models.Team;
 
 public class TeamTopPerformersDto
 {
+    public string Id { get; set; }
+    
+    public string Name { get; set; }
     public RushingStats Rushing { get; set; }
     public PassingStats Passing { get; set; }
     public KickingStats Kicking { get; set; }
