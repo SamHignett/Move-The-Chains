@@ -8,7 +8,9 @@ export default async function PlayerStatsPage({
 }: {
   params: Promise<{ playerName: string }>;
 }) {
-  const { playerName } = await params;
+  let { playerName } = await params;
+
+  playerName = decodeURIComponent(playerName);
 
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(playerInfoQuery({ names: [playerName] }));

@@ -7,7 +7,7 @@ export function teamSearchQuery(options?: {
 }) {
   return {
     queryFn: () => fetchTeamSearch(options),
-    queryKey: ['useTeamSearch', options?.searchTerm, options?.sortBy],
+    queryKey: ['teamSearch', options?.searchTerm ?? '', options?.sortBy ?? ''],
   };
 }
 

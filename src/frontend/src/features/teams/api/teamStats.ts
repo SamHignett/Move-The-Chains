@@ -4,7 +4,7 @@ import { TeamStats } from '@/features/teams/Types';
 export function teamStatsQuery(options?: { searchTerm?: string }) {
   return {
     queryFn: () => fetchTeamStats(options),
-    queryKey: ['teamStats', options?.searchTerm],
+    queryKey: ['teamStats', options?.searchTerm ?? ''],
   };
 }
 

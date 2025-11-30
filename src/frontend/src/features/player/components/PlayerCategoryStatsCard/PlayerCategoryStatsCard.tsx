@@ -19,13 +19,24 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
     [props.stats],
   );
 
-  const { data: players } = useQuery(playerInfoQuery({ ids: playerIDs }));
+  const {
+    data: players,
+    error,
+    isLoading,
+  } = useQuery({
+    ...playerInfoQuery({ ids: playerIDs }),
+    enabled: playerIDs.length > 0,
+  });
 
   const playerNameById = useMemo(() => {
     if (!players) return new Map<string, string>();
 
     return new Map(players.map((p) => [p.id, p.name]));
   }, [players]);
+
+  if (isLoading) return <div>Loading player info...</div>;
+
+  if (error) return <div> Error querying player info: {error.message}</div>;
 
   return (
     <Box

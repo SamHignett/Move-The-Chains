@@ -58,7 +58,7 @@ export default function TopTeamStatsGrid() {
   }
 
   if (error) {
-    return <div>Error loading Stats</div>;
+    return <div>Error loading Stats: {error.message}</div>;
   }
 
   return (

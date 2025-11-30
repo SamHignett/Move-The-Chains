@@ -4,7 +4,7 @@ import { Axios } from '@/app/Axios';
 export function teamTopPerformersQuery(options?: { searchTerm?: string }) {
   return {
     queryFn: () => fetchTeamTopPerformers(options),
-    queryKey: ['teamTopPerformers', options?.searchTerm],
+    queryKey: ['teamTopPerformers', options?.searchTerm ?? ''],
   };
 }
 

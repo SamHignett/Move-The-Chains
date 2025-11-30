@@ -17,7 +17,10 @@ export default async function TeamStatsPage({
 }: {
   params: Promise<{ teamName: string }>;
 }) {
-  const { teamName } = await params;
+  let { teamName } = await params;
+
+  teamName = decodeURIComponent(teamName);
+
   const queryClient = getQueryClient();
 
   await Promise.all([

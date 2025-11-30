@@ -20,14 +20,21 @@ export default function TeamTopPerformersCard({
 }) {
   const [categoryValue, setCategoryValue] = useState(0);
 
-  const { data: topPerformers } = useQuery(
-    teamTopPerformersQuery({ searchTerm: teamName }),
-  );
+  const {
+    data: topPerformers,
+    error,
+    isLoading,
+  } = useQuery(teamTopPerformersQuery({ searchTerm: teamName }));
+
+  if (isLoading) return <div>Loading team top performers...</div>;
+
+  if (error)
+    return <div>Error querying team top performers: {error.message}</div>;
 
   if (!topPerformers) return <div>Failed to query team top performers</div>;
 
   const teamTopPerformers = topPerformers.find(
-    (t) => t.name.toLowerCase() == teamName.toLowerCase(),
+    (t) => t.name.toLowerCase() === teamName.toLowerCase(),
   );
 
   if (!teamTopPerformers) {

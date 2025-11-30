@@ -10,17 +10,25 @@ import { useQuery } from '@tanstack/react-query';
 import { teamStatsQuery } from '@/features/teams/api/teamStats';
 
 export default function TeamStatsCard({ teamName }: { teamName: string }) {
-  const { data: stats } = useQuery(teamStatsQuery({ searchTerm: teamName }));
+  const {
+    data: stats,
+    error,
+    isLoading,
+  } = useQuery(teamStatsQuery({ searchTerm: teamName }));
 
   const [categoryValue, setCategoryValue] = useState(0);
   const [offensiveCategoryValue, setOffensiveCategoryValue] = useState(0);
+
+  if (isLoading) return <div>Loading team stats...</div>;
+
+  if (error) return <div>Error querying team stats: {error.message}</div>;
 
   if (!stats) {
     return <div>Failed to query team stats</div>;
   }
 
   const teamStats = stats.find(
-    (s) => s.name.toLowerCase() == teamName.toLowerCase(),
+    (s) => s.name.toLowerCase() === teamName.toLowerCase(),
   );
 
   if (!teamStats) {

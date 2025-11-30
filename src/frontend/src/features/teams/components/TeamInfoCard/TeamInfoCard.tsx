@@ -8,11 +8,13 @@ import { teamInfoQuery } from '@/features/teams/api/teamInfo';
 import { useQuery } from '@tanstack/react-query';
 
 export default function TeamInfoCard({ teamName }: { teamName: string }) {
-  const { data: info } = useQuery(teamInfoQuery(teamName));
+  const { data: info, error, isLoading } = useQuery(teamInfoQuery(teamName));
 
-  if (!info) {
-    return <div>Loading team information...</div>;
-  }
+  if (isLoading) return <div>Loading team information...</div>;
+
+  if (error) return <div>Error querying team information: {error.message}</div>;
+
+  if (!info) return <div>Loading team information...</div>;
 
   return (
     <Box

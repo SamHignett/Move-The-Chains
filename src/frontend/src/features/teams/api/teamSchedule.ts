@@ -11,7 +11,7 @@ export function teamScheduleQuery(teamName: string) {
 export async function fetchTeamSchedule(
   teamName: string,
 ): Promise<TeamSchedule> {
-  if (!teamName)
+  if (teamName === '')
     throw new Error('Team name is required to fetch team schedule.');
 
   const baseUrl = 'api/team/schedule';

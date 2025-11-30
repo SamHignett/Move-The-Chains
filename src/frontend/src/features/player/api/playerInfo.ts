@@ -7,7 +7,7 @@ export function playerInfoQuery(options?: {
 }) {
   return {
     queryFn: () => fetchPlayerInfo(options),
-    queryKey: ['playerInfo', options?.names, options?.ids],
+    queryKey: ['playerInfo', options?.names ?? [], options?.ids ?? []],
   };
 }
 
@@ -19,14 +19,9 @@ export async function fetchPlayerInfo(options?: {
 
   const params = new URLSearchParams();
 
-  let playerNames: string[] = [];
-  if (options !== undefined && options.names !== undefined) {
-    playerNames = options.names;
-  }
+  const playerNames: string[] = options?.names ?? [];
 
-  let playerIds: string[] = [];
-  if (options !== undefined && options.ids !== undefined)
-    playerIds = options.ids;
+  const playerIds: string[] = options?.ids ?? [];
 
   if (playerNames.length === 0 && playerIds.length === 0)
     throw new Error(

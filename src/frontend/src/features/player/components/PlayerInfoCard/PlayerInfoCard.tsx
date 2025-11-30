@@ -9,9 +9,19 @@ import { useQuery } from '@tanstack/react-query';
 import { removeSpaces } from '@/utils/string/StringUtils';
 
 export default function PlayerInfoCard({ playerName }: { playerName: string }) {
-  const { data: playerInfo } = useQuery(
-    playerInfoQuery({ names: [playerName] }),
-  );
+  const {
+    data: playerInfo,
+    error,
+    isLoading,
+  } = useQuery(playerInfoQuery({ names: [playerName] }));
+
+  if (isLoading) {
+    return <div>Loading player info...</div>;
+  }
+
+  if (error) {
+    return <div>Error querying player info: {error.message}</div>;
+  }
 
   if (!playerInfo) {
     return <div>Failed to query player info</div>;
