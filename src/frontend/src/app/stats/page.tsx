@@ -1,4 +1,6 @@
-﻿import { Typography } from '@mui/material';
+﻿export const dynamic = 'force-dynamic';
+
+import { Typography } from '@mui/material';
 import LeagueTableGrid from '@/features/teams/components/LeagueTableGrid/LeagueTableGrid';
 import TopTeamStatsGrid from '@/features/teams/components/TopTeamStatsGrid/TopTeamStatsGrid';
 import TopPlayerStatsGrid from '@/features/player/components/TopPlayerStatsGrid/TopPlayerStatsGrid';

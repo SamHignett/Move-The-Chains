@@ -1,5 +1,5 @@
 ﻿import { PlayerInfo } from '@/features/player/Types';
-import { Axios } from '@/app/Axios';
+import { Fetch } from '@/app/Fetch';
 
 export function playerInfoQuery(options?: {
   names?: string[];
@@ -8,6 +8,7 @@ export function playerInfoQuery(options?: {
   return {
     queryFn: () => fetchPlayerInfo(options),
     queryKey: ['playerInfo', options?.names ?? [], options?.ids ?? []],
+    staleTime: 1000 * 60 * 60 * 6, // 6 hours
   };
 }
 
@@ -42,5 +43,5 @@ export async function fetchPlayerInfo(options?: {
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
-  return Axios.get(url).then((response) => response.data);
+  return Fetch(url);
 }

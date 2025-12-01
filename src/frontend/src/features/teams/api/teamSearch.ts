@@ -1,5 +1,5 @@
 ﻿import { TeamInfo } from '@/features/teams/Types';
-import { Axios } from '@/app/Axios';
+import { Fetch } from '@/app/Fetch';
 
 export function teamSearchQuery(options?: {
   searchTerm?: string;
@@ -8,6 +8,7 @@ export function teamSearchQuery(options?: {
   return {
     queryFn: () => fetchTeamSearch(options),
     queryKey: ['teamSearch', options?.searchTerm ?? '', options?.sortBy ?? ''],
+    staleTime: 1000 * 60 * 60 * 6, // 6 hours
   };
 }
 
@@ -29,5 +30,5 @@ export async function fetchTeamSearch(options?: {
 
   const url = params.toString() ? `${baseUrl}?${params.toString()}` : baseUrl;
 
-  return Axios.get(url).then((response) => response.data);
+  return Fetch(url);
 }

@@ -9,6 +9,9 @@ function makeQueryClient() {
     defaultOptions: {
       queries: {
         gcTime: 60 * 1000 * 30, // 30 minutes
+        refetchOnMount: false,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
         staleTime: 60 * 1000 * 5, // 5 minutes
       },
     },

@@ -1,4 +1,6 @@
-﻿import { styled, alpha } from '@mui/material/styles';
+﻿'use client';
+
+import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useCallback, useMemo } from 'react';

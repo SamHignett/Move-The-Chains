@@ -1,74 +1,30 @@
-﻿import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
+﻿import { useQuery } from '@tanstack/react-query';
 import { usePlayerInfo } from '@/features/player/hooks/usePlayerInfo/usePlayerInfo';
-import { renderHook, waitFor } from '@testing-library/react';
-import React from 'react';
-import { Axios } from '@/app/Axios';
+import { playerInfoQuery } from '@/features/player/api/playerInfo';
 
-jest.mock('next/navigation', () => ({
-  useParams: jest.fn(),
-}));
-
-jest.mock('@/app/Axios', () => ({
-  Axios: { get: jest.fn() },
-}));
-
-function createWrapper() {
-  const queryClient = new QueryClient({
-    defaultOptions: { queries: { retry: false } },
-  });
-
-  function Wrapper({ children }: { children: React.ReactNode }) {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-  }
-
-  Wrapper.displayName = 'QueryClientWrapper';
-
-  return Wrapper;
-}
+jest.mock('@tanstack/react-query');
+jest.mock('@/features/player/api/playerInfo');
 
 describe('PlayerApi', () => {
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('Gets Player info and returns data', async () => {
-    const expectedName = 'JalenHurts';
+  it('Invokes useQuery with correct query & options', () => {
+    const testOptions = {
+      names: ['JalenHurts'],
+    };
 
-    (useParams as jest.Mock).mockReturnValue({ playerName: expectedName });
-
-    (Axios.get as jest.Mock).mockResolvedValue({
-      data: {
-        names: expectedName,
-      },
+    const mockQueryConfig = { queryFn: jest.fn(), queryKey: ['JalenHurts'] };
+    (playerInfoQuery as jest.Mock).mockReturnValue(mockQueryConfig);
+    (useQuery as jest.Mock).mockReturnValue({
+      data: undefined,
+      isLoading: false,
     });
 
-    const { result } = renderHook(() => usePlayerInfo(), {
-      wrapper: createWrapper(),
-    });
+    usePlayerInfo(testOptions);
 
-    expect(Axios.get).toHaveBeenCalled();
-
-    await waitFor(
-      () => {
-        expect(result.current.isSuccess).toBe(true);
-      },
-      { timeout: 2000 },
-    );
-
-    expect(result.current.data).toEqual({ names: expectedName });
-    expect(Axios.get).toHaveBeenCalledWith(
-      `api/player/info?names=${expectedName}`,
-    );
-  });
-
-  it('Throws when no playerName provided', () => {
-    (useParams as jest.Mock).mockReturnValue({});
-
-    expect(() =>
-      renderHook(() => usePlayerInfo(), { wrapper: createWrapper() }),
-    ).toThrow();
+    expect(playerInfoQuery).toHaveBeenCalledWith(testOptions);
+    expect(useQuery).toHaveBeenCalledWith(mockQueryConfig);
   });
 });
