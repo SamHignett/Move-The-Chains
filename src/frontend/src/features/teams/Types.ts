@@ -31,6 +31,8 @@ export type TeamStats = {
 };
 
 export type TeamTopPerformers = {
+  id: string;
+  name: string;
   rushing: RushingStats;
   passing: PassingStats;
   kicking: KickingStats;

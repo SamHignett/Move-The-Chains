@@ -40,6 +40,8 @@ public static class Tank01TeamMapper
     {
         return new TeamTopPerformersDto()
         {
+            Id = dto.ID,
+            Name = dto.Name,
             Kicking = ToPlayerKickingStatsDto(dto),
             Passing = ToPlayerPassingStatsDto(dto),
             Punting = ToPlayerPuntingStatsDto(dto),

@@ -1,9 +1,12 @@
-﻿import { Box, Grid, Typography } from '@mui/material';
+﻿'use client';
+
+import { Box, Grid, Typography } from '@mui/material';
 import { Fragment } from 'react';
 import { formatCamelCase } from '@/utils/string/StringUtils';
 import { PlayerSingleStat } from '@/features/player/Types';
-import { usePlayerInfo } from '@/features/player/hooks/usePlayerInfo/usePlayerInfo';
 import { useMemo } from 'react';
+import { playerInfoQuery } from '@/features/player/api/playerInfo';
+import { useQuery } from '@tanstack/react-query';
 
 export type StatsCardProps = {
   category: string;
@@ -16,13 +19,24 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
     [props.stats],
   );
 
-  const { data: players } = usePlayerInfo({ ids: playerIDs });
+  const {
+    data: players,
+    error,
+    isLoading,
+  } = useQuery({
+    ...playerInfoQuery({ ids: playerIDs }),
+    enabled: playerIDs.length > 0,
+  });
 
   const playerNameById = useMemo(() => {
     if (!players) return new Map<string, string>();
 
     return new Map(players.map((p) => [p.id, p.name]));
   }, [players]);
+
+  if (isLoading) return <div>Loading player info...</div>;
+
+  if (error) return <div> Error querying player info: {error.message}</div>;
 
   return (
     <Box
