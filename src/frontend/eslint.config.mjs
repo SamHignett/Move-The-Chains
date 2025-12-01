@@ -70,8 +70,14 @@ const eslintConfig = [
           "case": "camelCase"
         }
       ]
-    }
+    },
   },
+  {
+    files: ["**/Fetch.ts"],
+    rules: {
+      "unicorn/prefer-top-level-await": "off"
+    }
+  }
 ];
 
 export default eslintConfig;

@@ -1,10 +1,11 @@
-﻿import { Axios } from '@/app/Axios';
+﻿import { Fetch } from '@/app/Fetch';
 import { TeamInfo } from '@/features/teams/Types';
 
 export function teamInfoQuery(teamName: string) {
   return {
     queryFn: () => fetchTeamInfo(teamName),
     queryKey: ['teamInfo', teamName],
+    staleTime: 1000 * 60 * 60 * 6, // 6 hours
   };
 }
 
@@ -19,5 +20,5 @@ export async function fetchTeamInfo(teamName: string): Promise<TeamInfo> {
 
   const url = `${baseUrl}?${params.toString()}`;
 
-  return Axios.get(url).then((response) => response.data);
+  return Fetch(url);
 }

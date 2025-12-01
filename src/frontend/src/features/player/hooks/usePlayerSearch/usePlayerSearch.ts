@@ -2,17 +2,14 @@
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { PlayerInfo } from '@/features/player/Types';
-import { Axios } from '@/app/Axios';
+import { Fetch } from '@/app/Fetch';
 export function usePlayerSearch(
   searchTerm: string,
 ): UseQueryResult<PlayerInfo[]> {
   return useQuery({
     enabled: Boolean(searchTerm),
-    queryFn: () =>
-      Axios.get(`api/player/search/${searchTerm}`).then(
-        (response) => response.data,
-      ),
+    queryFn: () => Fetch<PlayerInfo[]>(`api/player/search/${searchTerm}`),
     queryKey: ['usePlayerSearch', searchTerm],
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 60 * 6,
   });
 }

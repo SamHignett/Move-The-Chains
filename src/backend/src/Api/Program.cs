@@ -84,7 +84,8 @@ builder.Services.AddCors(options =>
                 return previewRegex.IsMatch(origin);
             })
             .AllowAnyHeader()
-            .AllowAnyMethod());
+            .AllowAnyMethod()
+            .SetPreflightMaxAge(TimeSpan.FromDays(1)));
 });
 
 var app = builder.Build();
