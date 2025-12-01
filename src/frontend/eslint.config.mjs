@@ -73,7 +73,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ["**/Fetch.tsx"],
+    files: ["**/Fetch.ts"],
     rules: {
       "unicorn/prefer-top-level-await": "off"
     }

@@ -12,7 +12,7 @@ function makeQueryClient() {
         refetchOnMount: false,
         refetchOnReconnect: false,
         refetchOnWindowFocus: false,
-        staleTime: 60 * 1000 * 5, // 5 minutes
+        staleTime: 60 * 1000 * 60 * 6, // 6 hours
       },
     },
   });
