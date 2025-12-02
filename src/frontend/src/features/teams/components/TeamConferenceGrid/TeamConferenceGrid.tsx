@@ -1,4 +1,6 @@
-﻿import { Grid, Typography } from '@mui/material';
+﻿'use client';
+
+import { Grid, Typography } from '@mui/material';
 import TeamDivisionGrid from '@/features/teams/components/TeamDivisionGrid/TeamDivisionGrid';
 import { TeamInfo } from '@/features/teams/Types';
 

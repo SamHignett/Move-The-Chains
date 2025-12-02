@@ -1,10 +1,12 @@
-﻿import React from 'react';
-import { Grid, Typography } from '@mui/material';
+﻿import 'server-only';
+
+import React from 'react';
+import { Grid, Skeleton } from '@mui/material';
 import {
   getTopPerformersForStatCategory,
   StatCategories,
 } from '@/features/player/utils/StatUtils';
-import PlayerCategoryStatsCard from '@/features/player/components/PlayerCategoryStatsCard/PlayerCategoryStatsCard';
+import TopPlayerStatsGridView from '../client/TopPlayerStatsGrid';
 import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { playerInfoQuery } from '@/features/player/api/playerInfo';
@@ -32,34 +34,19 @@ export default async function TopPlayerStatsGrid() {
 
   await queryClient.prefetchQuery(playerInfoQuery({ ids: [...allPlayerIDs] }));
 
+  return <TopPlayerStatsGridView topStats={topStats} />;
+}
+
+export function TopPlayerStatsGridSkeleton() {
   return (
-    <Grid container spacing={3} sx={{ flexGrow: 1 }}>
-      <Grid
-        size={12}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography variant="h2">Top Player Stats</Typography>
-      </Grid>
-      {Object.entries(StatCategories).map(([categoryName]) => {
-        return (
-          <Grid
-            key={categoryName}
-            size={3}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <PlayerCategoryStatsCard
-              category={categoryName}
-              stats={topStats[categoryName]}
-            />
+    <Grid container spacing={3} sx={{ flexGrow: 1, paddingBottom: 5 }}>
+      {Array.from({ length: Object.keys(StatCategories).length }).map(
+        (_, index) => (
+          <Grid size={3} key={index}>
+            <Skeleton variant="rectangular" height={300} />
           </Grid>
-        );
-      })}
+        ),
+      )}
     </Grid>
   );
 }

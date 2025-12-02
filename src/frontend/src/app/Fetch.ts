@@ -30,6 +30,10 @@ export async function Fetch<T>(url: string, options?: RequestInit): Promise<T> {
       ...options?.headers,
     },
     ...options,
+    cache: 'force-cache',
+    next: {
+      revalidate: 3600,
+    },
   });
 
   if (!response.ok) {

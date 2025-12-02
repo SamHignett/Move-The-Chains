@@ -1,31 +1,20 @@
-﻿export const dynamic = 'force-dynamic';
+﻿export const revalidate = 3600; // Revalidate this page every hour
 
+import { Suspense } from 'react';
 import { Typography } from '@mui/material';
-import LeagueTableGrid from '@/features/teams/components/LeagueTableGrid/LeagueTableGrid';
-import TopTeamStatsGrid from '@/features/teams/components/TopTeamStatsGrid/TopTeamStatsGrid';
-import TopPlayerStatsGrid from '@/features/player/components/TopPlayerStatsGrid/TopPlayerStatsGrid';
-import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
-import { teamSearchQuery } from '@/features/teams/api/teamSearch';
-import { teamStatsQuery } from '@/features/teams/api/teamStats';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
+import LeagueTableGrid, {
+  LeagueTableGridSkeleton,
+} from '@/features/teams/components/LeagueTableGrid/server/LeagueTableGrid';
+import TopTeamStatsGrid, {
+  TopTeamStatsGridSkeleton,
+} from '@/features/teams/components/TopTeamStatsGrid/server/TopTeamStatsGrid';
+import TopPlayerStatsGrid, {
+  TopPlayerStatsGridSkeleton,
+} from '@/features/player/components/TopPlayerStatsGrid/server/TopPlayerStatsGrid';
 
-export default async function StatsHomePage() {
-  const queryClient = getQueryClient();
-
-  await Promise.all([
-    queryClient.prefetchQuery(teamStatsQuery()),
-    queryClient.prefetchQuery(teamTopPerformersQuery()),
-    queryClient.prefetchQuery(
-      teamSearchQuery({
-        searchTerm: '',
-        sortBy: 'standings',
-      }),
-    ),
-  ]);
-
+export default function StatsHomePage() {
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
+    <>
       <Typography
         variant="h1"
         sx={{
@@ -36,9 +25,15 @@ export default async function StatsHomePage() {
       >
         Stats
       </Typography>
-      <LeagueTableGrid />
-      <TopTeamStatsGrid />
-      <TopPlayerStatsGrid />
-    </HydrationBoundary>
+      <Suspense fallback={<LeagueTableGridSkeleton />}>
+        <LeagueTableGrid />
+      </Suspense>
+      <Suspense fallback={<TopTeamStatsGridSkeleton />}>
+        <TopTeamStatsGrid />
+      </Suspense>
+      <Suspense fallback={<TopPlayerStatsGridSkeleton />}>
+        <TopPlayerStatsGrid />
+      </Suspense>
+    </>
   );
 }

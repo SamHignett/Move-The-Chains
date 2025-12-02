@@ -4,39 +4,13 @@ import React from 'react';
 
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
-import { playerInfoQuery } from '@/features/player/api/playerInfo';
-import { useQuery } from '@tanstack/react-query';
-import { removeSpaces } from '@/utils/string/StringUtils';
+import { PlayerInfo } from '@/features/player/Types';
 
-export default function PlayerInfoCard({ playerName }: { playerName: string }) {
-  const {
-    data: playerInfo,
-    error,
-    isLoading,
-  } = useQuery(playerInfoQuery({ names: [playerName] }));
+export type PlayerInfoCardProps = {
+  info: PlayerInfo;
+};
 
-  if (isLoading) {
-    return <div>Loading player info...</div>;
-  }
-
-  if (error) {
-    return <div>Error querying player info: {error.message}</div>;
-  }
-
-  if (!playerInfo) {
-    return <div>Failed to query player info</div>;
-  }
-
-  const info = playerInfo.find(
-    (p) =>
-      removeSpaces(p.name.toLowerCase()) ===
-      removeSpaces(playerName.toLowerCase()),
-  );
-
-  if (!info) {
-    return <div>No info found for player: {playerName}</div>;
-  }
-
+export default function PlayerInfoCard({ info }: PlayerInfoCardProps) {
   return (
     <Box
       sx={{

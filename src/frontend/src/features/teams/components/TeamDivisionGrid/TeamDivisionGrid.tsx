@@ -1,17 +1,10 @@
 ﻿import { Box, Typography, Grid } from '@mui/material';
 import { Fragment } from 'react';
+import { TeamInfo } from '@/features/teams/Types';
 
 export type TeamDivisionGridProps = {
   divisionName: string;
-  teams: Array<{
-    name: string;
-    division: string;
-    conference: string;
-    logoURL: string;
-    wins: number;
-    losses: number;
-    ties: number;
-  }>;
+  teams: TeamInfo[];
 };
 
 export default function TeamDivisionGrid({
