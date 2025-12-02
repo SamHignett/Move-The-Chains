@@ -1,6 +1,6 @@
 ﻿import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import TeamInfoCard from '@/features/teams/components/TeamInfoCard/TeamInfoCard';
+import TeamInfoCard from '@/features/teams/components/TeamInfoCard/client/TeamInfoCard';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { teamInfoQuery } from '@/features/teams/api/teamInfo';
 
@@ -10,6 +10,7 @@ describe('TeamInfoCard', () => {
     city: 'Mock City',
     conference: 'Mock Conference',
     division: 'Mock Division',
+    id: '1',
     logoURL: 'https://via.placeholder.com/150',
     losses: 5,
     name: 'Mock Team',
@@ -34,7 +35,7 @@ describe('TeamInfoCard', () => {
     );
 
     const { getByAltText, getByText } = render(
-      <TeamInfoCard teamName={mockName} />,
+      <TeamInfoCard info={mockInfo} />,
       { wrapper },
     );
 

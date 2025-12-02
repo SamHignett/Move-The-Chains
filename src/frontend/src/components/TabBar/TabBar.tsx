@@ -1,20 +1,26 @@
-﻿import AppBar from '@mui/material/AppBar';
+﻿'use client';
+
+import AppBar from '@mui/material/AppBar';
 import { Tabs } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import { SyntheticEvent } from 'react';
 
 export type TabBarProps = {
   value: number;
-  handleChange: (event: SyntheticEvent, newValue: number) => void;
+  handleChangeAction: (event: SyntheticEvent, newValue: number) => void;
   labels: string[];
 };
 
-export default function TabBar({ handleChange, labels, value }: TabBarProps) {
+export default function TabBar({
+  handleChangeAction,
+  labels,
+  value,
+}: TabBarProps) {
   return (
     <AppBar position="static">
       <Tabs
         value={value}
-        onChange={handleChange}
+        onChange={handleChangeAction}
         indicatorColor="secondary"
         textColor="inherit"
         variant="fullWidth"

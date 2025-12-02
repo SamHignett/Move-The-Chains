@@ -1,21 +1,15 @@
 ﻿'use client';
 
 import React from 'react';
-
 import { Box } from '@mui/system';
 import { Typography } from '@mui/material';
-import { teamInfoQuery } from '@/features/teams/api/teamInfo';
-import { useQuery } from '@tanstack/react-query';
+import { TeamInfo } from '@/features/teams/Types';
 
-export default function TeamInfoCard({ teamName }: { teamName: string }) {
-  const { data: info, error, isLoading } = useQuery(teamInfoQuery(teamName));
+export type TeamInfoCardProps = {
+  info: TeamInfo;
+};
 
-  if (isLoading) return <div>Loading team information...</div>;
-
-  if (error) return <div>Error querying team information: {error.message}</div>;
-
-  if (!info) return <div>Loading team information...</div>;
-
+export default function TeamInfoCard({ info }: TeamInfoCardProps) {
   return (
     <Box
       sx={{

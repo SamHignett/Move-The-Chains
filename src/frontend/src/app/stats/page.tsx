@@ -1,6 +1,4 @@
-﻿export const revalidate = 3600; // Revalidate this page every hour
-
-import { Suspense } from 'react';
+﻿import { Suspense } from 'react';
 import { Typography } from '@mui/material';
 import LeagueTableGrid, {
   LeagueTableGridSkeleton,
@@ -11,6 +9,8 @@ import TopTeamStatsGrid, {
 import TopPlayerStatsGrid, {
   TopPlayerStatsGridSkeleton,
 } from '@/features/player/components/TopPlayerStatsGrid/server/TopPlayerStatsGrid';
+
+export const revalidate = 3600;
 
 export default function StatsHomePage() {
   return (
