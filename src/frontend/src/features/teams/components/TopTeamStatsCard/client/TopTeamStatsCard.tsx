@@ -1,4 +1,6 @@
-﻿import { Box, Grid, Typography } from '@mui/material';
+﻿'use client';
+
+import { Box, Grid, Typography } from '@mui/material';
 import { TeamSingleStat } from '@/features/teams/Types';
 import { Fragment } from 'react';
 import { formatCamelCase } from '@/utils/string/StringUtils';

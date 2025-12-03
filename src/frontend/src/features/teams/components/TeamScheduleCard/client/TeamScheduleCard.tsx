@@ -8,24 +8,13 @@ import {
   ListItem,
   Typography,
 } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { teamScheduleQuery } from '@/features/teams/api/teamSchedule';
+import { TeamSchedule } from '@/features/teams/Types';
 
-export default function TeamScheduleCard({ teamName }: { teamName: string }) {
-  const {
-    data: schedule,
-    error,
-    isLoading,
-  } = useQuery(teamScheduleQuery(teamName));
+export type TeamScheduleProps = {
+  schedule: TeamSchedule;
+};
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error || !schedule) {
-    return <div>No schedule information available.</div>;
-  }
-
+export default function TeamScheduleCard({ schedule }: TeamScheduleProps) {
   return (
     <Card
       sx={{

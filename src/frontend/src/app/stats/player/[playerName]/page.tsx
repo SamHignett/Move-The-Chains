@@ -1,7 +1,10 @@
-﻿import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
-import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
-import { playerInfoQuery } from '@/features/player/api/playerInfo';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+﻿import { Suspense } from 'react';
+
+import PlayerInfoCard, {
+  PlayerInfoCardSkeleton,
+} from '@/features/player/components/PlayerInfoCard/server/PlayerInfoCard';
+
+export const revalidate = 3600;
 
 export default async function PlayerStatsPage({
   params,
@@ -9,15 +12,13 @@ export default async function PlayerStatsPage({
   params: Promise<{ playerName: string }>;
 }) {
   let { playerName } = await params;
-
   playerName = decodeURIComponent(playerName);
 
-  const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(playerInfoQuery({ names: [playerName] }));
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <PlayerInfoCard playerName={playerName} />
-    </HydrationBoundary>
+    <>
+      <Suspense fallback={<PlayerInfoCardSkeleton />}>
+        <PlayerInfoCard playerName={playerName} />
+      </Suspense>
+    </>
   );
 }

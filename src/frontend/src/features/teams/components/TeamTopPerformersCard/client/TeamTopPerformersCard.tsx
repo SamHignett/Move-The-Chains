@@ -10,36 +10,16 @@ import {
   getTopPerformersForStatCategory,
   StatCategories,
 } from '@/features/player/utils/StatUtils';
-import { useQuery } from '@tanstack/react-query';
-import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
+import { TeamTopPerformers } from '@/features/teams/Types';
+
+export type TeamTopPerformersCardProps = {
+  teamTopPerformers: TeamTopPerformers;
+};
 
 export default function TeamTopPerformersCard({
-  teamName,
-}: {
-  teamName: string;
-}) {
+  teamTopPerformers,
+}: TeamTopPerformersCardProps) {
   const [categoryValue, setCategoryValue] = useState(0);
-
-  const {
-    data: topPerformers,
-    error,
-    isLoading,
-  } = useQuery(teamTopPerformersQuery({ searchTerm: teamName }));
-
-  if (isLoading) return <div>Loading team top performers...</div>;
-
-  if (error)
-    return <div>Error querying team top performers: {error.message}</div>;
-
-  if (!topPerformers) return <div>Failed to query team top performers</div>;
-
-  const teamTopPerformers = topPerformers.find(
-    (t) => t.name.toLowerCase() === teamName.toLowerCase(),
-  );
-
-  if (!teamTopPerformers) {
-    return <div>No top performers found for team: {teamName}</div>;
-  }
 
   const handleCategoryChange = (_event: SyntheticEvent, newValue: number) => {
     setCategoryValue(newValue);
@@ -60,7 +40,7 @@ export default function TeamTopPerformersCard({
         labels={Object.entries(StatCategories).map(
           ([categoryName]) => categoryName,
         )}
-        handleChange={handleCategoryChange}
+        handleChangeAction={handleCategoryChange}
       />
       {Object.entries(StatCategories).map(([categoryName, config], index) => {
         const topStats = getTopPerformersForStatCategory(
