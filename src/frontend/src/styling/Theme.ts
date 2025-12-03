@@ -12,6 +12,9 @@ const theme = createTheme({
   components: {
     MuiButton: MuiButton,
   },
+  cssVariables: {
+    colorSchemeSelector: 'class',
+  },
   typography: {
     fontFamily: 'var(--font-roboto)',
   },
