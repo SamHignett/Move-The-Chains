@@ -10,7 +10,7 @@ import TopPlayerStatsGrid, {
   TopPlayerStatsGridSkeleton,
 } from '@/features/player/components/TopPlayerStatsGrid/server/TopPlayerStatsGrid';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 export default function StatsHomePage() {
   return (

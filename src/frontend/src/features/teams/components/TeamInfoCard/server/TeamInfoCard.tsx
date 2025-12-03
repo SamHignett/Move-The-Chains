@@ -1,5 +1,6 @@
-﻿import React from 'react';
+﻿import 'server-only';
 
+import React from 'react';
 import { teamInfoQuery } from '@/features/teams/api/teamInfo';
 import TeamInfoCardView from '../client/TeamInfoCard';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';

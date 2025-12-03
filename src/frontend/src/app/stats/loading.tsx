@@ -6,13 +6,13 @@ export default function Loading() {
     <Grid container spacing={2}>
       <Grid size={9}>
         <Stack spacing={3}>
-          <Skeleton variant="rectangular" height={150} /> {/* TeamInfo */}
-          <Skeleton variant="rectangular" height={400} /> {/* TeamStats */}
-          <Skeleton variant="rectangular" height={400} /> {/* TopPerformers */}
+          <Skeleton variant="rectangular" height={150} />
+          {/* LeagueTableGrid */}
+          <Skeleton variant="rectangular" height={400} />
+          {/* TopTeamStatsGrid */}
+          <Skeleton variant="rectangular" height={400} />
+          {/* TopPlayerStatsGrid */}
         </Stack>
-      </Grid>
-      <Grid size={3}>
-        <Skeleton variant="rectangular" height="100%" /> {/* Schedule */}
       </Grid>
     </Grid>
   );

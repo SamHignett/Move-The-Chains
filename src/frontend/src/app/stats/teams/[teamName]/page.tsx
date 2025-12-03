@@ -6,7 +6,9 @@ import TeamStatsCard, {
   TeamStatsCardSkeleton,
 } from '@/features/teams/components/TeamStatsCard/server/TeamStatsCard';
 import { Stack } from '@mui/system';
-import TeamTopPerformersCard from '@/features/teams/components/TeamTopPerformersCard/server/TeamTopPerformersCard';
+import TeamTopPerformersCard, {
+  TeamTopPerformersCardSkeleton,
+} from '@/features/teams/components/TeamTopPerformersCard/server/TeamTopPerformersCard';
 import { Grid } from '@mui/material';
 import TeamScheduleCard, {
   TeamScheduleCardSkeleton,
@@ -32,7 +34,7 @@ export default async function TeamStatsPage({
           <Suspense fallback={<TeamStatsCardSkeleton />}>
             <TeamStatsCard teamName={teamName} />
           </Suspense>
-          <Suspense fallback={<TeamStatsCardSkeleton />}>
+          <Suspense fallback={<TeamTopPerformersCardSkeleton />}>
             <TeamTopPerformersCard teamName={teamName} />
           </Suspense>
         </Stack>

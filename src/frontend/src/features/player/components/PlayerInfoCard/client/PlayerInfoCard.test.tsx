@@ -1,11 +1,8 @@
 ﻿import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/PlayerInfoCard';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { playerInfoQuery } from '@/features/player/api/playerInfo';
+import PlayerInfoCard from '@/features/player/components/PlayerInfoCard/client/PlayerInfoCard';
 
 describe('PlayerInfoCard', () => {
-  const mockName = 'Mock Player';
   const mockPlayer = {
     age: 25,
     currentTeam: 'Mock Team',
@@ -18,30 +15,9 @@ describe('PlayerInfoCard', () => {
     weight: 210,
   };
 
-  const mockInfo = [mockPlayer];
-
   it('Renders player information correctly', () => {
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: false,
-          staleTime: 1000 * 60 * 5,
-        },
-      },
-    });
-
-    queryClient.setQueryData(
-      playerInfoQuery({ names: [mockName] }).queryKey,
-      mockInfo,
-    );
-
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    );
-
     const { getByAltText, getByText } = render(
-      <PlayerInfoCard playerName={mockName} />,
-      { wrapper },
+      <PlayerInfoCard info={mockPlayer} />,
     );
 
     expect(screen.getByAltText('Headshot')).toBeInTheDocument();

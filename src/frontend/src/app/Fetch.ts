@@ -25,15 +25,15 @@ export async function Fetch<T>(url: string, options?: RequestInit): Promise<T> {
   url = baseURL ? `${baseURL}/${url}` : url;
 
   const response = await fetch(url, {
+    cache: 'force-cache',
     headers: {
       'Content-Type': 'application/json',
       ...options?.headers,
     },
-    ...options,
-    cache: 'force-cache',
     next: {
       revalidate: 3600,
     },
+    ...options,
   });
 
   if (!response.ok) {

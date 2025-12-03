@@ -1,4 +1,6 @@
-﻿import TeamTopPerformersCardView from '../client/TeamTopPerformersCard';
+﻿import 'server-only';
+
+import TeamTopPerformersCardView from '../client/TeamTopPerformersCard';
 import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { Skeleton } from '@mui/material';
@@ -27,5 +29,5 @@ export default async function TeamTopPerformersCard({
 }
 
 export function TeamTopPerformersCardSkeleton() {
-  return <Skeleton variant={'rectangular'} height={400} />;
+  return <Skeleton variant="rectangular" height={400} />;
 }

@@ -1,4 +1,6 @@
-﻿import TeamConferenceGridView from '../client/LeagueTableGrid';
+﻿import 'server-only';
+
+import LeagueTableGridView from '../client/LeagueTableGrid';
 import { teamSearchQuery } from '@/features/teams/api/teamSearch';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { Grid, Skeleton } from '@mui/material';
@@ -21,10 +23,7 @@ export default async function LeagueTableGrid() {
   const conferenceNames = new Set<string>(teams.map((team) => team.conference));
 
   return (
-    <TeamConferenceGridView
-      teams={teams}
-      conferenceNames={[...conferenceNames]}
-    />
+    <LeagueTableGridView teams={teams} conferenceNames={[...conferenceNames]} />
   );
 }
 
@@ -32,7 +31,7 @@ export function LeagueTableGridSkeleton() {
   return (
     <Grid container spacing={3} sx={{ flexGrow: 1, paddingBottom: 5 }}>
       {Array.from({ length: 2 }).map((_, conferenceIndex) => (
-        <Fragment key={conferenceIndex + 'Title'}>
+        <Fragment key={`${conferenceIndex}-Title`}>
           <Grid size={12}>
             <Skeleton
               variant="text"

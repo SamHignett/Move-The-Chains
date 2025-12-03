@@ -1,5 +1,6 @@
-﻿import React from 'react';
+﻿import 'server-only';
 
+import React from 'react';
 import { Skeleton } from '@mui/material';
 import { playerInfoQuery } from '@/features/player/api/playerInfo';
 import { removeSpaces } from '@/utils/string/StringUtils';

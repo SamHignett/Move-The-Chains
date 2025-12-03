@@ -1,4 +1,6 @@
-﻿import React from 'react';
+﻿import 'server-only';
+
+import React from 'react';
 import { teamStatsQuery } from '@/features/teams/api/teamStats';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { Grid, Skeleton } from '@mui/material';

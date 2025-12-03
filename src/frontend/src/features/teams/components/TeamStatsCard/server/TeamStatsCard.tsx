@@ -1,4 +1,6 @@
-﻿import TeamStatsCardView from '../client/TeamStatsCard';
+﻿import 'server-only';
+
+import TeamStatsCardView from '../client/TeamStatsCard';
 import { teamStatsQuery } from '@/features/teams/api/teamStats';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { Skeleton } from '@mui/material';
