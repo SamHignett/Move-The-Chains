@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using Application.Interfaces;
 using Application.Models.Team;
+using Infrastructure.Clients.Team.Tank01.Models;
+using Infrastructure.Clients.Team.Tank01.Responses;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infrastructure.Clients.Team.Tank01;

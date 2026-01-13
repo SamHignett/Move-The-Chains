@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Infrastructure.Clients.Team.Tank01;
+namespace Infrastructure.Clients.Team.Tank01.Models;
 
 public class Tank01TeamScheduleDto
 {
