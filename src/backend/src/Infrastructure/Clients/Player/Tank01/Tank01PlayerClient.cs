@@ -53,9 +53,9 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
         return playerDtos.ToArray();
     }
 
-    public async Task<PlayerStatsDto[]> GetPlayerStats(string name = "", string id = "")
+    public async Task<PlayerStatsDto> GetPlayerStats(string name = "", string id = "")
     {
-        if (name == "" && id == "")
+        if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(id))
         {
             throw new ArgumentException("Either name or id must be provided");
         }
@@ -63,11 +63,11 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
         var players = await QueryPlayers(name, id, true);
         
         if (players.Length != 1)
-            throw new HttpRequestException($"Unable to find player stats for player Name: {name} ID: {id}");
+            throw new HttpRequestException($"Multiple players found with Name: {name} ID: {id}");
 
-        var playerDtos = players.Select(p => p.ToPlayerStatsDto());
+        var playerDto = players.First().ToPlayerStatsDto();
 
-        return playerDtos.ToArray();
+        return playerDto;
     }
 
     public async Task<PlayerInfoDto[]> SearchPlayers(string name = "", string id = "")

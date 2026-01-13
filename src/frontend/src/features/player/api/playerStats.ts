@@ -12,7 +12,7 @@ export function playerStatsQuery(options?: { name?: string; id?: string }) {
 export async function fetchPlayerStats(options?: {
   name?: string;
   id?: string;
-}): Promise<PlayerStats[]> {
+}): Promise<PlayerStats> {
   if (!options?.name && !options?.id) {
     throw new Error(
       'Player name or ID is required to fetch player statistics.',

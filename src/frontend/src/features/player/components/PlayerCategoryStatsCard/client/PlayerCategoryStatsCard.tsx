@@ -14,14 +14,10 @@ export type StatsCardProps = {
 };
 
 export default function PlayerCategoryStatsCard(props: StatsCardProps) {
-  //console.log(props.stats)
-
   const playerIDs = useMemo(
     () => [...new Set(props.stats.map((stat) => stat.playerID))],
     [props.stats],
   );
-
-  //console.log(playerIDs);
 
   const {
     data: players,
@@ -41,8 +37,6 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
   if (isLoading) return <div>Loading player info...</div>;
 
   if (error) return <div> Error querying player info: {error.message}</div>;
-
-  //console.log('playerNameById', playerNameById);
 
   return (
     <Box

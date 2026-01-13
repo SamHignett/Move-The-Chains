@@ -21,7 +21,7 @@ public class Tank01TeamTopPerformers
     public Tank01TeamTopPerformersKicking Kicking { get; set; }
     
     [JsonPropertyName("Passing")]
-    public Tank01TeamTopPeformersPassing Passing { get; set; }
+    public Tank01TeamTopPerformersPassing Passing { get; set; }
     
     [JsonPropertyName("Receiving")]
     public Tank01TeamTopPerformersReceiving Receiving { get; set; }
@@ -60,7 +60,7 @@ public class Tank01TeamTopPerformersKicking
     public Tank01TeamTopPerformerStat ExtraPointsMade { get; set; }
 }
 
-public class Tank01TeamTopPeformersPassing
+public class Tank01TeamTopPerformersPassing
 {
     [JsonPropertyName("passYds")]
     public Tank01TeamTopPerformerStat Yards { get; set; }

@@ -28,7 +28,7 @@ export default async function TopPlayerStatsGrid() {
       topPerformers,
       config,
     );
-    console.log(topStats[categoryName]);
+
     for (const stat of topStats[categoryName]) allPlayerIDs.add(stat.playerID);
   }
 

@@ -71,7 +71,6 @@ export function getTopPerformersForStatCategory<T extends Record<string, Stat>>(
       return statB.value - statA.value;
     })[0];
 
-    console.log(categoryConfig.getStats(topPlayerForStat)[statKey]);
     return {
       name: statKey as string,
       playerID: categoryConfig.getStats(topPlayerForStat)[statKey].id,

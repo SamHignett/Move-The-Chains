@@ -7,6 +7,7 @@ import TabBar from '@/components/TabBar/TabBar';
 import TabPanel from '@/components/TabPanel/TabPanel';
 import { PlayerStats } from '@/features/player/Types';
 import StatTable from '@/features/stats/components/StatTable/StatTable';
+
 export type PlayerStatsCardProps = {
   stats: PlayerStats;
 };
@@ -55,7 +56,7 @@ export default function PlayerStatsCard({ stats }: PlayerStatsCardProps) {
           handleChangeAction={handleOffensiveCategoryChange}
         />
         <TabPanel value={offensiveCategoryValue} index={0}>
-          {stats.offensive.passing != undefined && (
+          {stats.offensive?.passing != undefined && (
             <StatTable
               category={'Passing'}
               stats={Object.entries(stats.offensive.passing).map(
@@ -65,7 +66,7 @@ export default function PlayerStatsCard({ stats }: PlayerStatsCardProps) {
           )}
         </TabPanel>
         <TabPanel value={offensiveCategoryValue} index={1}>
-          {stats.offensive.receiving != undefined && (
+          {stats.offensive?.receiving != undefined && (
             <StatTable
               category={'Receiving'}
               stats={Object.entries(stats.offensive.receiving).map(
@@ -74,49 +75,49 @@ export default function PlayerStatsCard({ stats }: PlayerStatsCardProps) {
             />
           )}
         </TabPanel>
-        {stats.offensive.rushing != undefined && (
-          <TabPanel value={offensiveCategoryValue} index={2}>
+        <TabPanel value={offensiveCategoryValue} index={2}>
+          {stats.offensive?.rushing != undefined && (
             <StatTable
               category={'Rushing'}
               stats={Object.entries(stats.offensive.rushing).map(
                 ([key, stat]) => ({ id: key, value: stat.value }),
               )}
             />
-          </TabPanel>
-        )}
-        {stats.offensive.kicking != undefined && (
-          <TabPanel value={offensiveCategoryValue} index={3}>
+          )}
+        </TabPanel>
+        <TabPanel value={offensiveCategoryValue} index={3}>
+          {stats.offensive?.kicking != undefined && (
             <StatTable
               category={'Kicking'}
               stats={Object.entries(stats.offensive.kicking).map(
                 ([key, stat]) => ({ id: key, value: stat.value }),
               )}
             />
-          </TabPanel>
-        )}
-        {stats.offensive.punting != undefined && (
-          <TabPanel value={offensiveCategoryValue} index={4}>
+          )}
+        </TabPanel>
+        <TabPanel value={offensiveCategoryValue} index={4}>
+          {stats.offensive?.punting != undefined && (
             <StatTable
               category={'Punting'}
               stats={Object.entries(stats.offensive.punting).map(
                 ([key, stat]) => ({ id: key, value: stat.value }),
               )}
             />
-          </TabPanel>
-        )}
-        {stats.offensive.fumbling != undefined && (
-          <TabPanel value={offensiveCategoryValue} index={5}>
+          )}
+        </TabPanel>
+        <TabPanel value={offensiveCategoryValue} index={5}>
+          {stats.offensive?.fumbling != undefined && (
             <StatTable
               category={'Fumbling'}
               stats={Object.entries(stats.offensive.fumbling).map(
                 ([key, stat]) => ({ id: key, value: stat.value }),
               )}
             />
-          </TabPanel>
-        )}
+          )}
+        </TabPanel>
       </TabPanel>
-      {stats.defensive != undefined && (
-        <TabPanel value={categoryValue} index={1}>
+      <TabPanel value={categoryValue} index={1}>
+        {stats.defensive != undefined && (
           <StatTable
             category={'Defensive'}
             stats={Object.entries(stats.defensive).map(([key, stat]) => ({
@@ -124,8 +125,8 @@ export default function PlayerStatsCard({ stats }: PlayerStatsCardProps) {
               value: stat.value,
             }))}
           />
-        </TabPanel>
-      )}
+        )}
+      </TabPanel>
     </Box>
   );
 }

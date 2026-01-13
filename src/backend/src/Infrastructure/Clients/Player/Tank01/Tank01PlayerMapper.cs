@@ -27,7 +27,7 @@ public static class Tank01PlayerMapper
             Kicking = stats.Kicking == null ? null : stats.Kicking.ToPlayerKickingStats(),
             Punting = stats.Punting == null ? null : stats.Punting.ToPlayerPuntingStats(),
             Receiving = stats.Receiving == null ? null : stats.Receiving.ToPlayerReceivingStats(),
-            Fumbling = stats.Defensive == null? null :  stats.ToPlayerFumblingStats()
+            Fumbling = stats.Defensive == null ? null :  stats.ToPlayerFumblingStats()
         };
     }
 

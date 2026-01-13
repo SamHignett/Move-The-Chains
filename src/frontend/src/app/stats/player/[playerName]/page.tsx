@@ -5,7 +5,7 @@ import PlayerInfoCard, {
 } from '@/features/player/components/PlayerInfoCard/server/PlayerInfoCard';
 import PlayerStatsCard, {
   PlayerStatsCardSkeleton,
-} from '@/features/player/TeamStatsCard/server/PlayerStatsCard';
+} from '@/features/player/components/PlayerStatsCard/server/PlayerStatsCard';
 
 export const revalidate = 3600;
 

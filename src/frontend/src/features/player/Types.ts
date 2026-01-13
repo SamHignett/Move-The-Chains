@@ -15,8 +15,8 @@ export type PlayerInfo = {
 export type PlayerStats = {
   id: string;
   name: string;
-  offensive: OffensiveStats;
-  defensive: PlayerDefensiveStats;
+  offensive?: OffensiveStats;
+  defensive?: PlayerDefensiveStats;
 };
 
 export type PlayerSingleStat = {
