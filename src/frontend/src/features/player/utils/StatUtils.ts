@@ -64,12 +64,10 @@ export function getTopPerformersForStatCategory<T extends Record<string, Stat>>(
       };
     });
   }
-
   return statKeys.map((statKey) => {
     const topPlayerForStat = [...teamTopPerformers].toSorted((a, b) => {
       const statA = categoryConfig.getStats(a)[statKey];
       const statB = categoryConfig.getStats(b)[statKey];
-
       return statB.value - statA.value;
     })[0];
 

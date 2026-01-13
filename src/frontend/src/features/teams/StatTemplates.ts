@@ -38,14 +38,19 @@ export const PuntingStatsTemplate: PuntingStats = {
 };
 
 export const TeamDefensiveStatsTemplate: TeamDefensiveStats = {
+  defensiveTouchdowns: { id: '', value: 0 },
   fumblesRecovered: { id: '', value: 0 },
   interceptions: { id: '', value: 0 },
+  passesDeflected: { id: '', value: 0 },
   passingTDsAllowed: { id: '', value: 0 },
   passingYardsAllowed: { id: '', value: 0 },
   qbHits: { id: '', value: 0 },
   rushingTDsAllowed: { id: '', value: 0 },
   rushingYardsAllowed: { id: '', value: 0 },
   sacks: { id: '', value: 0 },
+  soloTackles: { id: '', value: 0 },
+  tacklesForLoss: { id: '', value: 0 },
+  totalTackles: { id: '', value: 0 },
 };
 
 export const PlayerDefensiveStatsTemplate: PlayerDefensiveStats = {

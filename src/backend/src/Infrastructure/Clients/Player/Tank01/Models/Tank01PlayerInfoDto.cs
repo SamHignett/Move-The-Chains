@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Infrastructure.Clients.Player.Tank01;
+namespace Infrastructure.Clients.Player.Tank01.Models;
 
 public class Tank01PlayerInfoDto
 {
     [JsonPropertyName("espnName")] 
-    public string PlayerName { get; set; }
+    public string Name { get; set; }
     
     [JsonPropertyName("playerID")]
     public string ID { get; set; }
@@ -30,4 +30,7 @@ public class Tank01PlayerInfoDto
     
     [JsonPropertyName("espnHeadshot")]
     public string HeadshotImageUrl { get; set; }
+    
+    [JsonPropertyName("stats")]
+    public Tank01PlayerStatsDto Stats { get; set; }
 }

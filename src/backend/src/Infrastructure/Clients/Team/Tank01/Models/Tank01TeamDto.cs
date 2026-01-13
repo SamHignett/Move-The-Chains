@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using Infrastructure.Clients.Player.Tank01;
 
-namespace Infrastructure.Clients.Team.Tank01
+namespace Infrastructure.Clients.Team.Tank01.Models
 {
     public class Tank01TeamDto
     {
@@ -39,9 +38,9 @@ namespace Infrastructure.Clients.Team.Tank01
         public string PointsAgainst { get; set; }
         
         [JsonPropertyName("teamStats")]
-        public Tank01TeamStats TeamStats { get; set; }
+        public Tank01TeamStatsDto TeamStatsDto { get; set; }
         
         [JsonPropertyName("topPerformers")]
-        public Tank01PlayerStats TopPerformers { get; set; }
+        public Tank01TeamTopPerformers TopPerformers { get; set; }
     }
 }

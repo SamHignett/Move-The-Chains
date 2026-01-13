@@ -17,7 +17,7 @@ export type StatTableProps = {
   stats: Stat[];
 };
 
-export default function TeamStatTable({ category, stats }: StatTableProps) {
+export default function StatTable({ category, stats }: StatTableProps) {
   return (
     <TableContainer component={Paper}>
       <Table>
