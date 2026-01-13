@@ -77,6 +77,7 @@ export default function Search() {
     [debounceSearchChange],
   );
 
+  //TODO: Separate search behaviour from general search component
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === 'Enter') {

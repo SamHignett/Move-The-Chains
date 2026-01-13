@@ -1,6 +1,6 @@
 ﻿using Application.Models.Stats;
 using Application.Models.Team;
-using Infrastructure.Clients.Player.Tank01;
+using Infrastructure.Clients.Team.Tank01.Models;
 
 namespace Infrastructure.Clients.Team.Tank01;
 
@@ -31,7 +31,7 @@ public static class Tank01TeamMapper
             LogoURL = dto.NflComLogo1,
             PointsFor = dto.PointsFor,
             PointsAgainst = dto.PointsAgainst,
-            Offensive = ToOffensiveStatsDto(dto),
+            Offensive = ToTeamOffensiveStatsDto(dto),
             Defensive = ToTeamDefensiveStatsDto(dto),
         };
     }
@@ -42,16 +42,16 @@ public static class Tank01TeamMapper
         {
             Id = dto.ID,
             Name = dto.Name,
-            Kicking = ToPlayerKickingStatsDto(dto),
-            Passing = ToPlayerPassingStatsDto(dto),
-            Punting = ToPlayerPuntingStatsDto(dto),
-            Receiving = ToPlayerReceivingStatsDto(dto),
-            Rushing = ToPlayerRushingStatsDto(dto),
-            Defensive = ToPlayerDefensiveStatsDto(dto),
+            Kicking = ToTeamTopPerformerKickingStatsDto(dto),
+            Passing = ToTeamTopPerformerPassingStatsDto(dto),
+            Punting = ToTeamTopPerformerPuntingStatsDto(dto),
+            Receiving = ToTeamTopPerformerReceivingStatsDto(dto),
+            Rushing = ToTeamTopPerformerRushingStatsDto(dto),
+            Defensive = ToTeamTopPerformerDefensiveStatsDto(dto),
         };
     }
     
-    public static OffensiveStats ToOffensiveStatsDto(this Tank01TeamDto dto)
+    public static OffensiveStats ToTeamOffensiveStatsDto(this Tank01TeamDto dto)
     {
         return new OffensiveStats
         {
@@ -68,23 +68,23 @@ public static class Tank01TeamMapper
     {
         return new PassingStats
         {
-            Attempts = ToStat(dto.TeamStats.Passing.Attempts),
-            Completions = ToStat(dto.TeamStats.Passing.Completions),
-            Interceptions = ToStat(dto.TeamStats.Passing.Interceptions),
-            Touchdowns = ToStat(dto.TeamStats.Passing.Touchdowns),
-            Yards = ToStat(dto.TeamStats.Passing.Yards),
+            Attempts = ToTeamTopPerformerStat(dto.TeamStatsDto.Passing.Attempts),
+            Completions = ToTeamTopPerformerStat(dto.TeamStatsDto.Passing.Completions),
+            Interceptions = ToTeamTopPerformerStat(dto.TeamStatsDto.Passing.Interceptions),
+            Touchdowns = ToTeamTopPerformerStat(dto.TeamStatsDto.Passing.Touchdowns),
+            Yards = ToTeamTopPerformerStat(dto.TeamStatsDto.Passing.Yards),
         };
     }
     
-    private static PassingStats ToPlayerPassingStatsDto(this Tank01TeamDto dto)
+    private static PassingStats ToTeamTopPerformerPassingStatsDto(this Tank01TeamDto dto)
     {
         return new PassingStats
         {
-            Attempts = ToStat(dto.TopPerformers.Passing.Attempts),
-            Completions = ToStat(dto.TopPerformers.Passing.Completions),
-            Interceptions = ToStat(dto.TopPerformers.Passing.Interceptions),
-            Touchdowns = ToStat(dto.TopPerformers.Passing.Touchdowns),
-            Yards = ToStat(dto.TopPerformers.Passing.Yards)
+            Attempts = ToTeamTopPerformerStat(dto.TopPerformers.Passing.Attempts),
+            Completions = ToTeamTopPerformerStat(dto.TopPerformers.Passing.Completions),
+            Interceptions = ToTeamTopPerformerStat(dto.TopPerformers.Passing.Interceptions),
+            Touchdowns = ToTeamTopPerformerStat(dto.TopPerformers.Passing.Touchdowns),
+            Yards = ToTeamTopPerformerStat(dto.TopPerformers.Passing.Yards)
         };
     }
 
@@ -92,21 +92,21 @@ public static class Tank01TeamMapper
     {
         return new ReceivingStats()
         {
-            Receptions = ToStat(dto.TeamStats.Receiving.Receptions),
-            Yards = ToStat(dto.TeamStats.Receiving.Yards),
-            Targets = ToStat(dto.TeamStats.Receiving.Targets),
-            Touchdowns = ToStat(dto.TeamStats.Receiving.Touchdowns)
+            Receptions = ToTeamTopPerformerStat(dto.TeamStatsDto.Receiving.Receptions),
+            Yards = ToTeamTopPerformerStat(dto.TeamStatsDto.Receiving.Yards),
+            Targets = ToTeamTopPerformerStat(dto.TeamStatsDto.Receiving.Targets),
+            Touchdowns = ToTeamTopPerformerStat(dto.TeamStatsDto.Receiving.Touchdowns)
         };
     }
     
-    private static ReceivingStats ToPlayerReceivingStatsDto(this Tank01TeamDto dto)
+    private static ReceivingStats ToTeamTopPerformerReceivingStatsDto(this Tank01TeamDto dto)
     {
         return new ReceivingStats()
         {
-            Receptions = ToStat(dto.TopPerformers.Receiving.Receptions),
-            Yards =  ToStat(dto.TopPerformers.Receiving.Yards),
-            Targets = ToStat(dto.TopPerformers.Receiving.Targets),
-            Touchdowns = ToStat(dto.TopPerformers.Receiving.Touchdowns),
+            Receptions = ToTeamTopPerformerStat(dto.TopPerformers.Receiving.Receptions),
+            Yards =  ToTeamTopPerformerStat(dto.TopPerformers.Receiving.Yards),
+            Targets = ToTeamTopPerformerStat(dto.TopPerformers.Receiving.Targets),
+            Touchdowns = ToTeamTopPerformerStat(dto.TopPerformers.Receiving.Touchdowns),
         };
     }
 
@@ -114,18 +114,18 @@ public static class Tank01TeamMapper
     {
         return new RushingStats
         {
-            Yards = ToStat(dto.TeamStats.Rushing.Yards),
-            Touchdowns = ToStat(dto.TeamStats.Rushing.Touchdowns),
-            Carries = ToStat(dto.TeamStats.Rushing.Carries),
+            Yards = ToTeamTopPerformerStat(dto.TeamStatsDto.Rushing.Yards),
+            Touchdowns = ToTeamTopPerformerStat(dto.TeamStatsDto.Rushing.Touchdowns),
+            Carries = ToTeamTopPerformerStat(dto.TeamStatsDto.Rushing.Carries),
         };
     }
-    private static RushingStats ToPlayerRushingStatsDto(this Tank01TeamDto dto)
+    private static RushingStats ToTeamTopPerformerRushingStatsDto(this Tank01TeamDto dto)
     {
         return new RushingStats
         {
-            Yards = ToStat(dto.TopPerformers.Rushing.Yards),
-            Touchdowns = ToStat(dto.TopPerformers.Rushing.Touchdowns),
-            Carries = ToStat(dto.TopPerformers.Rushing.Carries),
+            Yards = ToTeamTopPerformerStat(dto.TopPerformers.Rushing.Yards),
+            Touchdowns = ToTeamTopPerformerStat(dto.TopPerformers.Rushing.Touchdowns),
+            Carries = ToTeamTopPerformerStat(dto.TopPerformers.Rushing.Carries),
         };
     }
 
@@ -133,39 +133,39 @@ public static class Tank01TeamMapper
     {
         return new KickingStats
         {
-            ExtraPointsAttempted = ToStat(dto.TeamStats.Kicking.ExtraPointsAttempted),
-            ExtraPointsMade = ToStat(dto.TeamStats.Kicking.ExtraPointsMade),
-            FieldGoalsAttempted = ToStat(dto.TeamStats.Kicking.FieldGoalsAttempted),
-            FieldGoalsMade = ToStat(dto.TeamStats.Kicking.FieldGoalsMade),
+            ExtraPointsAttempted = ToTeamTopPerformerStat(dto.TeamStatsDto.Kicking.ExtraPointsAttempted),
+            ExtraPointsMade = ToTeamTopPerformerStat(dto.TeamStatsDto.Kicking.ExtraPointsMade),
+            FieldGoalsAttempted = ToTeamTopPerformerStat(dto.TeamStatsDto.Kicking.FieldGoalsAttempted),
+            FieldGoalsMade = ToTeamTopPerformerStat(dto.TeamStatsDto.Kicking.FieldGoalsMade),
         };
     }
     
-    private static KickingStats ToPlayerKickingStatsDto(this Tank01TeamDto dto)
+    private static KickingStats ToTeamTopPerformerKickingStatsDto(this Tank01TeamDto dto)
     {
         return new KickingStats
         {
-            ExtraPointsAttempted = ToStat(dto.TopPerformers.Kicking.ExtraPointsAttempted),
-            ExtraPointsMade = ToStat(dto.TopPerformers.Kicking.ExtraPointsMade),
-            FieldGoalsAttempted = ToStat(dto.TopPerformers.Kicking.FieldGoalsAttempted),
-            FieldGoalsMade = ToStat(dto.TopPerformers.Kicking.FieldGoalsMade),
+            ExtraPointsAttempted = ToTeamTopPerformerStat(dto.TopPerformers.Kicking.ExtraPointsAttempted),
+            ExtraPointsMade = ToTeamTopPerformerStat(dto.TopPerformers.Kicking.ExtraPointsMade),
+            FieldGoalsAttempted = ToTeamTopPerformerStat(dto.TopPerformers.Kicking.FieldGoalsAttempted),
+            FieldGoalsMade = ToTeamTopPerformerStat(dto.TopPerformers.Kicking.FieldGoalsMade),
         };
     }
 
     private static PuntingStats ToTeamPuntingStatsDto(this Tank01TeamDto dto)
     {
-        var yards = double.Parse(dto.TeamStats.Punting.Yards);
-        var punts = double.Parse(dto.TeamStats.Punting.Punts);
+        var yards = double.Parse(dto.TeamStatsDto.Punting.Yards);
+        var punts = double.Parse(dto.TeamStatsDto.Punting.Punts);
         
         return new PuntingStats
         {
             Punts = new Stat{Value = punts},
             Yards = new Stat{Value = yards},
             AverageYards = new Stat{Value = punts > 0 ? Math.Round(yards / punts, 1): 0},
-            PuntsInside20 = ToStat(dto.TeamStats.Punting.PuntsInside20)
+            PuntsInside20 = ToTeamTopPerformerStat(dto.TeamStatsDto.Punting.PuntsInside20)
         };
     }
     
-    private static PuntingStats ToPlayerPuntingStatsDto(this Tank01TeamDto dto)
+    private static PuntingStats ToTeamTopPerformerPuntingStatsDto(this Tank01TeamDto dto)
     {
         var yards = double.Parse(dto.TopPerformers.Punting.Yards.Value);
         var punts = double.Parse(dto.TopPerformers.Punting.Punts.Value);
@@ -183,7 +183,7 @@ public static class Tank01TeamMapper
             Punts = new Stat{Value = punts, Id = topPuntingAttemptsPlayerID},
             Yards = new Stat{Value = yards, Id = topPuntingYardsPlayerID},
             AverageYards = new Stat{Value =  punts > 0 ? Math.Round(yards / punts, 1) : 0, Id = topPuntingYardsPlayerID},
-            PuntsInside20 = ToStat(dto.TopPerformers.Punting.PuntsInside20)
+            PuntsInside20 = ToTeamTopPerformerStat(dto.TopPerformers.Punting.PuntsInside20)
         };
     }
 
@@ -191,9 +191,9 @@ public static class Tank01TeamMapper
     {
         return new FumblingStats
         {
-            Fumbles = ToStat(dto.TeamStats.Defensive.Fumbles),
-            FumblesLost = ToStat(dto.TeamStats.Defensive.FumblesLost),
-            FumblesRecovered = ToStat(dto.TeamStats.Defensive.FumblesRecovered)
+            Fumbles = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.Fumbles),
+            FumblesLost = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.FumblesLost),
+            FumblesRecovered = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.FumblesRecovered)
         };
     }
     
@@ -201,41 +201,46 @@ public static class Tank01TeamMapper
     {
         return new TeamDefensiveStats
         {
-            FumblesRecovered = ToStat(dto.TeamStats.Defensive.FumblesRecovered),
-            Sacks = ToStat(dto.TeamStats.Defensive.Sacks),
-            QbHits = ToStat(dto.TeamStats.Defensive.QbHits),
-            Interceptions = ToStat(dto.TeamStats.Defensive.Interceptions),
-            PassingYardsAllowed = ToStat(dto.TeamStats.Defensive.PassingYardsAllowed),
-            PassingTDsAllowed = ToStat(dto.TeamStats.Defensive.PassingTDsAllowed),
-            RushingYardsAllowed = ToStat(dto.TeamStats.Defensive.RushingYardsAllowed),
-            RushingTDsAllowed = ToStat(dto.TeamStats.Defensive.RushingTDsAllowed),
+            FumblesRecovered = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.FumblesRecovered),
+            Sacks = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.Sacks),
+            QbHits = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.QbHits),
+            Interceptions = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.Interceptions),
+            PassingYardsAllowed = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.PassingYardsAllowed),
+            PassingTDsAllowed = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.PassingTDsAllowed),
+            RushingYardsAllowed = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.RushingYardsAllowed),
+            RushingTDsAllowed = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.RushingTDsAllowed),
+            PassesDeflected = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.PassesDeflected),
+            SoloTackles = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.SoloTackles),
+            TacklesForLoss = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.TacklesForLoss),
+            TotalTackles = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.TotalTackles),
+            DefensiveTouchdowns = ToTeamTopPerformerStat(dto.TeamStatsDto.Defensive.DefensiveTouchdowns),
         };
     }
     
-    private static PlayerDefensiveStats ToPlayerDefensiveStatsDto(this Tank01TeamDto dto)
+    private static PlayerDefensiveStats ToTeamTopPerformerDefensiveStatsDto(this Tank01TeamDto dto)
     {
         return new PlayerDefensiveStats
         {
-            FumblesRecovered = ToStat(dto.TopPerformers.Defensive.FumblesRecovered),
-            Sacks =  ToStat(dto.TopPerformers.Defensive.Sacks),
-            QbHits = ToStat(dto.TopPerformers.Defensive.QbHits),
-            Interceptions = ToStat(dto.TopPerformers.Defensive.Interceptions),
-            SoloTackles = ToStat(dto.TopPerformers.Defensive.SoloTackles),
-            Tackles = ToStat(dto.TopPerformers.Defensive.TotalTackles),
-            TacklesForLoss = ToStat(dto.TopPerformers.Defensive.TacklesForLoss),
-            DefensiveTouchdowns = ToStat(dto.TopPerformers.Defensive.DefensiveTouchdowns),
-            PassesDeflected = ToStat(dto.TopPerformers.Defensive.PassesDeflected),
+            FumblesRecovered = ToTeamTopPerformerStat(dto.TopPerformers.Defense.FumblesRecovered),
+            Sacks =  ToTeamTopPerformerStat(dto.TopPerformers.Defense.Sacks),
+            QbHits = ToTeamTopPerformerStat(dto.TopPerformers.Defense.QbHits),
+            Interceptions = ToTeamTopPerformerStat(dto.TopPerformers.Defense.Interceptions),
+            SoloTackles = ToTeamTopPerformerStat(dto.TopPerformers.Defense.SoloTackles),
+            Tackles = ToTeamTopPerformerStat(dto.TopPerformers.Defense.TotalTackles),
+            TacklesForLoss = ToTeamTopPerformerStat(dto.TopPerformers.Defense.TacklesForLoss),
+            DefensiveTouchdowns = ToTeamTopPerformerStat(dto.TopPerformers.Defense.DefensiveTouchdowns),
+            PassesDeflected = ToTeamTopPerformerStat(dto.TopPerformers.Defense.PassesDeflected),
         };
     }
 
-    private static Stat ToStat(this Tank01PlayerStat playerStat)
+    private static Stat ToTeamTopPerformerStat(this Tank01TeamTopPerformerStat teamTopPerformerStat)
     {
-        return new Stat { Value = Math.Round(double.Parse(playerStat.Value), 1), Id = playerStat.PlayerIDs.Length > 0 ? playerStat.PlayerIDs[0] : ""};
+        return new Stat { Value = Math.Round(double.Parse(teamTopPerformerStat.Value), 1), Id = teamTopPerformerStat.PlayerIDs.Length > 0 ? teamTopPerformerStat.PlayerIDs[0] : ""};
     }
     
-    private static Stat ToStat(this string playerStat)
+    private static Stat ToTeamTopPerformerStat(this string value)
     {
-        return new Stat { Value = Math.Round(double.Parse(playerStat) , 1) };
+        return new Stat { Value = Math.Round(double.Parse(value) , 1) };
     }
 
     public static ScheduleDto ToScheduleDto(this Tank01TeamScheduleDto dto)
