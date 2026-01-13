@@ -3,7 +3,7 @@
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import { useState, SyntheticEvent } from 'react';
-import TeamStatTable from '@/features/stats/components/TeamStatTable/TeamStatTable';
+import StatTable from '@/features/stats/components/StatTable/StatTable';
 import TabBar from '@/components/TabBar/TabBar';
 import TabPanel from '@/components/TabPanel/TabPanel';
 import { TeamStats } from '@/features/teams/Types';
@@ -49,7 +49,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           handleChangeAction={handleOffensiveCategoryChange}
         />
         <TabPanel value={offensiveCategoryValue} index={0}>
-          <TeamStatTable
+          <StatTable
             category={'Passing'}
             stats={Object.entries(stats.offensive.passing).map(
               ([key, stat]) => ({ id: key, value: stat.value }),
@@ -57,7 +57,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           />
         </TabPanel>
         <TabPanel value={offensiveCategoryValue} index={1}>
-          <TeamStatTable
+          <StatTable
             category={'Rushing'}
             stats={Object.entries(stats.offensive.rushing).map(
               ([key, stat]) => ({ id: key, value: stat.value }),
@@ -65,7 +65,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           />
         </TabPanel>
         <TabPanel value={offensiveCategoryValue} index={2}>
-          <TeamStatTable
+          <StatTable
             category={'Kicking'}
             stats={Object.entries(stats.offensive.kicking).map(
               ([key, stat]) => ({ id: key, value: stat.value }),
@@ -73,7 +73,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           />
         </TabPanel>
         <TabPanel value={offensiveCategoryValue} index={3}>
-          <TeamStatTable
+          <StatTable
             category={'Punting'}
             stats={Object.entries(stats.offensive.punting).map(
               ([key, stat]) => ({ id: key, value: stat.value }),
@@ -81,7 +81,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
           />
         </TabPanel>
         <TabPanel value={offensiveCategoryValue} index={4}>
-          <TeamStatTable
+          <StatTable
             category={'Fumbling'}
             stats={Object.entries(stats.offensive.fumbling).map(
               ([key, stat]) => ({ id: key, value: stat.value }),
@@ -90,7 +90,7 @@ export default function TeamStatsCard({ stats }: TeamStatsCardProps) {
         </TabPanel>
       </TabPanel>
       <TabPanel value={categoryValue} index={1}>
-        <TeamStatTable
+        <StatTable
           category={'Defensive'}
           stats={Object.entries(stats.defensive).map(([key, stat]) => ({
             id: key,

@@ -1,29 +1,30 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Infrastructure.Clients.Team.Tank01;
+namespace Infrastructure.Clients.Player.Tank01.Models;
 
-public class Tank01TeamStats
+public class Tank01PlayerStatsDto
 {
     [JsonPropertyName("Rushing")]
-    public Tank01TeamRushingStats Rushing { get; set; }
+    public Tank01PlayerRushingStats Rushing { get; set; }
     
     [JsonPropertyName("Kicking")]
-    public Tank01TeamKickingStats Kicking { get; set; }
+    public Tank01PlayerKickingStats Kicking { get; set; }
     
     [JsonPropertyName("Passing")]
-    public Tank01TeamPassingStats Passing { get; set; }
+    public Tank01PlayerPassingStats Passing { get; set; }
     
     [JsonPropertyName("Receiving")]
-    public Tank01TeamReceivingStats Receiving { get; set; }
+    public Tank01PlayerReceivingStats Receiving { get; set; }
     
     [JsonPropertyName("Punting")]
-    public Tank01TeamPuntingStats Punting { get; set; }
- 
+    public Tank01PlayerPuntingStats Punting { get; set; }
+    
     [JsonPropertyName("Defense")]
-    public Tank01TeamDefensiveStats Defensive { get; set; }
+    public Tank01PlayerDefensiveStats Defensive { get; set; }
 }
 
-public class Tank01TeamRushingStats
+
+public class Tank01PlayerRushingStats
 {
     [JsonPropertyName("rushYds")]
     public string Yards { get; set; }
@@ -35,7 +36,7 @@ public class Tank01TeamRushingStats
     public string Carries { get; set; }
 }
 
-public class Tank01TeamKickingStats
+public class Tank01PlayerKickingStats
 {
     [JsonPropertyName("fgAttempts")]
     public string FieldGoalsAttempted { get; set; }
@@ -50,7 +51,7 @@ public class Tank01TeamKickingStats
     public string ExtraPointsMade { get; set; }
 }
 
-public class Tank01TeamPassingStats
+public class Tank01PlayerPassingStats
 {
     [JsonPropertyName("passYds")]
     public string Yards { get; set; }
@@ -68,7 +69,7 @@ public class Tank01TeamPassingStats
     public string Attempts { get; set; }
 }
 
-public class Tank01TeamReceivingStats
+public class Tank01PlayerReceivingStats
 {
     [JsonPropertyName("recYds")]
     public string Yards { get; set; }
@@ -84,7 +85,7 @@ public class Tank01TeamReceivingStats
 }
 
 
-public class Tank01TeamPuntingStats
+public class Tank01PlayerPuntingStats
 {
     [JsonPropertyName("punts")]
     public string Punts { get; set; }
@@ -96,7 +97,7 @@ public class Tank01TeamPuntingStats
     public string PuntsInside20 { get; set; }
 }
 
-public class Tank01TeamDefensiveStats
+public class Tank01PlayerDefensiveStats
 {
     [JsonPropertyName("fumblesLost")]
     public string FumblesLost { get; set; }
@@ -107,14 +108,29 @@ public class Tank01TeamDefensiveStats
     [JsonPropertyName("fumblesRecovered")]
     public string FumblesRecovered { get; set; }
     
+    [JsonPropertyName("totalTackles")]
+    public string TotalTackles { get; set; }
+    
+    [JsonPropertyName("soloTackles")]
+    public string SoloTackles { get; set; }
+    
+    [JsonPropertyName("tfl")]
+    public string TFL { get; set; }
+    
     [JsonPropertyName("sacks")]
     public string Sacks { get; set; }
     
     [JsonPropertyName("qbHits")]
     public string QbHits { get; set; }
     
+    [JsonPropertyName("defTD")]
+    public string DefensiveTouchdowns { get; set; }
+    
     [JsonPropertyName("defensiveInterceptions")]
     public string Interceptions { get; set; }
+    
+    [JsonPropertyName("passDeflections")]
+    public string PassDeflections { get; set; }
     
     [JsonPropertyName("passingYardsAllowed")]
     public string PassingYardsAllowed { get; set; }
