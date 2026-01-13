@@ -21,6 +21,19 @@ public class PlayerController(IMediator mediator): Controller
         return Ok(player);
     }
 
+    [HttpGet("stats")]
+    public async Task<IActionResult> GetPlayerStats([FromQuery] string? name = null, [FromQuery] string? id = null)
+    {
+        if (name == null && id == null)
+        {
+            return BadRequest("Either 'name' or 'id' must be provided.");
+        }
+        
+        var stats = await mediator.Send(new GetPlayerStats.Command(name, id));
+
+        return Ok(stats);
+    }
+
     [HttpGet("search/{searchTerm}")]
     public async Task<IActionResult> SearchPlayers(string searchTerm)
     {

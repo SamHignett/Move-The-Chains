@@ -1,4 +1,6 @@
-﻿export type PlayerInfo = {
+﻿import { OffensiveStats, PlayerDefensiveStats } from '@/features/stats/Types';
+
+export type PlayerInfo = {
   id: string;
   name: string;
   age: number;
@@ -8,6 +10,13 @@
   currentTeam: string;
   position: string;
   headshotImageUrl: string;
+};
+
+export type PlayerStats = {
+  id: string;
+  name: string;
+  offensive: OffensiveStats;
+  defensive: PlayerDefensiveStats;
 };
 
 export type PlayerSingleStat = {

@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using Application.Interfaces;
 using Application.Models.Player;
+using Infrastructure.Clients.Player.Tank01.Models;
+using Infrastructure.Clients.Player.Tank01.Responses;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Infrastructure.Clients.Player.Tank01;
@@ -19,6 +21,7 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
         if (ids is { Length: > 0 })
         {
             var fetchedIds = new HashSet<string>();
+            
             foreach (var playerID in ids)
             {
                 if (fetchedIds.Contains(playerID))
@@ -50,16 +53,57 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
         return playerDtos.ToArray();
     }
 
+    public async Task<PlayerStatsDto[]> GetPlayerStats(string name = "", string id = "")
+    {
+        if (name == "" && id == "")
+        {
+            throw new ArgumentException("Either name or id must be provided");
+        }
+        
+        var players = await QueryPlayers(name, id, true);
+        
+        if (players.Length != 1)
+            throw new HttpRequestException($"Unable to find player stats for player Name: {name} ID: {id}");
+
+        var playerDtos = players.Select(p => p.ToPlayerStatsDto());
+
+        return playerDtos.ToArray();
+    }
+
     public async Task<PlayerInfoDto[]> SearchPlayers(string name = "", string id = "")
+    {
+        var players = await QueryPlayers(name, id);
+        
+        if (players.Length == 0)
+            return [];
+
+        var playerDtos = players.Select(p => new PlayerInfoDto()
+        {
+            Name = p.Name,
+            Id = p.ID,
+            Age = int.TryParse(p.Age, out var age) ? age : 0,
+            Height = p.Height,
+            Weight = p.Weight,
+            School = p.School,
+            CurrentTeam = p.Team,
+            Position = p.Position,
+            HeadshotImageUrl = p.HeadshotImageUrl,
+        });
+        
+        return playerDtos.ToArray();
+    }
+
+    private async Task<Tank01PlayerInfoDto[]> QueryPlayers(string name, string id, bool getStats = false)
     {
         var query = $"getNFLPlayerInfo";
         
         if (!string.IsNullOrEmpty(name))
             query = QueryHelpers.AddQueryString(query, "playerName", name);
-
-
+        
         if (!string.IsNullOrEmpty(id))
             query = QueryHelpers.AddQueryString(query, "playerID", id);
+        
+        query = QueryHelpers.AddQueryString(query, "getStats", getStats ? "true" : "false");
         
         using HttpResponseMessage response = await client.GetAsync(query);
         response.EnsureSuccessStatusCode();
@@ -78,23 +122,7 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
             if (player != null)
                 players.Add(player);
         }
-        
-        if (players.Count == 0)
-            return [];
 
-        var playerDtos = players.Select(p => new PlayerInfoDto()
-        {
-            Name = p.PlayerName,
-            Id = p.ID,
-            Age = int.TryParse(p.Age, out var age) ? age : 0,
-            Height = p.Height,
-            Weight = p.Weight,
-            School = p.School,
-            CurrentTeam = p.Team,
-            Position = p.Position,
-            HeadshotImageUrl = p.HeadshotImageUrl
-        });
-        
-        return playerDtos.ToArray();
+        return players.ToArray();
     }
 }

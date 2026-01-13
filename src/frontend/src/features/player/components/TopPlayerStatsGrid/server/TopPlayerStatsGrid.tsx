@@ -23,17 +23,16 @@ export default async function TopPlayerStatsGrid() {
 
   const allPlayerIDs = new Set<string>();
   const topStats: Record<string, PlayerSingleStat[]> = {};
-
   for (const [categoryName, config] of Object.entries(StatCategories)) {
     topStats[categoryName] = getTopPerformersForStatCategory(
       topPerformers,
       config,
     );
+    console.log(topStats[categoryName]);
     for (const stat of topStats[categoryName]) allPlayerIDs.add(stat.playerID);
   }
 
   await queryClient.prefetchQuery(playerInfoQuery({ ids: [...allPlayerIDs] }));
-
   return <TopPlayerStatsGridView topStats={topStats} />;
 }
 

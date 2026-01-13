@@ -3,6 +3,9 @@
 import PlayerInfoCard, {
   PlayerInfoCardSkeleton,
 } from '@/features/player/components/PlayerInfoCard/server/PlayerInfoCard';
+import PlayerStatsCard, {
+  PlayerStatsCardSkeleton,
+} from '@/features/player/TeamStatsCard/server/PlayerStatsCard';
 
 export const revalidate = 3600;
 
@@ -18,6 +21,9 @@ export default async function PlayerStatsPage({
     <>
       <Suspense fallback={<PlayerInfoCardSkeleton />}>
         <PlayerInfoCard playerName={playerName} />
+      </Suspense>
+      <Suspense fallback={<PlayerStatsCardSkeleton />}>
+        <PlayerStatsCard playerName={playerName} />
       </Suspense>
     </>
   );
