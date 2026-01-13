@@ -41,26 +41,31 @@ export type PuntingStats = {
 };
 
 export type TeamDefensiveStats = {
+  defensiveTouchdowns: Stat;
   fumblesRecovered: Stat;
-  sacks: Stat;
+  soloTackles: Stat;
   qbHits: Stat;
   interceptions: Stat;
   passingYardsAllowed: Stat;
   passingTDsAllowed: Stat;
   rushingYardsAllowed: Stat;
   rushingTDsAllowed: Stat;
+  passesDeflected: Stat;
+  tacklesForLoss: Stat;
+  totalTackles: Stat;
+  sacks: Stat;
 };
 
 export type PlayerDefensiveStats = {
+  defensiveTouchdowns: Stat;
   fumblesRecovered: Stat;
-  sacks: Stat;
+  soloTackles: Stat;
   qbHits: Stat;
   interceptions: Stat;
-  tackles: Stat;
-  soloTackles: Stat;
-  tacklesForLoss: Stat;
   passesDeflected: Stat;
-  defensiveTouchdowns: Stat;
+  tackles: Stat;
+  tacklesForLoss: Stat;
+  sacks: Stat;
 };
 
 export type FumblingStats = {
