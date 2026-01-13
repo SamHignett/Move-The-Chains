@@ -2,9 +2,9 @@
 
 public class Stat
 {
-    public double Value { get; set; }
-
     public string Id { get; set; } = "";
+    
+    public double Value { get; set; }
 }
 
 public class OffensiveStats
@@ -69,7 +69,11 @@ public class FumblingStats
 
 public class TeamDefensiveStats
 {
+    public Stat DefensiveTouchdowns { get; set; }
     public Stat FumblesRecovered { get; set; }
+    
+    public Stat SoloTackles { get; set; }
+    
     public Stat Sacks { get; set; }
     public Stat QbHits { get; set; }
     public Stat Interceptions { get; set; }
@@ -77,6 +81,12 @@ public class TeamDefensiveStats
     public Stat PassingTDsAllowed { get; set; }
     public Stat RushingYardsAllowed { get; set; }
     public Stat RushingTDsAllowed { get; set; }
+    
+    public Stat PassesDeflected { get; set; }
+    
+    public Stat TacklesForLoss { get; set; }
+    
+    public Stat TotalTackles { get; set; }
 }
 
 public class PlayerDefensiveStats
