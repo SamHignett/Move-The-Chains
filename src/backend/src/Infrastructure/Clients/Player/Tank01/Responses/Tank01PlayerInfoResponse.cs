@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
+using Infrastructure.Clients.Player.Tank01.Models;
 
-namespace Infrastructure.Clients.Player.Tank01;
+namespace Infrastructure.Clients.Player.Tank01.Responses;
 
 public class Tank01PlayerInfoResponse
 {
