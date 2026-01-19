@@ -56,7 +56,7 @@ export default function PlayerStatTable({
               </TableCell>
               <TableCell align="center" scope="row">
                 <Link
-                  href={`/stats/player/${removeSpaces(playerNameById.get(stat.playerID))}`}
+                  href={`/stats/player/${encodeURIComponent(removeSpaces(playerNameById.get(stat.playerID) || ''))}`}
                 >
                   {playerNameById.get(stat.playerID)}
                 </Link>

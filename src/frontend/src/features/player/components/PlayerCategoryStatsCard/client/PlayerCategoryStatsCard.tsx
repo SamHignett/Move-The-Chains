@@ -79,7 +79,7 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
             </Grid>
             <Grid size={4}>
               <Link
-                href={`/stats/player/${removeSpaces(playerNameById.get(stat.playerID))}`}
+                href={`/stats/player/${encodeURIComponent(removeSpaces(playerNameById.get(stat.playerID)) || '')}`}
               >
                 <Typography variant="h5">
                   {playerNameById.get(stat.playerID) || 'Unknown Player'}

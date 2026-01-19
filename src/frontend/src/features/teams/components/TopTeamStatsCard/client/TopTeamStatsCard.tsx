@@ -40,7 +40,7 @@ export default function TopTeamStatsCard(props: StatsCardProps) {
               <Typography variant="h5">{formatCamelCase(stat.name)}</Typography>
             </Grid>
             <Grid size={2}>
-              <Link href={`/stats/teams/${stat.teamName}`}>
+              <Link href={`/stats/teams/${encodeURIComponent(stat.teamName)}`}>
                 <Box
                   component="img"
                   src={stat.logoURL}

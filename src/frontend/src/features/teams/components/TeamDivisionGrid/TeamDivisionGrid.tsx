@@ -70,7 +70,7 @@ export default function TeamDivisionGrid({
                 ></Box>
               </Grid>
               <Grid size={4}>
-                <Link href={`/stats/teams/${team.name}`}>
+                <Link href={`/stats/teams/${encodeURIComponent(team.name)}`}>
                   <Typography variant="h6">{team.name}</Typography>
                 </Link>
               </Grid>
