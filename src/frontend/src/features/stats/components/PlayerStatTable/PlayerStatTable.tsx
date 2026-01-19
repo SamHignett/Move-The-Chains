@@ -9,11 +9,12 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
-import { formatCamelCase } from '@/utils/string/StringUtils';
+import { formatCamelCase, removeSpaces } from '@/utils/string/StringUtils';
 import { PlayerSingleStat } from '@/features/player/Types';
 import { useMemo } from 'react';
 import { playerInfoQuery } from '@/features/player/api/playerInfo';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
 export type PlayerStatTableProps = {
   category: string;
@@ -54,7 +55,11 @@ export default function PlayerStatTable({
                 {formatCamelCase(stat.name)}
               </TableCell>
               <TableCell align="center" scope="row">
-                {playerNameById.get(stat.playerID)}
+                <Link
+                  href={`/stats/player/${encodeURIComponent(removeSpaces(playerNameById.get(stat.playerID) || ''))}`}
+                >
+                  {playerNameById.get(stat.playerID)}
+                </Link>
               </TableCell>
               <TableCell align="center" scope="row">
                 {stat.value}

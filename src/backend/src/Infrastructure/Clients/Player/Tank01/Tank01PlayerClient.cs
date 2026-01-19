@@ -62,9 +62,9 @@ public class Tank01PlayerClient(HttpClient client) : IPlayerClient
         
         var players = await QueryPlayers(name, id, true);
         
-        if (players.Length != 1)
-            throw new HttpRequestException($"Multiple players found with Name: {name} ID: {id}");
-
+        if (players.Length == 0)
+            throw new Exception($"No player found with Name: {name}, ID: {id}");
+        
         var playerDto = players.First().ToPlayerStatsDto();
 
         return playerDto;
