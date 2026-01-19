@@ -2,11 +2,12 @@
 
 import { Box, Grid, Typography } from '@mui/material';
 import { Fragment } from 'react';
-import { formatCamelCase } from '@/utils/string/StringUtils';
+import { formatCamelCase, removeSpaces } from '@/utils/string/StringUtils';
 import { PlayerSingleStat } from '@/features/player/Types';
 import { useMemo } from 'react';
 import { playerInfoQuery } from '@/features/player/api/playerInfo';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
 
 export type StatsCardProps = {
   category: string;
@@ -77,9 +78,13 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
               </Typography>
             </Grid>
             <Grid size={4}>
-              <Typography variant="h5">
-                {playerNameById.get(stat.playerID) || 'Unknown Player'}
-              </Typography>
+              <Link
+                href={`/stats/player/${encodeURIComponent(removeSpaces(playerNameById.get(stat.playerID)) || '')}`}
+              >
+                <Typography variant="h5">
+                  {playerNameById.get(stat.playerID) || 'Unknown Player'}
+                </Typography>
+              </Link>
             </Grid>
           </Fragment>
         ))}

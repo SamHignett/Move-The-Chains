@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { TeamSingleStat } from '@/features/teams/Types';
 import { Fragment } from 'react';
 import { formatCamelCase } from '@/utils/string/StringUtils';
+import Link from 'next/link';
 
 export type StatsCardProps = {
   category: string;
@@ -39,17 +40,19 @@ export default function TopTeamStatsCard(props: StatsCardProps) {
               <Typography variant="h5">{formatCamelCase(stat.name)}</Typography>
             </Grid>
             <Grid size={2}>
-              <Box
-                component="img"
-                src={stat.logoURL}
-                alt={`${stat.teamName} Logo`}
-                sx={{
-                  display: { sm: 'block', xs: 'none' },
-                  flexShrink: 0,
-                  height: 50,
-                  width: 50,
-                }}
-              />
+              <Link href={`/stats/teams/${encodeURIComponent(stat.teamName)}`}>
+                <Box
+                  component="img"
+                  src={stat.logoURL}
+                  alt={`${stat.teamName} Logo`}
+                  sx={{
+                    display: { sm: 'block', xs: 'none' },
+                    flexShrink: 0,
+                    height: 50,
+                    width: 50,
+                  }}
+                />
+              </Link>
             </Grid>
             <Grid size={4}>
               <Typography
