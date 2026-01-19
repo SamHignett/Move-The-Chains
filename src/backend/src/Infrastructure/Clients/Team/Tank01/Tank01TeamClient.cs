@@ -108,11 +108,9 @@ public class Tank01TeamClient(HttpClient client) : ITeamClient
         var uri = "getNFLTeamSchedule";
         
         uri = QueryHelpers.AddQueryString(uri, "teamID", teamInfo.ID);
-        
-        if (string.IsNullOrEmpty(season))
-            season = DateTime.Now.Year.ToString();
-        
-        uri = QueryHelpers.AddQueryString(uri, "season", season);
+
+        if (!string.IsNullOrEmpty(season))
+            uri = QueryHelpers.AddQueryString(uri, "season", season);
         
         HttpResponseMessage response = await client.GetAsync(uri);
         response.EnsureSuccessStatusCode();

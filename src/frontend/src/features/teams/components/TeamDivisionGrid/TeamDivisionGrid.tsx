@@ -1,6 +1,7 @@
 ﻿import { Box, Typography, Grid } from '@mui/material';
 import { Fragment } from 'react';
 import { TeamInfo } from '@/features/teams/Types';
+import Link from 'next/link';
 
 export type TeamDivisionGridProps = {
   divisionName: string;
@@ -69,7 +70,9 @@ export default function TeamDivisionGrid({
                 ></Box>
               </Grid>
               <Grid size={4}>
-                <Typography variant="h6">{team.name}</Typography>
+                <Link href={`/stats/teams/${team.name}`}>
+                  <Typography variant="h6">{team.name}</Typography>
+                </Link>
               </Grid>
               <Grid size={4}>
                 <Typography variant="h5">
