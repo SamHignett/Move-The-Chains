@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - uat
+  push:
+    branches:
+      - uat
 
 jobs:
   deploy:
