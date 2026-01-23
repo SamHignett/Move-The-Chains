@@ -4,13 +4,15 @@ import React from 'react';
 import { Grid, Typography } from '@mui/material';
 import { StatCategories } from '@/features/player/utils/StatUtils';
 import PlayerCategoryStatsCard from '@/features/player/components/PlayerCategoryStatsCard/client/PlayerCategoryStatsCard';
-import { PlayerSingleStat } from '@/features/player/Types';
+import { PlayerInfo, PlayerSingleStat } from '@/features/player/Types';
 
 export type TopPlayerStatsGridProps = {
   topStats: Record<string, PlayerSingleStat[]>;
+  players: PlayerInfo[];
 };
 
 export default function TopPlayerStatsGrid({
+  players,
   topStats,
 }: TopPlayerStatsGridProps) {
   return (
@@ -37,6 +39,9 @@ export default function TopPlayerStatsGrid({
             <PlayerCategoryStatsCard
               category={categoryName}
               stats={topStats[categoryName]}
+              players={players.filter((p) =>
+                topStats[categoryName].some((stat) => stat.playerID === p.id),
+              )}
             />
           </Grid>
         );

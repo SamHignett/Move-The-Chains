@@ -32,8 +32,11 @@ export default async function TopPlayerStatsGrid() {
     for (const stat of topStats[categoryName]) allPlayerIDs.add(stat.playerID);
   }
 
-  await queryClient.prefetchQuery(playerInfoQuery({ ids: [...allPlayerIDs] }));
-  return <TopPlayerStatsGridView topStats={topStats} />;
+  const topPlayers = await queryClient.fetchQuery(
+    playerInfoQuery({ ids: [...allPlayerIDs] }),
+  );
+
+  return <TopPlayerStatsGridView topStats={topStats} players={topPlayers} />;
 }
 
 export function TopPlayerStatsGridSkeleton() {

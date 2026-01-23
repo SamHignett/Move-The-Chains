@@ -3,41 +3,22 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { Fragment } from 'react';
 import { formatCamelCase, removeSpaces } from '@/utils/string/StringUtils';
-import { PlayerSingleStat } from '@/features/player/Types';
+import { PlayerInfo, PlayerSingleStat } from '@/features/player/Types';
 import { useMemo } from 'react';
-import { playerInfoQuery } from '@/features/player/api/playerInfo';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 export type StatsCardProps = {
   category: string;
   stats: PlayerSingleStat[];
+  players: PlayerInfo[];
 };
 
 export default function PlayerCategoryStatsCard(props: StatsCardProps) {
-  const playerIDs = useMemo(
-    () => [...new Set(props.stats.map((stat) => stat.playerID))],
-    [props.stats],
-  );
+  const playerNamesById = useMemo(() => {
+    if (!props.players) return new Map<string, string>();
 
-  const {
-    data: players,
-    error,
-    isLoading,
-  } = useQuery({
-    ...playerInfoQuery({ ids: playerIDs }),
-    enabled: playerIDs.length > 0,
-  });
-
-  const playerNameById = useMemo(() => {
-    if (!players) return new Map<string, string>();
-
-    return new Map(players.map((p) => [p.id, p.name]));
-  }, [players]);
-
-  if (isLoading) return <div>Loading player info...</div>;
-
-  if (error) return <div> Error querying player info: {error.message}</div>;
+    return new Map(props.players.map((p) => [p.id, p.name]));
+  }, [props.players]);
 
   return (
     <Box
@@ -79,10 +60,10 @@ export default function PlayerCategoryStatsCard(props: StatsCardProps) {
             </Grid>
             <Grid size={4}>
               <Link
-                href={`/stats/player/${encodeURIComponent(removeSpaces(playerNameById.get(stat.playerID)) || '')}`}
+                href={`/stats/player/${encodeURIComponent(removeSpaces(playerNamesById.get(stat.playerID)) || '')}`}
               >
                 <Typography variant="h5">
-                  {playerNameById.get(stat.playerID) || 'Unknown Player'}
+                  {playerNamesById.get(stat.playerID) || 'Unknown Player'}
                 </Typography>
               </Link>
             </Grid>
