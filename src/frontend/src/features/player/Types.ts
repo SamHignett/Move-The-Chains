@@ -24,3 +24,9 @@ export type PlayerSingleStat = {
   value: number;
   playerID: string;
 };
+
+export type PlayerCategoryStats = {
+  categoryName: string;
+  stats: PlayerSingleStat[];
+  players: PlayerInfo[];
+};
