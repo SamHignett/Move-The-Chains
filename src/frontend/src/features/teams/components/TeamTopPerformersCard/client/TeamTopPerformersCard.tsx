@@ -3,21 +3,17 @@
 import { Box } from '@mui/system';
 import Typography from '@mui/material/Typography';
 import { useState, SyntheticEvent } from 'react';
-import PlayerStatTable from '@/features/stats/components/PlayerStatTable/PlayerStatTable';
+import PlayerSingleStatTable from '@/features/stats/components/PlayerStatTable/client/PlayerSingleStatTable';
 import TabBar from '@/components/TabBar/TabBar';
 import TabPanel from '@/components/TabPanel/TabPanel';
-import {
-  getTopPerformersForStatCategory,
-  StatCategories,
-} from '@/features/player/utils/StatUtils';
-import { TeamTopPerformers } from '@/features/teams/Types';
+import { PlayerCategoryStats } from '@/features/player/Types';
 
 export type TeamTopPerformersCardProps = {
-  teamTopPerformers: TeamTopPerformers;
+  topPerformers: PlayerCategoryStats[];
 };
 
 export default function TeamTopPerformersCard({
-  teamTopPerformers,
+  topPerformers,
 }: TeamTopPerformersCardProps) {
   const [categoryValue, setCategoryValue] = useState(0);
 
@@ -37,19 +33,23 @@ export default function TeamTopPerformersCard({
       <Typography variant="h3">Top Performers</Typography>
       <TabBar
         value={categoryValue}
-        labels={Object.entries(StatCategories).map(
-          ([categoryName]) => categoryName,
+        labels={topPerformers.map(
+          (categoryStats) => categoryStats.categoryName,
         )}
         handleChangeAction={handleCategoryChange}
       />
-      {Object.entries(StatCategories).map(([categoryName, config], index) => {
-        const topStats = getTopPerformersForStatCategory(
-          [teamTopPerformers],
-          config,
-        );
+      {topPerformers.map((categoryStats, index) => {
         return (
-          <TabPanel key={categoryName} value={categoryValue} index={index}>
-            <PlayerStatTable category={categoryName} stats={topStats} />
+          <TabPanel
+            key={categoryStats.categoryName}
+            value={categoryValue}
+            index={index}
+          >
+            <PlayerSingleStatTable
+              category={categoryStats.categoryName}
+              stats={categoryStats.stats}
+              players={categoryStats.players}
+            />
           </TabPanel>
         );
       })}

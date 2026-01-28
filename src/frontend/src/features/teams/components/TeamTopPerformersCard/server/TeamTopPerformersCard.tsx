@@ -4,6 +4,11 @@ import TeamTopPerformersCardView from '../client/TeamTopPerformersCard';
 import { teamTopPerformersQuery } from '@/features/teams/api/teamTopPerformers';
 import { getQueryClient } from '@/components/ReactQueryProvider/ReactQueryProvider';
 import { Skeleton } from '@mui/material';
+import {
+  getTopPerformersForStatCategory,
+  StatCategories,
+} from '@/features/player/utils/StatUtils';
+import { playerInfoQuery } from '@/features/player/api/playerInfo';
 
 export default async function TeamTopPerformersCard({
   teamName,
@@ -25,7 +30,38 @@ export default async function TeamTopPerformersCard({
     return <div>No top performers found for team: {teamName}</div>;
   }
 
-  return <TeamTopPerformersCardView teamTopPerformers={teamTopPerformers} />;
+  const statsPromises = Object.entries(StatCategories).map(
+    async ([categoryName, config]) => {
+      const topStats = getTopPerformersForStatCategory(
+        [teamTopPerformers],
+        config,
+      );
+
+      const playerIDs = [...new Set(topStats.map((stat) => stat.playerID))];
+
+      if (playerIDs.length === 0) {
+        return {
+          categoryName: categoryName,
+          players: [],
+          stats: topStats,
+        };
+      }
+
+      const players = await queryClient.fetchQuery(
+        playerInfoQuery({ ids: playerIDs }),
+      );
+
+      return {
+        categoryName: categoryName,
+        players: players || [],
+        stats: topStats,
+      };
+    },
+  );
+
+  const topPerformersStats = await Promise.all(statsPromises);
+
+  return <TeamTopPerformersCardView topPerformers={topPerformersStats} />;
 }
 
 export function TeamTopPerformersCardSkeleton() {
