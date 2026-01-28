@@ -9,7 +9,6 @@ import {
   StatCategories,
 } from '@/features/player/utils/StatUtils';
 import { playerInfoQuery } from '@/features/player/api/playerInfo';
-import { PlayerCategoryStats } from '@/features/player/Types';
 
 export default async function TeamTopPerformersCard({
   teamName,
@@ -31,8 +30,6 @@ export default async function TeamTopPerformersCard({
     return <div>No top performers found for team: {teamName}</div>;
   }
 
-  let topPerformersStats: PlayerCategoryStats[] = [];
-
   const statsPromises = Object.entries(StatCategories).map(
     async ([categoryName, config]) => {
       const topStats = getTopPerformersForStatCategory(
@@ -41,6 +38,14 @@ export default async function TeamTopPerformersCard({
       );
 
       const playerIDs = [...new Set(topStats.map((stat) => stat.playerID))];
+
+      if (playerIDs.length === 0) {
+        return {
+          categoryName: categoryName,
+          players: [],
+          stats: topStats,
+        };
+      }
 
       const players = await queryClient.fetchQuery(
         playerInfoQuery({ ids: playerIDs }),
@@ -54,7 +59,7 @@ export default async function TeamTopPerformersCard({
     },
   );
 
-  topPerformersStats = await Promise.all(statsPromises);
+  const topPerformersStats = await Promise.all(statsPromises);
 
   return <TeamTopPerformersCardView topPerformers={topPerformersStats} />;
 }

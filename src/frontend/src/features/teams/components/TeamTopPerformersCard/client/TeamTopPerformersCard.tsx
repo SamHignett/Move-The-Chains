@@ -40,7 +40,11 @@ export default function TeamTopPerformersCard({
       />
       {topPerformers.map((categoryStats, index) => {
         return (
-          <TabPanel key={index} value={categoryValue} index={index}>
+          <TabPanel
+            key={categoryStats.categoryName}
+            value={categoryValue}
+            index={index}
+          >
             <PlayerSingleStatTable
               category={categoryStats.categoryName}
               stats={categoryStats.stats}
