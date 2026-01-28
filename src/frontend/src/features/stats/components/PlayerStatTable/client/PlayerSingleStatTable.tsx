@@ -10,28 +10,21 @@ import {
   TableRow,
 } from '@mui/material';
 import { formatCamelCase, removeSpaces } from '@/utils/string/StringUtils';
-import { PlayerSingleStat } from '@/features/player/Types';
+import { PlayerInfo, PlayerSingleStat } from '@/features/player/Types';
 import { useMemo } from 'react';
-import { playerInfoQuery } from '@/features/player/api/playerInfo';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 export type PlayerStatTableProps = {
   category: string;
   stats: PlayerSingleStat[];
+  players: PlayerInfo[];
 };
 
-export default function PlayerStatTable({
+export default function PlayerSingleStatTable({
   category,
+  players,
   stats,
 }: PlayerStatTableProps) {
-  const playerIDs = useMemo(
-    () => [...new Set(stats.map((stat) => stat.playerID))],
-    [stats],
-  );
-
-  const { data: players } = useQuery(playerInfoQuery({ ids: playerIDs }));
-
   const playerNameById = useMemo(() => {
     if (!players) return new Map<string, string>();
 
