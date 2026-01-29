@@ -1,0 +1,41 @@
+﻿name: Deploy Portal to Azure WA - Live
+
+on:
+  push:
+    branches: [ live ]
+  pull_request:
+    branches: [ live ]
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: 
+        name: portal-live
+    permissions:
+        contents: read
+        id-token: write
+        pull-requests: write
+    steps:        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Build Portal
+        uses: ./.github/actions/build-node-app
+        with:
+          app-directory: src/frontend
+          node-version: 20
+
+      - name: Prepare deployment package
+        run: |
+          cd src/frontend
+          mv ./.next/build ./.next/standalone/src/frontend/.next
+          mv ./.next/static ./.next/standalone/src/frontend/.next
+        shell: bash
+
+      - name: Deploy Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_PORTAL_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PORTAL_WEBAPP_PUBLISH_PROFILE }}
+          package: src/frontend/.next/standalone/src/frontend
+          clean: true
